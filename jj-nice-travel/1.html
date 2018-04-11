@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+<!-- <meta name="divport" content="width=750,user-scalable=no" /> -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="wap-font-scale" content="no">
+<title>首页</title>
+<link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<!--[if lt IE 9]><script>alert('您的浏览器版本过低，请更新本版本浏览器，或更换为诸如谷歌浏览器的现代浏览器')</script><![endif]-->
+<script>window.onload = function () {if (!/test/i.test(location.search)) return; var script = document.createElement('script'); script.src="https://cdn.bootcss.com/eruda/1.2.6/eruda.min.js"; document.body.appendChild(script); script.onload = function () { eruda.init() } };</script>
+<style>
+*, *:before， *:after {
+  box-sizing: border-box;
+}
+.other {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  width: 48%;
+  height: 50%;
+  background: red;
+}
+.pc {display: none;}
+@media (min-width: 768px) {
+  .pc { display: block; }
+  .mobile { display: none; }
+}
+</style>
+</head>
+
+<body>
+<div class="container pc">
+  <header class="header">
+    <div class="container">
+      <img src="img/header.png" class="img-fluid">
+    </div>
+  </header>
+  <img src="img/1/pc.jpg" class="img-fluid">
+</div>
+<img src="img/1/mobile.jpg" class="img-fluid mobile">
+</body>
+</html>
