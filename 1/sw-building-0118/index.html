@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="wap-font-scale" content="no">
+<title>上海优秀商业景观推选</title>
+<meta name="keywords" content="张永恒, foreverZ, 案例库" />
+<meta name="description" content="" />
+<!--[if lt IE 9]><script>alert('您的浏览器版本过低，请更新本版本浏览器，或更换为诸如谷歌浏览器的现代浏览器')</script><![endif]-->
+<style>
+*, *:before， *:after {
+	box-sizing: border-box;
+}
+html {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-moz-font-feature-settings: "liga", "kern";
+}
+body, .body {
+	overflow: hidden;
+}
+img {
+	max-width: 100%;
+	display: block;
+}
+.bg {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  width: 100%;
+  height: 100%;
+}
+.body {
+	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	background: #000;
+	display: flex;
+	flex-direction: column;
+	max-width: 768px;
+	margin: auto;
+}
+.main {
+	flex-grow: 1;
+	overflow-x: hidden;
+	overflow-y: auto;
+	transform: translate3d(0,0,0);
+	-webkit-overflow-scrolling: touch;
+  background: linear-gradient(#140123, #070031)
+}
+.modal {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  opacity: 0;
+  z-index: -1;
+  overflow: hidden;
+  transition: opacity .3s, z-index 0s .3s;
+}
+.modal-bg {
+  background: rgba(0,0,0,.8);
+}
+.modal.in {
+  opacity: 1;
+  z-index: 10;
+  transition: opacity .3s, z-index 0s;
+}
+.modal-box {
+  display: none;
+	transform: translate3d(0,0,0);
+}
+.in .modal-box {
+  display: block;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 10px;
+}
+.item {
+  width: calc(50% - 20px);
+  margin: 10px 10px;
+}
+.image {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+.image:before {
+  content: "";
+  display: block;
+  padding-top: 75%;
+}
+.image > img, .image > video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.video-box, .cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.video-box {
+    display: none;
+    z-index: -1;
+    background: rgba(0,0,0,.8);
+}
+.video-box.on {
+    z-index: 0;
+    display: block;
+}
+</style>
+</head>
+
+<body>
+<div class="body">
+	<div class="main">
+		<div class='list'>
+			<div class='item' v-for='item in list'>
+			  <a class='image' :href='item.video' @click.prevent='videoPlay(item.video)'>
+					<img :src='item.image' />
+			  </a>
+			</div>
+		</div>
+	</div>
+  <div class="video-box" v-for='item in list' :class='{on:item.video==video}'>
+    <video :src="item.video" class="bg" preload x5-video-player-type="h5" x5-video-player-fullscreen="true" webkit-playsinline="true" playsinline="true"></video>
+  </div>
+<!-- 	<div class="modal" v-for='item in list' :class='{in:item.video==video}'>
+		<div class="modal-bg bg" @click='cancel'></div>
+		<div class="modal-box bg">
+      <video :src="item.video" class="bg" preload x5-video-player-type="h5" x5-video-player-fullscreen="true" webkit-playsinline="true" playsinline="true"></video>
+		</div>
+	</div> -->
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script src="https://unpkg.com/better-scroll@1.0.1/dist/bscroll.min.js"></script>
+<script>
+var baseUrl = 'https://sum.kdcer.com/sw-vote-1224/';
+// var baseUrl = './';
+var data = [
+  {
+    image: 'bobh.jpg',
+    video: 'bobh2.mp4',
+  },
+  {
+    image: 'dsdgc.jpg',
+    video: 'dsdgc2.mp4',
+  },
+  {
+    image: 'dwbh.jpg',
+    video: 'dwbh2.mp4',
+  },
+  {
+    image: 'dybbb.jpg',
+    video: 'dybbb2.mp4',
+  },
+  {
+    image: 'gjzx.jpg',
+    video: 'gjzx2.mp4',
+  },
+  {
+    image: 'hl.jpg',
+    video: 'hl2.mp4',
+  },
+  {
+    image: 'hqg.jpg',
+    video: 'hqg2.mp4',
+  },
+  {
+    image: 'hzzx.jpg',
+    video: 'hzzx2.mp4',
+  },
+  {
+    image: 'jlzx.jpg',
+    video: 'jlzx2.mp4',
+  },
+  {
+    image: 'qbwk.jpg',
+    video: 'qbwk2.mp4',
+  },
+  {
+    image: 'xggc.jpg',
+    video: 'xggc2.mp4',
+  },
+  {
+    image: 'xtd.jpg',
+    video: 'xtd2.mp4',
+  },
+  {
+    image: 'xytgh.jpg',
+    video: 'xytgh2.mp4',
+  },
+  {
+    image: 'yf.jpg',
+    video: 'yf2.mp4',
+  }, 
+]
+var app = new Vue({
+  el: '.body',
+  data: {
+    list: [],
+    video: '',
+  },
+  created: function() {
+    var list = data.map(x => {
+      return {
+        image: baseUrl + 'img/' + x.image,
+        video: baseUrl + 'video/' + x.video,
+      }
+    });
+    this.list = list
+
+    var url = GetQueryString('video') || '';
+    this.video = url;
+  },
+  methods: {
+    videoPlay: function(url) {
+      this.video = url;
+      $video = $('video').filter('[src="'+app.video+'"]');
+      $video[0].play();
+      location.hash = 'video?video=' + url;
+    },
+    cancel: function() {
+      history.back();
+    },
+  }
+});
+
+$(window).on('touchmove', function(e){ e.preventDefault() });
+var wrapper = document.querySelector('.main')
+new BScroll(wrapper, {
+	click: true
+})
+
+var $video = null;
+window.addEventListener('load', xx)
+window.addEventListener('hashchange', xx)
+function xx() {
+  var hash = location.hash
+  $video = $('video').filter('[src="'+app.video+'"]');
+  if ($video.length < 1) return;
+  if (hash == '') {
+    app.video = '';
+    $video[0].pause();
+  }
+  $video.off().on(' pause', function(){
+    history.back();
+  });
+}
+
+function GetQueryString(name, str) {
+  var reg = new RegExp('(^|\\?|&|#)' + name + '=([^&]*)(&|$)');
+  var r = (str || window.location.href).match(reg);
+  if (r != null) return decodeURIComponent(r[2]); return null;
+}
+
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script id="share">
+function WxReady(apiList, callback) {
+  if (typeof wx == 'undefined') {
+    return console.error('没有 http://res.wx.qq.com/open/js/jweixin-1.2.0.js 文件');
+  }
+
+  if (typeof apiList == 'function') {
+    callback = apiList; apiList = null;
+  }
+
+  var isReady = false;
+  // 非公司域名则直接回调，如 file，localhost, github 或等情况
+  if (/localhost|(192\.168)|foreverZ133/i.test(location.hostname) || !/^http/.test(location.href)) {
+    return callback && callback();
+  } else {
+    var timer = setTimeout(function(){
+      if (!isReady) {
+        MAIN.game_state = 'error';
+        alert('微信服务器正忙，请过会再尝试刷新');
+      }
+    }, 5000);
+  }
+
+  $.ajaxSetup({ async: false });
+  $.getJSON("/wx/WeixinConfig", {
+    Url: window.location.href
+  }, function (r) {
+    r.jsApiList = r.jsApiList.concat(apiList || []);
+    wx.config(r);
+    wx.error(function (err) {
+      alert(JSON.stringify(err));
+    });
+    wx.ready(function () {
+      isReady = true;
+      callback && callback();
+    });
+  }, "", true);
+  $.ajaxSetup({ async: true });
+}
+
+function WxShare(json) {
+  wx.onMenuShareTimeline(json);
+  wx.onMenuShareAppMessage(json);
+}
+
+var shareJson = {
+  title: '夜上海，星闪耀，上海最美景观都在这！',
+  desc: '魅力“星”上海，璀璨新年鸿！你心目中的最美上海！',
+  icon: 'http://sum.kdcer.com/sw-vote-1224/img/icon.jpg',
+  url: 'http://sum.kdcer.com/sw-building-0118/',
+  complete: function(r) {},
+}
+WxReady(function(){
+  var $bgm = $('#bgm')[0]; $bgm && $bgm.play();
+  WxShare(shareJson);
+});
+</script>
+</body>
+</html>
