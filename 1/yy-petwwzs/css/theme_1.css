@@ -1,0 +1,7 @@
+﻿@charset "utf-8";
+
+@media (max-width: 768px) {
+    .swiper-button-next, .swiper-button-prev {
+        height: 20px;
+    }
+}
