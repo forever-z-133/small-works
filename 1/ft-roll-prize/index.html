@@ -34,7 +34,7 @@
   </div>
   <div class="page play" id="play">
     <div class="bg"><img src="img/main.jpg"></div>
-    <div class="roll"><img src="img/circle.png"></div>
+    <div class="roll" id="roll"><img src="img/circle.png"></div>
     <div class="arrow"><img src="img/arrow.png"></div>
     <a href="#" class="btn btn-start disabled grey"><img src="img/btn.png"></a>
   </div>
@@ -96,7 +96,7 @@ function Welcome() {
   $('#welcome').on('click', Play);
 }
 
-var $roll = $('.roll');
+var $roll = $('#roll');
 var getResult = false;  // 请求是否完成
 var post = null;    // 保存 $.post 对象
 var result = 0;     // 结果中了什么
@@ -107,22 +107,24 @@ function Play() {
   $('#play').fadeIn();
   $('.btn-start').one('click', function (e) {
     $(this).disable().addClass('grey');
-    Roll();     // 转啊转事件
     Post();     // 抽奖请求
+    Roll();     // 转啊转事件
   });
 }
 
 var prize_index = null
 function Post() {
+  // 去掉接口请求，改为 随机数 进行抽奖
+  
+  // 是否已抽奖
   getResult = true;
 
   if (true) {  // 合法
-    var rdm = Math.random() > 0.4;
+    var rdm = Math.random() > 0.3;
     if (rdm) { // 中奖
-      $('#qrcode').prop('src', 'img/qrcode.jpg');
       prize_index = Math.ceil(Math.random());
-    } else {    // 中奖
-      Bad();
+    } else {    // 未中奖
+      prize_index = null;
     }
   } else {    // 非法
     $tip.removeClass('static').text('非法进入').addClass('center in');
@@ -140,30 +142,36 @@ function Roll() {
   var Timer = setInterval(function(){
     timecount += 500;
     if (timecount < 1001) return;
-    if (!getResult) {
-      // 一直未请求到，且时间大于 3s，则默认没有中奖
-      if (timecount >= 3500) {
-        clearInterval(Timer);
-        $roll.removeClass('anim-roll');
-        $roll.transit({ rotate: 360 }, 'slow', 'ease-out');
-        post && post.abort();
-      }
-    } else {
+    if (getResult) {
       // 此为已请求到，则停止转动
       clearInterval(Timer);
       $roll.removeClass('anim-roll');
       if (typeof prize_index === 'number') {
-        $roll.transit({ rotate: 330 }, 1500, 'ease-out', function () {
-          Good(prize_index);
+        $roll.stop().transit({ rotate: 330 }, 1500, 'ease-out', function () {
+          RollFinish(prize_index);
         });
       } else {
-        $roll.transit({ rotate: 360 }, 1500, 'ease-out');
+        $roll.stop().transit({ rotate: 360 }, 1500, 'ease-out', function () {
+          RollFinish();
+        });
       }
+    } else if (timecount >= 3500) {
+      // 一直未请求到，且时间大于 3s，则默认没有中奖
+      clearInterval(Timer);
+      $roll.removeClass('anim-roll');
+      $roll.stop().transit({ rotate: 360 }, 'slow', 'ease-out');
+      post && post.abort();
+      RollFinish();
     }
   }, 500);
 }
 
+function RollFinish(result) {
+  typeof result === 'number' ? Good(result) : Bad();
+}
+
 function Good(type) {
+  $('#qrcode').prop('src', 'img/qrcode.jpg');
   $('#good').fadeIn().find('.img[data-id="'+type+'"]').removeClass('hide');
   alert('活动已结束');
 }
