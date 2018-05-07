@@ -935,7 +935,7 @@
     top: 0; bottom: 0;
     left: 0; right: 0;
     height: 100%;
-    object-fit: cover;
+    /*object-fit: cover;*/
 }
 .index-goods .btn-more {
     width: 13em;
@@ -1544,7 +1544,7 @@
     margin-bottom: 2em;
 }
 .page-goods-list .image {
-    width: 40%;
+    width: 44%;
     flex-shrink: 0;
     margin-bottom: 1em;
 }
@@ -1601,7 +1601,7 @@
     display: flex;
 }
 .page-goods-list .image:before {
-    padding-top: 75%;
+    padding-top: 100%;
 }
 .page-goods-list .goods-gallery .img {
     -webkit-box-flex: 1;
