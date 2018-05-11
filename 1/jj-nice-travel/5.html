@@ -92,16 +92,18 @@ img {
   </div>
 </div>
 <script>
-var imgs = document.querySelectorAll('img');
-for (var i=0,len=imgs.length; i<len; i++) {
-  var now = imgs[i];
-  now.style.opacity = 0;
-  var img = new Image();
-  img.onload = (function(img){
-    img.style.opacity = 1;
-  })(now)
-  img.src = now.src;
-}
+// var imgs = document.querySelectorAll('img');
+// for (var i=0,len=imgs.length; i<len; i++) {
+//   var now = imgs[i];
+//   now.style.opacity = 0;
+//   var img = new Image();
+//   img.onload = (function(img){
+//     setTimeout(function(){
+//       img.style.opacity = 1;
+//     }, 300);
+//   })(now)
+//   img.src = now.src;
+// }
 </script>
 </body>
 </html>
