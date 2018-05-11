@@ -45,6 +45,12 @@ img {
   font-size: 1.1em;
   font-weight: bold;
 }
+.qrcode {
+  width: 200px;
+}
+.others {
+  width: 200px;
+}
 </style>
 </head>
 
@@ -58,9 +64,9 @@ img {
   <img src="img/5/pc.jpg" class="img-fluid">
   <div class="footer">
     <p class="w1">迫不及待想要尝试吗？精彩抢先看！</p>
-    <img src="img/4/qrcode.png">
+    <img src="img/5/qrcode.png" class="qrcode">
     <p class="w2">请在苹果手机上使用 Safari 浏览器，在安卓机上使用 Chrome 浏览器：<br>复制粘贴 https://discover.narstravelretail.com/</p>
-    <img src="img/4/other.png">
+    <img src="img/5/other.png" class="others">
   </div>
 </div>
 <div class="mobile">
@@ -72,12 +78,22 @@ img {
   <img src="img/5/mobile.jpg" class="img-fluid">
   <div class="footer">
     <p class="w1">迫不及待想要尝试吗？精彩抢先看！</p>
-    <img src="img/4/qrcode.png">
+    <img src="img/5/qrcode.png" class="qrcode">
     <p class="w2">请在苹果手机上使用 Safari 浏览器，在安卓机上使用 Chrome 浏览器：<br>复制粘贴 https://discover.narstravelretail.com/</p>
-    <img src="img/4/other.png">
+    <img src="img/5/other.png" class="others">
   </div>
 </div>
 <script>
+var imgs = document.querySelectorAll('img');
+for (var i=0,len=imgs.length; i<len; i++) {
+  var now = imgs[i];
+  now.style.opacity = 0;
+  var img = new Image();
+  img.onload = (function(img){
+    img.style.opacity = 1;
+  })(now)
+  img.src = now.src;
+}
 </script>
 </body>
 </html>
