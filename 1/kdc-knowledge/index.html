@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="wap-font-scale" content="no">
+<title>坤鼎知识库</title>
+<!--[if lt IE 9]><script>alert('您的浏览器版本过低，请更新本版本浏览器，或更换为诸如谷歌浏览器的现代浏览器')</script><![endif]-->
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/module.css">
+<link rel="stylesheet" href="css/public.css">
+<link rel="stylesheet" href="css/theme_1.css">
+<style>
+</style>
+</head>
+
+<body>
+<div class="body">
+  <div class="bg body-bg"></div>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <img src="img/logo.png" alt="上海坤鼎文化传播有限公司" width="40" height="40">
+        <span class="seo-only">上海坤鼎文化传播有限公司</span>
+      </div>
+      <form class="search-box">
+        <input type="search" id="search-input" placeholder="搜索你要寻找的素材" autocomplete="off">
+        <button class="btn btn-to-search" type="submit">搜索</button>
+        <ul class="list search-list"></ul>
+      </form>
+      <ul class="nav top-nav">
+        <li class="item"><a class="link" href="#index"><span>首页</span></a></li>
+        <li class="item"><a class="link" href="#collect"><span>收藏</span></a></li>
+        <li class="item"><a class="link" href="#history"><span>时光</span></a></li>
+      </ul>
+    </div>
+  </header>
+  <main class="main">
+    <div class="scroll-wrap">
+      <section id="index">
+        <ul class="list main-list"></ul>
+      </section>
+      <section id="result"></section>
+      <section id="collect"></section>
+    </div>
+  </main>
+  <div class="modal" id="search">
+    <div class="bg btn-back"></div>
+    <div class="modal-box search-panel">
+      <div class="search-panel-part">
+        <div class="search-title">搜索历史</div>
+        <a href="#" class="btn btn-empty-search-history"></a>
+        <ul class="list search-history"></ul>
+      </div>
+      <div class="search-panel-part">
+        <div class="search-title">大家在搜</div>
+        <ul class="list search-most"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="upload">
+    <div class="bg btn-back bg-white"></div>
+    <div class="modal-box upload-panel">
+
+    </div>
+  </div>
+  <div class="modal" id="author">
+    <div class="bg btn-cancel modal-bg"></div>
+    <div class="modal-box author-panel">
+      <ul class="list at-author-list"></ul>
+    </div>
+  </div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/dropload.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/clipboard.min.js"></script>
+<script src="js/module.js"></script>
+<script>
+// ---------------------------------------- 公共方法
+var $win = $(window), $main = $('.main');
+$('.btn-back').on('click', function(){
+  history.back();
+});
+$('.btn-cancel').on('click', function(){
+  $(this).parents('.modal').removeClass('in');
+});
+var clipboard = new Clipboard('.btn-share');
+clipboard.on('success', function(e) {
+  console.log(e);
+});
+clipboard.on('error', function(e) {
+  console.log(e);
+});
+$main.css('margin-left', scrollbarWidth());
+// 获取 scrollBar 的宽度
+function scrollbarWidth() {
+  var $measure = $('<div style="position: absolute; top: -9999px; width: 100px; height: 100px; overflow: scroll;"></div>');
+  $('.main').append($measure);
+  var scrollbarWidth = $measure[0].offsetWidth - $measure[0].clientWidth;
+  $measure.remove();
+  return scrollbarWidth;
+};
+
+// ---------------------------------------- 初始数据
+
+
+$(OneCard()).appendTo('.main-list');
+$(Upload(false)).prependTo('#index');
+$(Upload()).prependTo('.upload-panel');
+var type = ['素材', '设计', '资讯', '营销', '产品', '技术', '其他'];
+$(Category(type)).appendTo('.category-list');
+var author = ['1', '23332', 'zyh', '张永恒', '1', '23332', 'zyh', '张永恒', '1', '23332', 'zyh', '张永恒', '1', '23332', 'zyh', '张永恒'];
+$('.choose-author-list').empty().append(Author(author));
+$('.at-author-list').empty().append(Author(author));
+
+// ---------------------------------------- 路由
+router.route('/', function(){
+  location.hash = 'index';
+});
+router.route('index', function(){
+  $('#search-input').val('');
+  $('.search-list').empty();
+  $('.header').css('z-index', 1);
+});
+router.route('search', function(){
+});
+router.route('upload', function(){
+  $('#upload .message').focus();
+});
+
+// ---------------------------------------- 搜索功能
+var $search = $('#search-input');
+var $search_list = $('.search-list');
+var search_posting = false;
+// 确认搜索
+$('.search-box').on('submit', function(evt){
+  evt.preventDefault();
+});
+// 显示/隐藏界面
+$search.on('click', function(){
+  location.hash = 'search';
+  $search.focus();
+  $('.header').css('z-index', 2);
+});
+// 自动补全处理
+$search.on('input', function(){
+  var val = $search.val();
+  if (search_posting) return;
+  if (val == '') {
+    $search_list.removeClass('in');
+  } else {
+    search_posting = true;
+    setTimeout(function(){
+      update_search_list(['','','']);
+      $search_list.addClass('in');
+      search_posting = false;
+    }, 200);
+  }
+});
+$search.on('blur', function(){
+  $search_list.removeClass('in');
+});
+
+// ---------------------------------------- 上传输入功能
+$('#index .index-upload-box').on('click', function(){
+  location.hash = 'upload';
+});
+$upload = $('#upload');
+// 监听字数限制
+var $message_number_limit = $('.upload-number-limit');
+$upload.on('input', '.message', function() {
+  var val = this.innerText.replace(/@/g,'').replace(/(http|https):\/\/\S*/,'').replace(/\s/g,'');
+  $message_number_limit.text(val.length);
+});
+// 监听输入时的 @
+var $author_panel = $('#author');
+var $author_list = $('.at-author-list');
+var need_choose_author = false;
+var message = new ListenSrting('#upload .message', function(){
+  $author_panel.addClass('in');
+  need_choose_author = true;
+  $author_list.children().removeClass('on').first().addClass('on');
+});
+$author_list.on('mouseenter', '.item', function(e){
+  $(this).addClass('on').siblings().removeClass('on');
+});
+$author_list.on('click', '.item', function(e){
+  if (!need_choose_author) return;
+  $author_panel.removeClass('in');
+  message.add($(this).text());
+});
+$upload.on('keydown', '.message', function(e){
+  if (!need_choose_author) return;
+  var $item = $author_list.children();
+  var now = $item.filter('.on').index();
+  if (e.keyCode == 38) {  // 键盘：上
+    $item.eq(Math.max(0, --now)).addClass('on').siblings().removeClass('on');
+  } else if (e.keyCode == 40) {  // 键盘：下
+    $item.eq(Math.min($item.length, ++now)).addClass('on').siblings().removeClass('on');
+  } else if (e.keyCode == 13 || e.keyCode == 108) {  // 键盘：回车
+    $author_panel.removeClass('in');
+    message.add($item.filter('.on').text());
+    e.preventDefault();
+  }
+});
+
+// ---------------------------------------- 上传功能
+var $upload_box = $upload.find('.upload-box');
+var $upload_list = $upload.find('.upload-list');
+$upload.on('click', '.btn-upload',function(){
+  if ($upload_box.is('.in')) {
+    $upload_box.removeClass('in');
+  } else {
+    $upload_box.addClass('in');
+  }
+});
+$upload.on('click', '.message', function(){
+  $upload_box.removeClass('in');
+});
+$upload.on('click', '.btn-close-upload', function(){
+  $upload_box.removeClass('in');
+});
+// 上传
+$upload.on('change', '#upload-input', function(e){
+  console.log(e.target.files);
+  create_one_upload('img/logo.png');
+  var len = $upload_list.children().length;
+  $upload.find('.has-upload').text(len > 1 ? len - 1 : '');
+  this.value = '';
+});
+// 删除
+$upload_box.on('click', '.btn-remove-upload', function(){
+  $(this).parents('.item').remove();
+  var len = $upload_list.children().length;
+  $upload.find('.has-upload').text(len > 1 ? len - 1 : '');
+});
+
+// ---------------------------------------- 选择作者功能
+// ---------------------------------------- 选择分类功能
+$('.choose-author-list').on('click', '.item', _choose);
+$('.category-list').on('click', '.item', _choose);
+function _choose(e) {
+  var $this = $(e.target);
+  $this.parents('.list').prev('.btn').text($this.text());
+}
+
+// ---------------------------------------- 发布功能
+$('.index-upload-box').on('submit', function(e){
+  e.preventDefault();
+  var v1 = $('.message'), v2 = $('.upload-upload'),
+      v3 = $('.upload-author'), v4 = $('.upload-category');
+  if (true) {}
+});
+
+// ---------------------------------------- 更多
+$main.on('click', '.btn-more', function(){
+  var $list = $(this).siblings('.more-list');
+  if ($list.is('.in')) { $list.removeClass('in'); }
+  else $list.addClass('in');
+});
+
+// ---------------------------------------- 评论
+function ToggleCommitList($list, callback) {
+  if ($list.is('.in')) {
+    $list.removeClass('in');
+  } else {
+    $list.addClass('in');
+    $list.find('input').focus();
+    callback && callback();
+  }
+}
+// 出现评论列表
+$main.on('click', '.btn-commit', function(){
+  var $this = $(this);
+  var $list = $this.parent().siblings('.commit');
+  ToggleCommitList($list, function(){
+    if ($this.data('hasLoad')) return;
+    $this.data('hasLoad', true);
+    if ($list.find('.commit-list').length < 1) {
+      var $sub = $('<ul class="list commit-list"></ul>').appendTo($list);
+    }
+    // $.post('', {}, function(r){});
+    var $commit = $(OneCommit({})).appendTo($sub);
+    if ($commit.find('.commit-list').length < 1) {
+      var $reply = $('<ul class="list commit-list"></ul>').appendTo($commit.find('.content'));
+    }
+    $reply.append(OneReply());
+    $reply.append('<footer><a href="#" class="link btn-more-reply">共 10 条评论</a></footer>');
+    $sub.append('<footer><a href="#" class="link btn-more-commit">查看更多</a></footer>');
+  });
+});
+// 出现回复输入框
+$main.on('click', '.btn-reply', function(){
+  var $list = $(this).parent().siblings('form');
+  ToggleCommitList($list);
+});
+// 顶级评论
+$main.on('submit', '.commit-head form', function(){
+  var $this = $(this), $input = $this.find('input');
+  var val = $input.val();
+  if (val == '') return;
+  var $parent = $this.parent();
+  var $target = $parent.siblings('.commit-list');
+  if ($target.length < 1) {
+    var $target = $('<ul class="list commit-list"></ul>').appendTo($parent.parent());
+  }
+  $target.prepend(OneCommit({}));
+  $input.val('');
+  $this.removeClass('in');
+});
+// 下级评论
+$main.on('submit', '.commit-list form', function(){
+  var $this = $(this), $input = $this.find('input');
+  var val = $input.val();
+  if (val == '') return;
+  // 获取目标列表
+  var $parent = $this.parent();
+  if ($parent.is('li')) var $target = $parent.parent();
+  else { var $target = $parent.children('.commit-list'); }
+  if ($target.length < 1) {
+    var $target = $('<ul class="list commit-list"></ul>').appendTo($parent);
+  }
+  console.log($target);
+  $target.prepend(OneReply({}));
+  $input.val('');
+  $this.removeClass('in');
+});
+function newDate(reg) {
+  var date = new Date();
+  reg = reg.replace('yyyy', date.getFullYear());
+  reg = reg.replace(/^yy/, date.getFullYear().toString().slice(-2));
+  reg = reg.replace('mm', date.getMonth() + 1);
+  reg = reg.replace('dd', date.getDate());
+  return reg;
+}
+</script>
+</body>
+</html>

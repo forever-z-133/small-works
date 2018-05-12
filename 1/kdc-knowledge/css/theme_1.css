@@ -1,0 +1,566 @@
+@charset "utf-8";
+
+/***************************************
+* 登录模块
+****************************************/
+.page-login .modal-box {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 50px 20px;
+  width: 300px;
+  border-radius: 5px;
+  box-shadow: 0 0 1px rgba(0,0,0,.2);
+}
+#login {
+  transform: translateY(-100px);
+  transition: .8s;
+}
+#login:target {
+  transform: translate(0);
+}
+.page-login .input-box {
+  margin: 0 0 15px;
+}
+.page-login input {
+  padding: 10px 15px;
+  text-align: center;
+}
+.page-login button {
+  width: 100%;
+  padding: 15px 20px;
+  background: #2f9fda;
+  color: #fff;
+  line-height: 1;
+}
+.btn-img-code,
+.btn-msg-code {
+  width: 6em;
+  flex-shrink: 0;
+  margin-left: 5px;
+  border: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-img-code {
+  background-size: 100% 100%;
+}
+.btn-msg-code:empty:before {
+  content: "发送短信";
+}
+
+/***************************************
+* 上传模块
+****************************************/
+.upload-head {
+  font-family: Georgia,"Times New Roman",Times,Kai,"Kaiti SC",KaiTi,BiauKai,FontAwesome,serif;
+}
+.index-upload-box {
+  position: relative;
+  z-index: 1;
+  margin: 0 10px 10px;
+  padding: 10px 10px;
+  background: #fff;
+}
+.upload-tools {
+  display: flex;
+  align-items: center;
+}
+.upload-tools > :not(:last-child) {
+  position: relative;
+  margin-right: 10px;
+  padding: 5px 10px;
+}
+.upload-upload {
+  flex-grow: 1;
+}
+.upload-upload,
+.upload-category {
+  margin: -5px;
+  padding: 5px;
+}
+#has-upload:empty {display: none;}
+#has-upload:not(:empty):before {
+  content: "x";
+}
+/* 内容输入 */
+.upload-content {
+  position: relative;
+  height: 150px;
+  background: #fff;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+}
+.upload-content [contenteditable] {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 5px 10px;
+}
+/* 发布字数限制 */
+.message-limit {
+  position: absolute;
+  top: -20px; right: 0;
+  line-height: 1;
+  font-size: .8em;
+  color: #999;
+}
+/* 发布按钮 */
+.btn-update {
+  color: #fff;
+  padding: 5px 40px;
+  background: #2f9fda;
+}
+.btn-update:hover {
+  opacity: .8;
+}
+/*------------------------ 上传素材盒子 */
+.upload-panel {
+  width: 700px;
+  margin: 60px auto;
+}
+.modal:target .upload-panel {
+  animation: upload .5s;
+}
+@keyframes upload {
+  50% {transform: scale(1.1);}
+}
+.upload-box {
+  position: absolute;
+  /*top: 100%; left: 0;*/
+  bottom: 0;
+  left: 5em;
+  width: 280px;
+  background: #fff;
+  border-radius: 2px;
+  padding: 5px 10px;
+  box-shadow: 0 0 1px rgba(0,0,0,.5);
+  opacity: 0;
+  z-index: -1;
+  transform: translate3d(0,-10%,0);
+  pointer-events: none;
+  user-select: none;
+  transition: .2s;
+}
+.upload-box.in {
+  opacity: 1;
+  z-index: 1;
+  pointer-events: auto;
+  user-select: inherit;
+  transform: translate3d(0,0,0);
+}
+/* 关闭上传面板 */
+.btn-close-upload {
+  position: absolute;
+  top: 0; right: 0;
+  padding: 1px 5px;
+}
+.btn-close-upload:before {
+  content: '\2716';
+}
+/* 上传面板标题 */
+.upload-box small {
+  color: #999;
+  font-size: 10px;
+  margin-left: 5px;
+}
+/* 上传素材列表 */
+.upload-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -5px;
+}
+.upload-list > .item {
+  position: relative;
+  width: calc(33.333% - 10px);
+  margin: 5px 5px
+}
+.upload-list > .item:nth-child(n+10) {
+  display: none;
+}
+.upload-list .img {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.upload-list .img:before,
+.upload-list .img:after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 上传素材 - 添加 */
+.upload-list .item.add:hover {
+  color: #fa7d3c;
+}
+.upload-list .item.add .img:before {
+  content: "\2722";
+  line-height: 1;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+/* 上传素材 - 加载中 */
+.upload-list .item.add .img:after {
+  border: 1px dashed;
+}
+.upload-list .item.load .img:before {
+  width: 1em; height: 1em;
+  margin: auto;
+  border: 2px solid;
+  border-radius: 100%;
+  border-top-color: transparent;
+  animation: rotate 1s infinite;
+}
+@keyframes roate {
+  100% {transform: rotate(360deg)}
+}
+.upload-list .item.load .img:after {
+  background-color: rgba(255,255,255,.6);
+}
+/* 删除上传素材 */
+.btn-remove-upload {
+  position: absolute;
+  top: 0; right: 0;
+  margin: -4px 0 0 -4px;
+  opacity: 0;
+  z-index: -1;
+}
+.btn-remove-upload:before {
+  font-size: .8em;
+  content: '\2716';
+}
+.upload-list .item:hover .btn-remove-upload {
+  opacity: 1;
+  z-index: 0;
+}
+/*------------------------ @我列表 */
+.at-author-list {
+  width: 15em;
+  max-height: 550px;
+  overflow: auto;
+  margin: 120px auto 0;
+  background: #f9f9f9;
+  box-shadow: 0 0 1px rgba(0,0,0,.3);
+}
+.at-author-list a {
+  padding: 3px 5px;
+}
+.at-author-list .on {
+  background: #f1f1f1;
+}
+/*------------------------ 作者选择 */
+.btn-choose-author:empty:before {
+  content: "作者";
+}
+.choose-author-list {
+  position: absolute;
+  top: 100%; left: 50%;
+  width: 200px;
+  max-height: 200px;
+  margin-left: -100px;
+  overflow-y: auto;
+  background: #fff;
+  box-shadow: 0 0 1px rgba(0,0,0,.5);
+  transform: translate3d(0,0,0);
+  display: flex;
+  flex-wrap: wrap;
+  display: none;
+}
+.upload-author:hover > .choose-author-list {
+  display: flex;
+  z-index: 1;
+}
+.choose-author-list .item {
+  width: 33.3%;
+}
+.choose-author-list a {
+  font-size: 10px;
+  text-align: center;
+  padding: 5px 15px;
+}
+.choose-author-list a:hover {
+  background: #f3f3f3;
+}
+
+/*------------------------ 分类选择 */
+.btn-choose-category:empty:before {
+  content: "分类";
+}
+.category-list {
+  position: absolute;
+  top: 100%; left: 50%;
+  width: 4em;
+  margin-left: -2em;
+  text-align: center;
+  box-shadow: 0 0 1px rgba(0,0,0,.5);
+  transform: translate3d(0,0,0);
+  display: none;
+}
+.upload-category:hover > .category-list {
+  display: block;
+  z-index: 1;
+}
+.category-list a {
+  padding: 3px 6px;
+  background: #fff;
+}
+.category-list a:hover {
+  background: #f3f3f3;
+}
+
+
+/***************************************
+* 主列表模块
+****************************************/
+.main-list {
+  padding: 0 10px 10px;
+}
+/*------------------------ 单个动态 */
+.main-list .one {
+  margin: 10px 0 0;
+  padding: 10px 10px;
+  background: #fff;
+}
+.main-list .detail {
+  position: relative;
+  display: flex;
+}
+.main-list .face img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  box-shadow: 0 0 1px rgba(0,0,0,.5);
+}
+.main-list .content {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+.main-list .name,
+.main-list .identity,
+.main-list .time,
+.main-list .type {
+  line-height: 25px;
+  font-size: 14px;
+}
+.main-list .name {
+  font-size: 16px;
+  font-weight: 700;
+}
+.main-list .identity {
+  color: #22739f;
+}
+.main-list .time {
+  position: absolute;
+  top: 5px; right: 0;
+  color: #999;
+}
+.main-list .type {
+  position: absolute;
+  top: 22px; right: 0;
+  color: #22739f;
+}
+.main-list .word {
+  margin: 10px 0;
+}
+/*------------------------ 素材 */
+.main-list .source {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+.main-list .file {
+  position: relative;
+  overflow: hidden;
+  margin: 0 5px 5px 0;
+}
+.main-list .file {
+  width: 150px;
+  height: 150px;
+}
+.main-list .file img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  min-width: 100%;
+  height: 100%;
+  transform: translate(-50%,-50%);
+}
+/*------------------------ 工具条 */
+.main-list .tools {
+  position: relative;
+  margin: 0 -10px -10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #f1f1f1;
+}
+.main-list .tools > .btn {
+  position: relative;
+  /*width: 33.33%;*/
+  flex-grow: 1;
+  padding: 8px 10px;
+  text-align: center;
+  font-size: .9em;
+  line-height: 1;
+}
+.main-list .tools > .btn:after {
+  content: "";
+  position: absolute;
+  top: 20%; bottom: 20%;
+  left: 100%; width: 1px;
+  background: #f1f1f1;
+}
+.main-list .tools > .btn:last-child:after {
+  display: none;
+}
+.main-list .tools > .btn:before {
+  content: "";
+  position: relative;
+  top: -1px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+  background-size: 120px 20px;
+  background-image: url(../img/tools.png);
+}
+.main-list .btn-collect:before {
+  background-position: 0 0;
+}
+.main-list .btn-like:before {
+  background-position: 20% 0;
+}
+.main-list .btn-share:before {
+  background-position: 40% 0;
+}
+.main-list .btn-commit:before {
+  background-position: 60% 0;
+}
+.main-list .btn-download:before {
+  background-position: 80% 0;
+}
+.main-list .btn-more:before {
+  background-position: 100% 0;
+}
+/*------------------------ 更多 */
+.main-list .more-list {
+  position: absolute;
+  right: 10px; bottom: 110%;
+  box-shadow: 0 0 1px rgba(0,0,0,.3);
+  display: none;
+}
+.main-list .more-list.in {
+  display: block;
+}
+.main-list .more-list a {
+  width: 7em;
+  display: block;
+  text-align: center;
+  padding: 5px 10px;
+  box-shadow: inset 0 0 1px rgba(0,0,0,.2);
+}
+/*------------------------ 评论 */
+.main-list .commit {
+  margin: 10px -10px -10px;
+  padding: 15px 15px;
+  background: #f2f2f5;
+  display: none;
+}
+.main-list .commit.in {
+  display: block;
+}
+.main-list .commit-head {
+  display: flex;
+}
+/*------------------------ 评论列表 */
+.main-list .commit-head + .commit-list {
+  margin-top: 10px;
+}
+.main-list .commit-list {
+  margin-top: 5px;
+}
+.main-list .commit-list:empty:before {
+  content: "评论加载中..."
+}
+.main-list .commit-list .item:not(:first-child) {
+  margin-top: 10px;
+}
+.main-list .commit form {
+  display: flex;
+  align-items: center;
+  display: none;
+  flex-grow: 1;
+}
+.main-list .commit .commit-head form,
+.main-list .commit form.in {
+  display: flex;
+}
+.main-list .commit input {
+  padding: 4px 5px;
+  flex-grow: 1;
+  margin: 0 10px;
+  border: 1px solid #dfdfdf;
+}
+.main-list .commit button {
+  color: #fff;
+  font-size: 10px;
+  padding: 4px 10px;
+  background: #2f9fda;
+}
+.main-list .commit .face img {
+  width: 35px;
+  height: 35px;
+}
+.main-list .commit .name,
+.main-list .commit .time {
+  font-weight: normal;
+  line-height: normal;
+}
+.main-list .commit .time {
+  position: static;
+}
+.main-list .commit .tools {
+  justify-content: flex-end;
+  border: none;
+  margin-top: -20px;
+  margin-bottom: 8px;
+}
+.main-list .commit .btn {
+  flex-grow: 0;
+  font-size: 10px;
+  padding: 3px 10px;
+}
+.main-list .commit .btn-good:before,
+.main-list .commit .btn-reply:before {
+  display: none;
+}
+.main-list .btn-more-commit {
+  text-align: center;
+  padding: 8px 10px;
+  display: block;
+  border-top: 1px solid #e1e1e1;
+  margin: 10px -15px -15px;
+  font-size: .8em;
+}
+/*------------------------ 二级评论 */
+.main-list .commit-list .commit-list {
+  background: #e3e3e3;
+  padding: 10px 10px;
+  margin-top: 10px;
+}
+.main-list .btn-more-reply {
+  padding: 3px 0;
+  margin-top: 5px;
+  display: block;
+  font-size: .8em;
+}

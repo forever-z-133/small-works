@@ -1,0 +1,178 @@
+﻿@charset "utf-8";
+/*@main-color: #F5F5F5;*/
+/*
+ * 图标
+ *******************************/
+[class*="icon"] {
+  content: "";
+  position: relative;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  font-style: normal;
+  text-align: center;
+}
+.body {
+  min-width: 1200px;
+}
+@media (max-width: 1200px) {
+  body {overflow: auto;}
+}
+.body-bg {
+  background: #59abdd url(../img/body-bg.jpg) bottom center / 100% auto no-repeat;
+}
+.body-bg2 {
+  background: url(../img/body-bg2.jpg) center / cover no-repeat;
+}
+.main {
+  overflow-y: scroll;
+}
+.scroll-wrap {
+  width: 700px;
+  margin: auto;
+  padding: 10px 0 0;
+  background: rgba(255,255,255,.3);
+}
+section:not(:target) {
+  display: none;
+}
+.input-box {
+  margin: 10px 0;
+  display: flex;
+}
+.input-box input {
+  display: block;
+  flex-grow: 1;
+  width: 100%;
+  font-size: inherit;
+  color: #555;
+  background: none;
+  padding: .5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: .2rem;
+}
+
+/*
+ * 页首
+ *******************************/
+.header {
+  background: #fff;
+  padding: 5px 15px;
+  line-height: 40px;
+  box-shadow: 0 2px 2px rgba(0,0,0,.2);
+}
+.container {
+  position: relative;
+  width: 1100px;
+  margin: 0 auto;
+}
+.logo {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  float: left;
+}
+.top-nav {
+  float: right;
+}
+.search-box {
+  position: absolute;
+  z-index: 2;
+  top: 0; left: 50%;
+  width: 700px;
+  height: 30px;
+  margin: 5px 0 5px -350px;
+  display: flex;
+  box-shadow: 0 0 2px rgba(0,0,0,.5);
+  border-radius: 2px;
+}
+.search-box input {
+  flex-grow: 1;
+  line-height: 1;
+  border: none;
+  background: none;
+  padding: 5px 15px;
+}
+.btn-to-search {
+  width: 40px;
+  overflow: hidden;
+  text-indent: -99em;
+  background-color: transparent;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0Ij48cGF0aCBkPSJNOTI2LjkxIDg5Ny4xNEw3NzAuMTM2IDcyNy45NDNjNjYuNzItNzEuNDgzIDEwNy42MDItMTY3LjM3NSAxMDcuNjAyLTI3Mi42MzggMC0yMjAuNTA4LTE3OS40LTM5OS45MDMtMzk5LjkwMy0zOTkuOTAzLTIyMC41MDggMC0zOTkuOTAzIDE3OS4zOTUtMzk5LjkwMyAzOTkuOTAzUzI1Ny4zMjcgODU1LjIxIDQ3Ny44MzUgODU1LjIxYzg3Ljk1NyAwIDE2OS4zNzQtMjguNTQ3IDIzNS40NzQtNzYuODZMODcxLjIxIDk0OC43NmM3LjQ3OCA4LjA3NyAxNy42NTIgMTIuMTYzIDI3Ljg2MyAxMi4xNjMgOS4yMzQgMCAxOC40OTItMy4zNSAyNS43OTgtMTAuMTE3IDE1LjM4LTE0LjI2IDE2LjMwNi0zOC4yODQgMi4wNC01My42Njd6TTE1My44OCA0NTUuMzA1YzAtMTc4LjYzIDE0NS4zMjctMzIzLjk1NCAzMjMuOTU0LTMyMy45NTQgMTc4LjYzNCAwIDMyMy45NTQgMTQ1LjMyNiAzMjMuOTU0IDMyMy45NTRTNjU2LjQ2OCA3NzkuMjYgNDc3LjgzNCA3NzkuMjZjLTE3OC42MjggMC0zMjMuOTU0LTE0NS4zMjYtMzIzLjk1NC0zMjMuOTU0eiIvPjwvc3ZnPg==);
+  background-position: center;
+  background-size: auto 70%;
+  background-repeat: no-repeat;
+}
+.top-nav a {
+  padding: 0 10px;
+}
+.search-panel {
+  width: 700px;
+  height: 100%;
+  overflow: hidden;
+  margin: 50px auto;
+  background: rgba(255,255,255,.8);
+  display: none;
+}
+.modal:target > .search-panel {
+  display: block;
+}
+.search-panel-part {
+  position: relative;
+  margin: 30px 15px 40px;
+}
+.search-title {
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  line-height: 1;
+  border-bottom: 1px solid #00a0ea;
+}
+.btn-empty-search-history {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  line-height: 1;
+}
+.btn-empty-search-history:before {
+  content: "清空";
+}
+.search-panel-part .list a {
+  color: #417ba2;
+  padding: 2px 10px;
+  border-radius: 5px;
+  border: 1px solid;
+  display: inline-block;
+  vertical-align: middle;
+}
+.search-list {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 0 2px rgba(0,0,0,.5);
+  opacity: 0;
+  z-index: -1;
+  transform: translateY(-100%);
+}
+.search-list.in {
+  opacity: 1;
+  z-index: 0;
+  transform: translateY(0);
+}
+.search-list a {
+  padding: 0 15px;
+  border-bottom: 1px solid #aaa;
+}
+.search-panel-part > .list:before {
+  font-size: .8em;
+  color: #999;
+}
+.search-history:empty:before {
+  content: "您还没搜索过东西呢...";
+}
+.search-most:empty:before {
+  content: "暂时还没那么多...";
+}

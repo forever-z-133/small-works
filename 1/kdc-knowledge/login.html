@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="wap-font-scale" content="no">
+<title>坤鼎知识库</title>
+<!--[if lt IE 9]><script>alert('您的浏览器版本过低，请更新本版本浏览器，或更换为诸如谷歌浏览器的现代浏览器')</script><![endif]-->
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/module.css">
+<link rel="stylesheet" href="css/public.css">
+<link rel="stylesheet" href="css/theme_1.css">
+<style>
+input:valid:not(:placeholder-shown) {
+  border: 1px solid #1dda1d;
+}
+input:focus:invalid {
+  border: 1px solid red; /* 红色 */
+}
+</style>
+</head>
+
+<body>
+<div class="body page-login">
+  <div class="bg body-bg2"></div>
+  <div class="modal" id="login">
+    <div class="modal-box">
+      <form class="login" onsubmit="return false">
+        <div class="input-box">
+          <input type="tel" placeholder="电话号码" name="tel" required class="tel1">
+        </div>
+        <button type="reset" hidden></button>
+        <button type="submit" class="btn btn-login">下一步</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal" id="next">
+    <div class="modal-box">
+      <form class="login" onsubmit="return false">
+        <div class="input-box">
+          <input type="tel" placeholder="电话号码" name="tel" required class="tel2">
+        </div>
+        <div class="input-box">
+          <input type="password" placeholder="密码" name="pwd" required class="pwd2">
+        </div>
+        <button type="submit" class="btn btn-login">登录</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal" id="register">
+    <div class="modal-box">
+      <form class="register" onsubmit="return false">
+        <div class="input-box">
+          <input type="tel" placeholder="电话号码" name="tel" required class="tel3">
+        </div>
+        <div class="input-box">
+          <input type="text" placeholder="图形验证码" name="icode" required class="icode">
+          <a href="#" class="btn btn-img-code" style="background-image: url(img/logo.png)"></a>
+        </div>
+        <div class="input-box">
+          <input type="text" placeholder="短信验证码" name="pcode" required class="pcode">
+          <a href="#" class="btn btn-msg-code"></a>
+        </div>
+        <div class="input-box">
+          <input type="password" placeholder="密码" name="pwd" required class="pwd3">
+        </div>
+        <button type="submit">注册</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal" id="information">
+    <div class="modal-box">
+      <form class="information" onsubmit="return false">
+        <div class="user-image">
+          <input type="file">
+        </div>
+        <div class="input-box">
+          <input type="text" placeholder="昵称">
+        </div>
+        <div class="input-box">
+          <input type="text" placeholder="职务">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/dropload.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/module.js"></script>
+<script>
+var $inputs = document.getElementsByTagName('input');
+for(var i=0,len=$inputs.length; i<len; i++) {
+  $inputs[i].addEventListener('input', function(e){
+    // e.preventDefault();
+    if (this.value == '') {
+        this.removeAttribute('value');
+    } else {
+        this.setAttribute('value', this.value);
+    }
+  });
+}
+
+var userTel = '';
+var isFresh = false;
+
+router.route('/', function(){
+  location.replace('#login')
+});
+router.route('login', function(){
+  document.forms[0].reset();
+  isFresh = true;
+});
+router.route('next', function(){
+  if (!isFresh) location.replace('#login');
+  $('.pwd').focus();
+});
+router.route('register', function(){
+  // if (!isFresh) location.replace('#login');
+  $('#register .icode').focus();
+  $('.icode').focus();
+});
+router.route('information', function(){
+  if (!isFresh) location.replace('#login');
+});
+
+$('#login').on('submit', function(e){
+  var tel = $(this).find('.tel1').val();
+  if (tel == '') {alert('请先输入手机号'); return;}
+  if (!/^1\d{10}$/.test(tel)) {alert('手机号不规范'); return;}
+  $('.tel2, .tel3').val(tel);
+  // location.replace('#next');
+  location.replace('#register');
+});
+
+$('#next').on('submit', function(e){
+  var $this = $('#next');
+  var tel = $this.find('.tel2').val();
+  if (tel == '') {alert('请先输入手机号'); return;}
+  if (!/^1\d{10}$/.test(tel)) {alert('手机号不规范'); return;}
+  var pwd = $this.find('.pwd2').val();
+  if (pwd == '') {alert('请填写密码'); return;}
+  // if (pwd.length < 6) {alert('密码至少也要6位吧'); return;}
+  location.replace('#information');
+});
+
+$('.btn-img-code').on('click', function(){
+  $(this).css('background-image', '')
+});
+
+var Timer = null, $timer = $('.btn-msg-code'), count = 0;
+$('.btn-msg-code').on('click', function(){
+  var tel = $('.tel3').val();
+  if (tel == '') {alert('请先输入手机号'); return;}
+  if (!/^1\d{10}$/.test(tel)) {alert('手机号不规范'); return;}
+
+  Timer = setInterval(function(){
+    $timer.text(++count);
+  });
+});
+
+$('#register').on('submit', function(e){
+});
+
+$('#information').on('submit', function(e){
+});
+</script>
+</body>
+</html>
