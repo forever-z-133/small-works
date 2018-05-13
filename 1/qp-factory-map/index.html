@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<title>青浦智造</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    user-select: none;
+}
+.main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 768px;
+    margin: auto;
+    overflow: hidden;
+}
+.qingpuMap {
+    position: absolute;
+    top: -125%;
+    left: -575%;
+    width: 800%;
+    height: 300%;
+    transform: translate3d(0,0,0);
+}
+@media (min-width: 768px) {
+    .qingpuMap {
+        top: -100%;
+        left: -340%;
+        width: 500%;
+        height: 250%;
+    }
+}
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.bg {
+    display: flex;
+    flex-wrap: wrap;
+}
+.img-box {
+    position: relative;
+    width: 20%;
+    opacity: 0;
+}
+.img-box:before {
+    content: "";
+    padding-top: 85.47%;
+    width: 100%;
+    display: block;
+}
+.img-box img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    opacity: 0;
+}
+.img-box:nth-child(1) {background: url(img/bg/min/1.jpg) center / 100% 100%;}
+.img-box:nth-child(2) {background: url(img/bg/min/2.jpg) center / 100% 100%;}
+.img-box:nth-child(3) {background: url(img/bg/min/3.jpg) center / 100% 100%;}
+.img-box:nth-child(4) {background: url(img/bg/min/4.jpg) center / 100% 100%;}
+.img-box:nth-child(5) {background: url(img/bg/min/5.jpg) center / 100% 100%;}
+.img-box:nth-child(6) {background: url(img/bg/min/6.jpg) center / 100% 100%;}
+.img-box:nth-child(7) {background: url(img/bg/min/7.jpg) center / 100% 100%;}
+.img-box:nth-child(8) {background: url(img/bg/min/8.jpg) center / 100% 100%;}
+.img-box:nth-child(9) {background: url(img/bg/min/9.jpg) center / 100% 100%;}
+.img-box:nth-child(10) {background: url(img/bg/min/10.jpg) center / 100% 100%;}
+.img-box:nth-child(11) {background: url(img/bg/min/11.jpg) center / 100% 100%;}
+.img-box:nth-child(12) {background: url(img/bg/min/12.jpg) center / 100% 100%;}
+.img-box:nth-child(13) {background: url(img/bg/min/13.jpg) center / 100% 100%;}
+.img-box:nth-child(14) {background: url(img/bg/min/14.jpg) center / 100% 100%;}
+.img-box:nth-child(15) {background: url(img/bg/min/15.jpg) center / 100% 100%;}
+.m {
+    position: absolute;
+    /*background: rgba(0,0,0,.7);*/
+}
+.m0 {
+    top: 47%;
+    left: 73.5%;
+    width: 10%;
+    height: 20%;
+}
+.m1 {
+    top: 36.5%;
+    left: 52%;
+    width: 10%;
+    height: 10%;
+}
+.m2 {
+    top: 55.5%;
+    left: 86%;
+    width: 9%;
+    height: 12%;
+}
+.m3 {
+    top: 30%;
+    left: 82%;
+    width: 10%;
+    height: 12%;
+}
+.m4 {
+    top: 14%;
+    left: 69%;
+    width: 8%;
+    height: 11%;
+}
+.m5 {
+    top: 27%;
+    left: 72%;
+    width: 8%;
+    height: 12%;
+}
+.m6 {
+    top: 50%;
+    left: 23%;
+    width: 8%;
+    height: 9%;
+}
+.m7 {
+    top: 65%;
+    left: 28%;
+    width: 8%;
+    height: 12%;
+}
+.m8 {
+
+    top: 42%;
+    left: 40.5%;
+    width: 11%;
+    height: 14%;
+}
+.m9 {
+    top: 19%;
+    left: 57.5%;
+    width: 11%;
+    height: 12%;
+}
+.m10 {
+    top: 31%;
+    left: 62%;
+    width: 9%;
+    height: 6%;
+}
+.m11 {
+    top: 37%;
+    left: 63%;
+    width: 9%;
+    height: 8%;
+}
+.m12 {
+    top: 38%;
+    left: 15%;
+    width: 10%;
+    height: 12%;
+}
+.m13 {
+    top: 40%;
+    left: 25.5%;
+    width: 11%;
+    height: 10%;
+}
+.m14 {
+    top: 45%;
+    left: 62%;
+    width: 8%;
+    height: 11%;
+}
+.text {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: #fff;
+	z-index: 1000;
+}
+.a {
+	transform: scale(0.9,0.9);
+}
+.a {
+	transform: scale(0.8,0.8);
+}
+.b {
+    top: -125%;
+    left: -575%;
+    width: 800%;
+    height: 300%;
+}
+.b {
+    top: -107.5%;
+    left: -513.25%;
+    width: 721.5%;
+    height: 270%;
+}
+.b {
+    top: -90%;
+    left: -450%;
+    width: 640%;
+    height: 240%;
+}
+</style>
+</head>
+
+<body>
+<div class="main">
+	<div class="text">
+		<button id="zoom-in">放大</button>
+		<button id="zoom-out">缩小</button>
+	</div>
+    <div class="qingpuMap">
+        <div class="wrap">
+            <div class="bg">
+                <div class="img-box"><img data-src="img/bg/1.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/2.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/3.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/4.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/5.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/6.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/7.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/8.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/9.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/10.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/11.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/12.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/13.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/14.jpg" width="100%" height="100%"></div>
+                <div class="img-box"><img data-src="img/bg/15.jpg" width="100%" height="100%"></div>
+            </div>
+            <div class="link">
+                <div class="m m0" data-id="0"></div>
+                <div class="m m1" data-id="1"></div>
+                <div class="m m2" data-id="2"></div>
+                <div class="m m3" data-id="3"></div>
+                <div class="m m4" data-id="4"></div>
+                <div class="m m5" data-id="5"></div>
+                <div class="m m6" data-id="6"></div>
+                <div class="m m7" data-id="7"></div>
+                <div class="m m8" data-id="8"></div>
+                <div class="m m9" data-id="9"></div>
+                <div class="m m10" data-id="10"></div>
+                <div class="m m11" data-id="11"></div>
+                <div class="m m12" data-id="12"></div>
+                <div class="m m13" data-id="13"></div>
+                <div class="m m14" data-id="14"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/prefixfree/1.0.7/prefixfree.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery.transit/0.9.12/jquery.transit.min.js"></script>
+<script>
+// getLocation();
+// function getLocation() {
+//     if (navigator.geolocation) {
+//         navigator.geolocation.getCurrentPosition(locationSuccess, locationError, {
+//             // 指示浏览器获取高精度的位置，默认为false
+//             enableHighAccuracy: true,
+//             // 指定获取地理位置的超时时间，默认不限时，单位为毫秒
+//             timeout: 5000,
+//             // 最长有效期，在重复获取地理位置时，此参数指定多久再次获取位置。
+//             maximumAge: 3000
+//         });
+//     } else {
+//         alert("您当前的浏览器不支持定位！");
+//     }
+// }
+// function locationError(error) {
+//     //switch (error.code) {
+//     //    case error.TIMEOUT:
+//     //        alert("定位超时，请稍后再试~");
+//     //        break;
+//     //    case error.POSITION_UNAVAILABLE:
+//     //        alert('无法定位到您当前的位置，请稍后再试~');
+//     //        break;
+//     //    case error.PERMISSION_DENIED:
+//     //        alert('请打开GPS设备后，重试');
+//     //        break;
+//     //    case error.UNKNOWN_ERROR:
+//     //        alert('一个未知的错误，请稍后再试~');
+//     //        break;
+//     //}
+// }
+// // 获取到GPS坐标后的回调
+// function locationSuccess(position) {
+//     var ggPoint = new BMap.Point(position.coords.longitude, position.coords.latitude);
+//     var convertor = new BMap.Convertor();
+//     var pointArr = [];
+//     pointArr.push(ggPoint);
+//     convertor.translate(pointArr, 1, 5, translateCallback);
+// }
+// //坐标转换完之后的回调函数
+// function translateCallback(data) {
+//     //alert(data.points[0].lat + "\t" + data.points[0].lng);
+//     if (data.status === 0) {
+//         $.get("/CRM/SetLocation", { "lat": data.points[0].lat, "lon": data.points[0].lng }, function () {
+
+//         });
+//     }
+// }
+
+var imgs = [];
+for(var i=1;i<=15;i++) {
+	imgs.push("img/bg/min/"+i+".jpg");
+}
+// 加载缩略图（模糊的），然后才显示 img-box
+preloadImage(imgs, function(pecent){
+	// console.log(pecent);
+}, function() {
+	$(".img-box").transit({opacity:1});
+	// console.log("完了")
+})
+
+// 预加载图片
+function preloadImage(imgArr, fn, callback) {
+	var count = 0;
+	for(var i=0,len=imgArr.length; i<len; i++) {
+		var img = new Image();
+		img.src = imgArr[i];
+		img.onload = function() {
+			count++;
+			if (fn) fn(count/len*100, count, i);
+			if (count === imgArr.length) {
+				if (callback) callback();
+			}
+		}
+	}
+}
+
+// 一堆全局变量
+var W, H;		// .main 的大小，即视窗的大小
+var box,		// .qingpuMap 的位置与大小
+	overflow,	// 存储拖动不能超出的范围
+	imgBox;		// 存储 15 张图片的位置及显隐标记
+// 初始化各种全局变量
+resetAllData();
+// 检索图片，找出谁需要显示
+searchTheImg(box.top, box.left);
+
+// 缩放图片
+bindScale();
+function bindScale() {
+	var zoom = 0;
+	$("#zoom-in").on("touchstart", function(){
+		scaleMapView(++zoom);
+	});
+	$("#zoom-out").on("touchstart", function(){
+		if (zoom > -6) scaleMapView(--zoom);
+		else alert("只能缩到这里了");
+	});
+	function scaleMapView(scale) {
+		resetAllData(scale);
+		$(".qingpuMap").transit({"transformOrigin":(box.left+W/2)+"px "+(box.top+H/2)+"px"});
+		$(".qingpuMap").transit({top:-1*box.top,left:-1*box.left,width:box.width,height:box.height});
+	}
+}
+
+// 响应 PC 端
+$(window).on("resize", function(){
+    $(".qingpuMap").transit({x:0,y:0});
+    resetAllData();
+});
+
+// 获取相应全局变量，用于后续计算即更新
+function resetAllData(scale) {
+    W = $(".main").outerWidth(), H = $(".main").outerHeight();
+	box = mainBoxPosition(scale);
+	overflow = OverflowBoxPostion();
+	imgBox = imgBoxPositionArray();
+}
+// 获得 qingpuMap 的大小位置
+function mainBoxPosition(scale) {
+	var scale = scale || 0;
+    if (W >= 768) {
+        return {
+            top: H,
+            left: W * 3.4,
+            width: W * 5 * (1+scale*0.1),
+            height: H * 2.5 * (1+scale*0.1),
+        }
+    } else {
+        return {
+            top: H * (1.25 + scale*0.175),
+            left: W * (5.75 + scale*0.62),
+            width: W * (8 + scale*0.80),
+            height: H * (3 + scale*0.30),
+        }
+    }
+}
+// 拖拽盒块不得超出的范围
+function OverflowBoxPostion() {
+    return {
+        top: box.top,
+        left: box.left,
+        right: box.width - box.left - W,
+        bottom: box.height - box.top - H,
+    }
+}
+// 15 张图的大小位置及其显隐标识
+function imgBoxPositionArray () {
+    var imgBox = [];
+    var $box = $(".img-box")
+    var w = $box.outerWidth(), h = $box.outerHeight();
+    for(var i=0, len=$box.length; i<len; i++) {
+        var offset = $box.eq(i).offset();
+        imgBox.push({
+            width: w,
+            height: h,
+            top: offset.top + box.top,
+            left: offset.left + box.left,
+            show: false,
+        });
+    }
+    return imgBox;
+}
+// 检测此位置那些图片进入视线
+function searchTheImg(top, left) {
+    for(var i=0,len=imgBox.length; i<len; i++) {
+        var g = imgBox[i];
+        if (g.show) continue;
+        // 是否进入视线
+        if (g.top + g.height >= top && g.top <= top + box.height && g.left + g.width >= left && g.left <= left + box.width) {
+            g.show = true;
+            loadOneImage(i);
+        }
+    }
+}
+// 加载一次图片
+function loadOneImage(index) {
+    var $img = $(".img-box").eq(index).children("img");
+    var src = $img.attr("data-src");
+    var img = new Image();
+    img.src = src;
+    img.onload = function(){
+    	$img.attr("src", src).transit({opacity:1});
+    }
+}
+
+// 拖拽事件
+$(window, ".m").on("touchstart mousedown", function(e){
+    // jquery 的 touch 事件无 touches
+    if( e.type == 'touchstart' ) {e = e.originalEvent.touches[0] || window.event;}
+    // 存储是拖拽还是点击
+    var isdraging = false;
+    // $this 判断点的谁，$target 为位移盒块
+    var $this = $(e.target), $target = $(".qingpuMap");
+    // 存储地图已位移量
+    var offset = {x: parseInt($target.css("x")), y: parseInt($target.css("y"))};
+    // 点击起始位置
+    var x = e.clientX, y = e.clientY;
+    // 绑定拖拽
+    $(window).on("touchmove.drag mousemove.drag", function(e){
+        if( e.type == 'touchmove' ) {e = e.originalEvent.touches[0] || window.event;}
+        var xx = e.clientX, yy = e.clientY;
+        // 位移目标位置
+        var move = {x: xx-x+offset.x, y: yy-y+offset.y};
+        // 偏移量大于 5 才算拖拽，否则为点击，移动端对 touchmove 识别太高，几乎等于 touchstart 和 touchmove 并行
+        if (Math.abs(xx-x) > 5 || Math.abs(yy-y) > 5) {
+            isdraging = true;
+        }
+        // 不得拖出该范围
+        searchTheImg(box.top-move.y, box.left-move.x);
+        if (move.x < overflow.left && move.x > -1*overflow.right) $target.transit({x:move.x},0);
+        if (move.y < overflow.top && move.y > -1*overflow.bottom) $target.transit({y:move.y},0);
+        $target.transit({"transformOrigin":(box.left-move.x+W/2)+"px "+(box.top-move.y+H/2)+"px"},0)
+        return false;
+    });
+    // 手指离开时，清除事件，判断是否为点击在相应位置
+    $(window).one("touchend.drag mouseup.drag", function(e){
+        $(this).off(".drag");
+        if (!isdraging && $this.is(".m")) {
+            clickEvent($this);
+        }
+        return false;
+    });
+    return false;
+});
+
+// 点击事件
+function clickEvent($this) {
+    alert($this.attr("data-id"));
+}
+</script>
+</body>
+</html>
