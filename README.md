@@ -14,4 +14,5 @@
 * [【口碑】口碑吃货节商户问卷](https://github.com/foreverZ133/small-works/tree/master/1/koubei-question/) # [预览](https://foreverz133.github.io/small-works/1/koubei-question/)
 * [【百联】金鸡来签到，福袋抽回家](https://github.com/foreverZ133/small-works/tree/master/1/bb-lucky-bag/) # [预览](https://foreverz133.github.io/small-works/1/bb-lucky-bag/)
 * [【坤鼎】坤鼎微博预览版](https://github.com/foreverZ133/small-works/tree/master/1/kdc-knowledge/) # [预览](https://foreverz133.github.io/small-works/1/kdc-knowledge/)
+* [【纺大】最武汉 2.0](https://github.com/foreverZ133/small-works/tree/master/1/wtu-wuhan-2/) # [预览](https://foreverz133.github.io/small-works/1/wtu-wuhan-2/)
 

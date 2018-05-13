@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最武汉 || 购</title>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/commen-style.css">
+<link rel="stylesheet" href="../css/buy-style.css">
+</head>
+
+<body class="buy-main">
+<div class="container-fluid">
+	<div class="content buy-content">
+    	<a href="index.html"><div class="logo"></div></a><!-- logo ending -->
+        <div class="menu buy-menu">
+        	<ul>
+            	<li class="home"><a href="../index.html"><span></span>首页</a></li>
+            	<li class="buy active"><a href="buy-index.html"><span></span>购</a></li>
+            	<li class="eat"><a href="../eat/eat-index.html"><span></span>吃</a></li>
+            	<li class="play"><a href="../play/play-index.html"><span></span>玩</a></li>
+            	<li class="walk"><a href="../walk/walk-index.html"><span></span>行</a></li>
+            </ul>
+        </div><!-- menu ending -->
+        
+        <div class="col-xs-12">
+        	<div class="buy-choose">
+            	<ul>
+                	<li class="active"><a href="#chuhe-0">楚河汉街</a></li>
+                	<li><a href="#tiandi-1">武汉天地</a></li>
+                	<li><a href="#guangdu-2">光谷商圈</a></li>
+                	<li><a href="#wushang-3">武商商圈</a></li>
+                	<li><a href="#jianghan-4">江汉路</a></li>
+                </ul>
+            </div>
+        	<div class="center-box buy-center-box">
+            	<div class="pic-pre"></div>
+            	<div class="main-box address-show">
+                	<div class="address-word">
+                    	<h1>地理</h1><h4>Geography</h4>
+                        <p>楚河汉街是武汉中央文化区一期项目重要内容。项目面积1.8平方公里，总建筑面积340万平方米，是万达集团投资500亿元人民币，倾力打造的以文化为核心，兼具旅游、商业、商务、居住功能的世界级文化旅游项目。定位是“中国第一，世界一流，业内朝拜之地”，将打造成世界文化新品牌。楚河汉街不仅是商业，更是城市历史文化和生态景观工程，经济社会综合效应十分显著。“楚河”贯穿武汉中央文化区东西，是文化区的灵魂。</p>
+                    </div>
+                    <div id="map"></div>
+                    <div class="howtogo">
+                    	<p class="place">地址：<span></span></p>
+                    	<p class="traffic">交通：<span></span></p>
+                    </div>
+                    <div class="other-page">
+                    	<ul>
+                        	<li class="location"><a href="buy-index.html"><span class="location-icon"></span><p>楚河汉街</p></a></li>
+                        	<li class="address active"><a href="buy-address.html"><span class="address-icon active"></span><p>地理位置</p></a></li>
+                        	<li class="market"><a href="buy-market.html"><span class="market-icon"></span><p>特色推荐</p></a></li>
+                        </ul>
+                    </div>
+                </div>
+            	<div class="pic-next"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery-2.1.1.min.js"></script>
+<script src="js/map.js"></script>
+<script src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+<!-- [if lt IE 9] >
+	<script src="js/no-css3.js"></script>
+    <script></script>
+<! [endif] -->
+<script>
+// 定义标量
+var nowIndex = 0,					// 记录当前正处在的索
+	name = "", address = "",
+	traffic = "", word = "",		// 记录当前索引对应的字
+	bLi = $('.buy-choose li'),		// 顶部导航
+	nLi = $('.location p'),			// 名称
+	wLi = $('.address-word'),		// 简介
+	aLi = $('.place span'),			// 地址
+	tLi = $('.traffic span');		// 公交情况
+
+// 检测事件
+getHref();
+Show(nowIndex);
+$('.pic-pre').on('click',function(){Show(nowIndex-1)});
+$('.pic-next').on('click',function(){Show(nowIndex+1)});
+bLi.on('click',function(){Show(bLi.index(this))});
+
+// 从其他页面跳转至本页时更新索引
+function getHref() {
+	var ll = window.location.hash;
+	if(ll) nowIndex = parseInt(ll.substring(ll.length-1));
+		else nowIndex = 0;
+}
+
+// 合装所有效果
+function Show(index) {
+	// 更新索引
+	nowIndex = index;
+	if(nowIndex < 0) {nowIndex = bLi.length-1;}
+	if(nowIndex > bLi.length-1) {nowIndex = 0;}
+	
+	getWord();
+	navShow();
+	mapShow();
+	nameShow();
+	wordShow();
+	changeLocation();
+}
+
+function changeLocation() {
+	var hh = bLi.eq(nowIndex).children('a').attr('href');
+	window.location,hash = hh;
+	$('.location a').attr('href',"buy-index.html"+hh);
+	$('.address a').attr('href',"buy-address.html"+hh);
+	$('.market a').attr('href',"buy-market.html"+hh);
+}
+
+function navShow() {
+	bLi.removeClass('active');
+	bLi.eq(nowIndex).addClass('active');
+}
+
+//从map.js中调用百度地图api
+function mapShow() {
+	if(nowIndex==0) chuhan();
+	else if(nowIndex==1) tiandi();
+	else if(nowIndex==2) guanggu();
+	else if(nowIndex==3) wushang();
+	else if(nowIndex==4) jianghan();
+	else chuhan();
+}
+
+function nameShow() {
+	nLi.text("")		// 初始化清空
+	nLi.text(name);		// 更新左侧导航名称
+	nLi.prev('span')
+		.css({'background-image':'url(images/icon/location_'+nowIndex+'.png)',
+			  'background-position':'center center',
+			  'background-repeat':'no-repeat'});
+	nLi.parent().hover(function(){
+		nLi.prev().css({'background-image':'url(images/icon/location_'+nowIndex+'_hover.png)'});
+	},function(){
+		nLi.prev().css({'background-image':'url(images/icon/location_'+nowIndex+'.png)'});
+	});
+}
+
+function wordShow() {
+	wLi.removeClass('active').hide();
+	wLi.children('p').text('').text(word);
+	wLi.addClass('active').show();
+	aLi.text('').text(address);
+	tLi.text('').text(traffic);
+}
+
+function getWord() {
+	switch (nowIndex+'') {
+		case "0" :
+			name = "楚河汉街";
+			address = "武汉市武昌区公正路楚河汉街";
+			traffic ="8路电车，公汽19路，530路，537路，540路，577路，581路，583路，601路，618路，702路，723路，724路，805路，64路等";
+			word = "楚河汉街是武汉中央文化区一期项目重要内容。项目面积1.8平方公里，总建筑面积340万平方米，是万达集团投资500亿元人民币，倾力打造的以文化为核心，兼具旅游、商业、商务、居住功能的世界级文化旅游项目。定位是“中国第一，世界一流，业内朝拜之地”，将打造成世界文化新品牌。楚河汉街不仅是商业，更是城市历史文化和生态景观工程，经济社会综合效应十分显著。“楚河”贯穿武汉中央文化区东西，是文化区的灵魂。";
+			break;
+		case "1" :
+			name = "武汉天地";
+			address = "武汉市江岸区永清街+黄埔大道";
+			traffic ="30路  402路  516路  520路  526路  548路  588路  601路等";
+			word = "“武汉天地”位于武汉市汉口中心城区永清地块，东临长江，风景如画，是瑞安房地产精心打造的的江滩公园。“武汉天地”参照上海太平桥地区重建项目的发展模式，将打造成集住宅、办公楼、酒店、零售、餐饮、娱乐等多功能设施的市中心综合发展项目，以配合整个武汉市国际化发展的远景规划和发展战略。";
+			break;
+		case "2" :
+			name = "光谷广场";
+			address = "武汉市洪山区鲁磨路光谷广场";
+			traffic ="地铁2号线，公汽59、709、15、18、25、510、518、521、536、591、593、702、703、733、738、538、581、583、733、739、901等";
+			word = "整个“光谷广场”采用弧型的时尚建筑理念，主题结构新颖 ，设计巧夺天工。远远望去，广场的圆柱支撑柱稳若泰山，在它的 两侧，建筑幕墙逐渐伸展，似一只大鸟正张开两翼、振翅欲翔。此外，位于武汉市的东大门，倚立“中国·光谷”入口处，位置得天 独厚。";
+			break;
+		case "3" :
+			name = "武商商圈";
+			address = "武汉市区江汉区解放大道";
+			traffic ="1、2、电车，公汽3、42、47、64、505、508、519、522、548、551、575、615、628、703、705、712、716、721、726、802、808等。";
+			word = "武商商圈位于武汉市汉口黄金地段——解放大道与航空路交汇处，世贸大厦楼高60层，是武汉市标志性建筑，1—8层为世贸广场购物中心卖场，营业面积达8万平方米，集购物、休闲、餐饮、娱乐、商务于一体，多功能的大型购物中心。并通过连廊与武商集团属下武汉广场、国际广场三座大厦连为一体，构成了武商集团“MALL”（摩尔）商业城，是湖北省、武汉市第一黄金商圈。";
+			break;
+		case "4" :
+			name = "江汉路";
+			address = "武汉市区江岸区江汉路步行街";
+			traffic ="电车2路，1、7、24、38、45、402、520、533、548、559、588、598、608、707、707、711、711、727、727、801路等";
+			word = "江汉路是全国最长的步行街，有“天下第一步行街”的美誉，位于武汉汉口中心地带，南起沿江大道，贯通中山大道、京汉大道，北至解放大道，全长1600米。宽度为10至25米，是武汉著名的百年商业老街，也是“武汉二十世纪建筑博物馆”。江汉路上共有13栋列为历史优秀建筑，其中省级1座、市一级6座、市二级6座。";
+			break;
+	}
+}
+
+$('.other-page li').hover(function(){
+	$(this).find('p').stop().fadeIn(300);
+},function(){
+	$(this).find('p').stop().fadeOut(300);
+});
+</script>
+</body>
+</html>

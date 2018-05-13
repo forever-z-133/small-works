@@ -1,0 +1,350 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+body {
+	margin: 0px;
+	overflow: hidden;
+	font-family: "宋体";
+	text-shadow: 1px 1px 3px #5B5B5B;
+}
+html. body {
+	height: 100%;
+	max-width: 100%;
+}
+#container{
+	width:100%;
+	height:100%;
+	position:relative;
+	overflow:hidden;
+}
+p {
+	text-indent: 2em;
+}
+.person {
+	width: 100%;
+	height: 100%;
+	color: #EBEBEB;
+}
+#p1 {
+	background-color: #48C1C1;
+}
+#p2 {
+	background-color: #4BB480;	
+}
+#p3 {
+	background-color: #E1BD71;
+}
+#p4 {
+	background-color: #D65350;
+}
+#p5 {
+	background-color: #A5A9E0;
+}
+.portrait{
+	width:45%;
+	height:100%;
+	text-align:center;
+	float:left;
+}
+.portrait .blank{
+	height:15%;
+}
+.portrait img{
+	position:relative;
+	/*top:15%;*/
+	width:50%;
+	border:5px solid #FFFFFF;
+	border-radius:50%;
+}
+.portrait div{
+	position:relative;
+	top:5%;
+	width:100%;
+	text-align:center;
+	font-size:24px;
+}
+.detail {
+	width:55%;
+	height:100%;
+	float:left;
+}
+.detail .name{
+	position: relative;
+	width: 70%;
+	height: 15%;
+	top: 20%;
+	font-size: 40px;
+	left:35px;
+}
+.detail .info{
+	position:relative;
+	width:70%;
+	height:40%;
+	top:15%;
+	font-size:20px;
+}
+#sidearea {
+	height: 100%;
+	width: 60px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background-color: #FFFFFF;
+	opacity: 0.3;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #808080;
+	box-shadow: 0px 0px 3px #818181;
+}
+#sidearea .home {
+	height: 60px;
+	width: 100%;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #909090;
+	box-shadow: 0px 0px 1px #808080;
+	display:block;
+	background-image:url(img/home.jpg);
+}
+#sidearea .posbox {
+	height: 30%;
+	width: 100%;
+}
+#sidearea .posbox .box1{
+	width: 100%;
+	height: 30%;
+	line-height: 100%;
+	vertical-align: middle;
+	text-align:center;
+}
+#sidearea .posbox .box1 div{
+	width: 12px;
+	height: 12px;
+	background-image: url(img/posbox.png);
+	background-color:white;
+	display:inline-block;
+}
+#howto {
+	position: absolute;
+	right: 100px;
+	bottom: 20px;
+	background-image:url(img/howto.png);
+	width:200px;
+	height:150px;
+}
+#howto #konwn {
+	font-size: 13px;
+	color: #337CB9;
+	position: absolute;
+	top: 115px;
+	right: 40px;
+	text-shadow: 0px 0px 0px;
+	cursor: pointer;
+	font-family: "微软雅黑";
+	text-decoration: underline;
+}
+</style>
+<script src="../js/jquery-2.1.1.min.js"></script>
+<script src="jquery.mousewheel.js"></script>
+</head>
+
+<body onresize="changesize()" onload="checkCookie()">
+<div id="container">
+    <div id="p1" class="person">
+    	<div class="portrait">
+        	<div class="blank"></div>
+        	<img src="img/member/teammates1.png" />
+        	<div class="team">团队成员一</div></div>
+        <div class="detail">
+        	<div class="name">张思杰</div>
+            <div class="info"><p>我是传媒学院12级数字媒体艺术专业学生，在团队内担任的职务是技术总监，主要负责一些技术部分的工作，在整个网站项目的制作过程中，我主要负责了网页基本框架与吃部分的设计以及代码工作，后期的代码修改工作也参与了一部分。</p><p>最后的网页作品中的效果在设计之初，其实并没有太多考虑到实现的难易，所以后面在写代码的阶段经常不能得到自己想要的效果，有几次确实很伤脑筋，有想换成简单效果的念头，好在后面坚持下来，搜寻各种方法，终于把效果实现了，最后心里还是很兴奋的。</p></div>
+            <div style="clear:both;"></div></div>
+        <div style="clear:both;"></div></div>
+    <div id="p2" class="person">
+    	<div class="portrait">
+        	<div class="blank"></div>
+        	<img src="img/member/teammates2.png" />
+        	<div class="team">团队成员二</div></div>
+        <div class="detail">
+        	<div class="name">张永恒</div>
+            <div class="info"><p>偏执狂一枚，虽是小文艺青年，却选择了走web前端这条路。湖北石首人氏，却如同每一个小城市的小市民一样，渴望在大城市有一番作为。</p><p>对猫没有抵抗力，因此也渴望温暖的感情，认为相伴远甚于相欢。喜欢吃糖，可喜可贺竟然只有一颗蛀牙，都是家教好呀。</p><p>不爱说话，不内向，也不外向，除了偏执点，还真没什么个性。乐于助人，而且是真正的乐于，所以本作的多个页面都有我的足迹。效率型人才，往往一个网页，全新的效果，不出一天都可完成。</p><p>最后一项，出门旅游记得带水……</p></div>
+            <div style="clear:both;"></div></div>
+        <div style="clear:both;"></div></div>
+    <div id="p3" class="person">
+    	<div class="portrait">
+        	<div class="blank"></div>
+            <img src="img/member/teammates3.png" />
+        	<div class="team">团队成员三</div></div>
+        <div class="detail">
+    	<div class="name">杨杨</div>
+            <div class="info"><p>我叫杨杨，是来自数字媒体艺术一班的学生。在这次武汉旅游网站的设计工作中，我负责的是“购”板块的设计工作，后期代码部分因我暑假有兼职工作要做便交给了张永恒来完成。</p><p>在这次合作过程中，我们经历过刚开始的迷茫和困惑，也因此拖延了几周的工作时间，但后来经过不断的开会讨论找到方向后，大家都很快融入到自己的那部分工作中。张永恒和张思杰作为技术后盾，除了做好设计以外，更是给网站的实现费了不少心力。设计这块，我觉得做得比较学生气，不是特别漂亮，但好在我们几个人还是坚持做下来了。可能大学再就很难有这种机会，大家一起齐心做好一件事。所以这次体验和经历非常宝贵。</p></div>
+            <div style="clear:both;"></div></div>
+        <div style="clear:both;"></div></div>
+    <div id="p4" class="person">
+    	<div class="portrait">
+        	<div class="blank"></div>
+            <img src="img/member/teammates4.png" />
+        	<div class="team">团队成员四</div></div>
+        <div class="detail">
+    	<div class="name">张玥</div>
+            <div class="info"><p>张玥，武汉纺织大学传媒学院数字媒体艺术专业11201班学生。在此次网页制作中负责“玩部分”的设计与制作。在小组写网页的过程中，我学习到了团队合作的重要性，从设计初时毫无想法，不知道从哪里入手，到后来在团队的讨论中渐渐有了自己的想法，并用PS表现出来。而在写网页的过程中，我发现很多上课时没学到的知识，学着自我学习。同时，也巩固了课堂上学习的内容。最终，在团队的帮助下成功写完“玩”部分的内容。</p></div>
+            <div style="clear:both;"></div></div>
+        <div style="clear:both;"></div></div>
+    <div id="p5" class="person">
+    	<div class="portrait">
+        	<div class="blank"></div>
+            <img src="img/member/teammates5.png" />
+        	<div class="team">团队成员五</div></div>
+        <div class="detail">
+    	<div class="name">刘露</div>
+            <div class="info"><p>我叫刘露，来自数字媒体艺术二班。在这次武汉旅游网页中主要负责“行”的部分，和大家一起设计制作讨论以及编写代码都是大学中非常难得的一个部分和一次非常难忘的体验，大家都热情的帮助我完成自己的部分，心中充满了无限的感谢。尽管这个网页可能在很多方面并不完善，但是大家一步步努力出来的结果，多亏大家的帮忙，让我知道一个好的作品需要团队合作更需要伙伴，一个人的力量远没有团队的强大。</p></div>
+            <div style="clear:both;"></div></div>
+        <div style="clear:both;"></div></div>
+</div>
+<div id="sidearea">
+	<a class="home" href="../index.html"></a>
+    <div style="height:20%;"></div>
+    <div class="posbox">
+    	<div class="box1">
+        	<div id="pp0"></div></div>
+        <div class="box1">
+        	<div id="pp1"></div></div>
+        <div class="box1">
+        	<div id="pp2"></div></div>
+        <div class="box1">
+        	<div id="pp3"></div></div>
+        <div class="box1">
+        	<div id="pp4"></div></div></div></div>
+            
+<div id="howto">
+	<div id="konwn">知道了<span style="display:inline-block; background-image:url(img/ttt.png);width:10px;height:10px;margin-left:2px;"></span></div></div>
+    
+<script type="text/javascript">
+$("#sidearea").mouseover(function(){
+	$("#sidearea").stop(true);
+	$("#sidearea").animate({"opacity":"0.7"},300);
+});
+$("#sidearea").mouseout(function(){
+	$("#sidearea").animate({"opacity":"0.3"},200);
+});
+</script>
+</body>
+</html>
+<script type="text/javascript">
+var h=window.innerHeight
+|| document.documentElement.clientHeight
+|| document.body.clientHeight;
+$("body").css("height",h+"px");
+
+document.getElementById("container").scrollTop=0;
+var long=10;
+var pos=0;
+var state=0;
+
+$('#container').bind('mousewheel', function(event) {
+	if(state==0){
+		state++;
+		var scrollTop = this.scrollTop;
+		this.scrollTop = (scrollTop + ((event.deltaY * 0)* -1));
+		var yy=event.deltaY;
+		pos=pos-yy;
+		var obj1=this;
+		if(pos>=0&&pos<=4){
+			setTimeout(function(){ani(yy,obj1)},12);
+			posbox(pos);
+		}
+		else if(pos==-1){
+			pos=0;
+			state=0;
+		}
+		else if(pos==5){
+			pos=4;
+			state=0;
+		}
+	}
+});
+
+var t=2;
+function ani(yy,obj){
+	t++;
+	var ii=4.4*Math.sqrt(1/t);
+	var scrollTop = obj.scrollTop;
+	obj.scrollTop = (scrollTop + ((yy * 20*ii)* -1));
+	timing=setTimeout(function(){ani(yy,obj)},12);
+	long=long+20*ii;
+	while (long>=h){
+		clearTimeout(timing);
+		long=10;
+		t=2;
+		obj.scrollTop=pos*h;
+		state=0;
+	}
+}
+
+function changesize() {
+    h=window.innerHeight
+	|| document.documentElement.clientHeight
+	|| document.body.clientHeight;
+	$("body").css("height",h+"px");
+	document.getElementById("container").scrollTop=pos*h;
+}
+posbox(pos);
+function posbox(id){
+	$(".box1 div").css("background-position","0px");
+	$("#pp"+id).css("background-position","-12px");
+}
+
+//cookie
+
+function setCookie(c_state,value,expiredays){
+	var strsec = getsec(expiredays);
+	var exp = new Date();
+	exp.setTime(exp.getTime()+strsec*1);
+	document.cookie=c_state+"="+escape(value)+((expiredays==null) ? "" : ";expires=" +exp.toGMTString());
+
+}
+
+function getCookie(c_state){
+	if (document.cookie.length>0){
+		c_start=document.cookie.indexOf(c_state + "=");
+		if (c_start!=-1){
+    		c_start=c_start + c_state.length+1 
+    		c_end=document.cookie.indexOf(";",c_start)
+    		if (c_end==-1) c_end=document.cookie.length
+    		return unescape(document.cookie.substring(c_start,c_end))
+		}
+	}
+	return ""
+}
+
+
+function checkCookie(){
+	userstate=getCookie('kownstate');
+	if (userstate!=null && userstate!=""){
+		$("#howto").css("display","none");
+	}
+}
+
+$("#konwn").click(function(){
+	$("#howto").animate({bottom:'-150px',opacity:'0'},1000,function(){$("#howto").css("display","none");});
+	setCookie("kownstate","1","d7");//设置cookie过期时间，d7表示七天之后过期
+});
+
+function getsec(str){
+	//alert(str);
+	var str1=str.substring(1,str.length)*1; 
+	var str2=str.substring(0,1); 
+	if (str2=="s"){
+		return str1*1000;
+	}
+	else if (str2=="h"){
+		return str1*60*60*1000;
+	}
+	else if (str2=="d"){
+	return str1*24*60*60*1000;
+}
+}
+</script>

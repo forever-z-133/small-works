@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最武汉 || 购</title>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/commen-style.css">
+<link rel="stylesheet" href="../css/buy-style.css">
+</head>
+
+<body class="buy-main">
+<div class="container-fluid">
+	<div class="content buy-content">
+    	<a href="index.html"><div class="logo"></div></a><!-- logo ending -->
+        <div class="menu buy-menu">
+        	<ul>
+            	<li class="home"><a href="../index.html"><span></span>首页</a></li>
+            	<li class="buy active"><a href="buy-index.html"><span></span>购</a></li>
+            	<li class="eat"><a href="../eat/eat-index.html"><span></span>吃</a></li>
+            	<li class="play"><a href="../play/play-index.html"><span></span>玩</a></li>
+            	<li class="walk"><a href="../walk/walk-index.html"><span></span>行</a></li>
+            </ul>
+        </div><!-- menu ending -->
+        
+        <div class="col-xs-12">
+        	<div class="buy-choose">
+            	<ul>
+                	<li class="active"><a href="#chuhe-0">楚河汉街</a></li>
+                	<li><a href="#tiandi-1">武汉天地</a></li>
+                	<li><a href="#guangdu-2">光谷商圈</a></li>
+                	<li><a href="#wushang-3">武商商圈</a></li>
+                	<li><a href="#jianghan-4">江汉路</a></li>
+                </ul>
+            </div>
+        	<div class="center-box buy-center-box">
+            	<div class="pic-pre"></div>
+            	<div class="main-box market-show">
+                	<div class="market-show">
+                    	<div class="market-pic">
+                        	<h1>推荐<p>Recommendation</p></h1>
+                            <span>楚河汉街</span>
+                        </div>
+                        <ul class="show">
+                        	<li class="m1"><span>流行品牌<b>+</b></span></li>
+                        	<li class="m2"><span>赛龙舟<b>+</b></span></li>
+                        	<li class="m3"><span>文化书店<b>+</b></span></li>
+                        	<li class="m4"><span>汉秀剧场<b>+</b></span></li>
+                        </ul>
+                    </div>
+                    <div class="word">
+                    	<p></p>
+                    </div>
+                    <div class="other-page">
+                    	<ul>
+                        	<li class="location">
+                            	<a href="buy-index.html"><span class="location-icon"></span><p>楚河汉街</p></a>
+                            </li>
+                        	<li class="address">
+                            	<a href="buy-address.html"><span class="address-icon"></span><p>地理位置</p></a>
+                            </li>
+                        	<li class="market active">
+                            	<a href="buy-market.html"><span class="market-icon active"></span><p>特色推荐</p></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            	<div class="pic-next"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery-2.1.1.min.js"></script>
+<!-- [if lt IE 9] >
+	<script src="js/no-css3.js"></script>
+    <script></script>
+<! [endif] -->
+<script>
+// 定义标量
+var nowIndex = 0,					// 记录当前正处在的索引
+	word,							// 记录当前索引对应的字
+	bLi = $('.buy-choose li'),		// 顶部导航
+	nLi = $('.location p'),			// 名称
+	tLi = $('.show li'),			// 标题
+	wLi = $('.word p');				// 简介
+
+// 检测事件
+getHref();
+Show(nowIndex);
+$('.pic-pre').on('click',function(){Show(nowIndex-1)});
+$('.pic-next').on('click',function(){Show(nowIndex+1)});
+bLi.on('click',function(){Show(bLi.index(this))});
+
+// 从其他页面跳转至本页时更新索引
+function getHref() {
+	var ll = window.location.hash;
+	if(ll) nowIndex = parseInt(ll.substring(ll.length-1));
+		else nowIndex = 0;
+}
+
+// 合装所有效果
+function Show(index) {
+	// 更新索引
+	nowIndex = index;
+	if(nowIndex < 0) {nowIndex = bLi.length-1;}
+	if(nowIndex > bLi.length-1) {nowIndex = 0;}
+	
+	getWord();
+	navShow();
+	nameShow();
+	wordShow();
+	changeLocation();
+	$('.market-pic').removeClass('active');
+	wLi.parent().stop().fadeOut(300,"linear");
+}
+
+function changeLocation() {
+	var hh = bLi.eq(nowIndex).children('a').attr('href');
+	window.location,hash = hh;
+	$('.location a').attr('href',"buy-index.html"+hh);
+	$('.address a').attr('href',"buy-address.html"+hh);
+	$('.market a').attr('href',"buy-market.html"+hh);
+}
+
+function navShow() {
+	bLi.removeClass('active');
+	bLi.eq(nowIndex).addClass('active');
+}
+
+function nameShow() {
+	nLi.text("")		// 初始化清空
+	nLi.text(name);		// 更新左侧导航名称
+	nLi.prev('span')
+		.css({'background-image':'url(images/icon/location_'+nowIndex+'.png)',
+			  'background-position':'center center',
+			  'background-repeat':'no-repeat'});
+	nLi.parent().hover(function(){
+		nLi.prev().css({'background-image':'url(images/icon/location_'+nowIndex+'_hover.png)'});
+	},function(){
+		nLi.prev().css({'background-image':'url(images/icon/location_'+nowIndex+'.png)'});
+	});
+}
+
+function wordShow() {
+	$('.show').removeClass('active').stop().hide();
+	for(var i=0,len=tLi.length; i<len; i++) {
+		tLi.eq(i).css({'background':'url(images/market/i'+nowIndex+i+'.jpg)','background-size':'cover'});
+		tLi.eq(i).children('span').html('').html(word[i].title+'<b>+</b>');
+	}
+	$('.show').addClass('active').show();
+	tLi.children('span').on('click',function(){
+		$('.market-pic').addClass('active');
+		var ii = $('.show li').index($(this).parent());
+		wLi.parent().stop().fadeOut(300,"linear");
+		wLi.text('').text(word[ii].p);
+		wLi.parent().fadeIn(500,"linear");
+	})
+}
+
+function getWord() {
+	switch (nowIndex+'') {
+		case "0" : 
+			word = [
+				{"title":"流行品牌", "p":"不必担心离开自家的地盘，就买不到熟悉的衣服，GXG、DAZZLE、ME&CITY 、MORGAN以及ONLY、MODA、J&J等最受学生欢迎的品牌，在汉街上都一定能找到。而且，一些品牌在此开设都是升级店，如NIKE全球第三家概念店就在汉街上，星巴克的亚太旗舰店也在这里哦。"},
+				{"title":"赛龙舟", "p":"沿着两街，有一条连接沙湖和东湖、全长2.2公里的楚河，它也是国务院批准的武汉市“六湖连通水网治理工程”的首个工程，对同学们来说，它还是一条可以欣赏武汉“百湖之城”美景的游河，汉街内有码头可以乘坐游船游览湖光美景。而对武大、华科两校的学子来说，这条河还有更特殊的意义，每年端午期间，两所高校在此举行龙舟竞速赛。"},
+				{"title":"文化书店", "p":"这绝不是一家书店，它所带来的愉悦，绝对值得你目不斜视地穿过大半条汉街走向它。与普通书店不同，文华书店的推荐书架上绝对不会有《如何管理员工》《如何最快赚钱》，从“间隔年”、“背包旅行”等推荐主题，和书虫咖啡、店内杂货店等设计就能看出，这是一家关于理想生活、享受阅读的书店。店内不定期邀请文艺名人签售、讲座，如李欣频、马良、马原、素黑等。"},
+				{"title":"汉秀剧场", "p":"汉街最东端，有一座状似中国传统红灯笼造型的“汉秀”剧场十分引人注目，建筑本身由北京奥运会、广州亚运会、伦敦奥运会开闭幕式艺术总监马克菲舍尔设计，剧场里能看到由执导过澳门《水舞间》的弗兰克德贡等三大顶级艺术大师联手打造的世界第一水秀“汉秀”预计2014年8月开演。"}
+			]; break;
+		case "1" : 
+			word = [
+				{"title":"彩虹书店", "p":"这是由数十个年轻人共同创立的一间独立书店，说它是书店，其实更像是图书馆。店内有沙发、桌子、纸和笔，点一杯饮品，捧一本好书，就可以度过整个白天，这也是一间“优选书店”，没有教辅书、电脑书、励志书，凡是有趣、真诚的书一概售卖，不在乎它是否偏门或古旧。"},
+				{"title":"Jamaicablue", "p":"推开店门，别致的陈设、布置，让人心生美好。阳光透过明亮的天窗洒下来，将午后的困顿一扫而光。这里的咖啡，不同于“星巴克”和“Costa”的出品，味道挺特别，甜品也丝毫不逊色，两者组合妙极了。逛累了，不妨来这儿小憩片刻，感觉十分惬意。"},
+				{"title":"时尚品牌", "p":"ZARA、H&M、GAP、MUJI无印良品、M&S玛莎百货、UNIQLO优衣库、C&A、MAP、UR、依恋TT馆，这些快时尚品牌，即时单独一家出现，也能吸引同学们每周去刷新一遍新品吧，而在汉街，十大品牌比邻而居，每家店都是超大的规模，应该足够逛一整天了吧。"},
+				{"title":"生活橱窗秀", "p":"大学四年，足够让一个人从“小白”进化为“白骨精”，除了找到最惯常的消费地，汉街还有不少生活类精品品牌，如周大福集合店、HAMMAN音像、柏斯琴行、90+红酒、论道生活馆等生活精品也是首次亮相武汉。"}
+			]; break;
+		case "2" : 
+			word = [
+				{"title":"光谷国际广场", "p":"光谷国际广场购物中心位于光谷广场的西北角，这里以追求个性、时尚的青年消费群为核心，既有高档品牌也不乏平民品牌。对学生来说，一楼美食专区最有吸引力，有不少好吃的。"},
+				{"title":"光谷步行街", "p":"世界城内拥有中影天河国际影院、城市之星电玩城、大洋百货、家乐福超市、美食专区以及售卖各类商品的格子铺。是一个集购物消费、餐饮娱乐、旅游观光、休闲健身于一体的超级商业步行街区。时不时会有各种演出，正巧碰上可就饱眼福了。"},
+				{"title":"光谷书城", "p":"位于鲁巷光谷广场，营业面积达10000平方米，是华中地区营业面积最大、经营图书品种最齐全的巨型文化摩尔城，图书品种达20余万。这里上新书速度挺快，看书选书的人很多。最大的好处是服务员态度和善，一直在里面看书没买也不会上来催你。许多学生暑假呆在学校，就靠在书城里面蹭书蹭空调。"},
+				{"title":"鲁巷广场", "p":"鲁巷广场购物中心是集购物、休闲、娱乐为一体的大型综合性购物广场，这里有商场专门的停车场，面积相当大，很适合全家一起出来购物。服装专卖场各种层次的品牌基本上都能找得到，逛完再去趟超市，十分便利。"}
+			]; break;
+		case "3" : 
+			word = [
+				{"title":"武汉广场", "p":"这里是武汉云集的全球化妆品牌最多的购物场所，从大牌的香奈儿、迪奥、阿玛尼，到兰芝日韩系化妆品，超过半层楼的化妆品柜台都是免费化妆的好地方。"},
+				{"title":"武汉国际广场", "p":"HERMES，DIOR，CARTIER，GUCCI，BOTTEGA VENETA，HUGO BOSS，CORNELIANI，Y—3，VERRI，CERRUTI1881……光是数着这些品牌，就足够你在时尚的云端飘荡一会儿了。重要的是，你一定不必去看那些标签，只要若无其事地去研究风格和款式就OK。如果感觉这些大牌实在有些遥远，也可以去二楼看看优衣库、无印良品这些以材质取胜的平价国际品牌，心里就会舒服多了。"},
+				{"title":"新世界百货", "p":"新世界百货中心店以顶级大牌旗下二线时尚品牌为主打的新世界中心店，其服装品牌的包容也比较强。这里既有max-mara、pinko的青春系列，也有小清新风格的JORYA，当然这些品牌的价格着实不菲，偶尔看看就好。"},
+				{"title":"武商世贸广场", "p":"这里有武汉最全的珠宝首饰专柜，也是平价服装的购物场所，初来乍道的新生如果更青睐运动休闲品牌，这里会是不错的好去处。"}
+			]; break;
+		case "4" : 
+			word = [
+				{"title":"SOGO百货店", "p":"SOGO百货店这里是女装楼层最多的购物场所之一。从90后青春系类到70后的淑女系一应俱全。"},
+				{"title":"中心百货大楼", "p":"中心百货大楼是武汉资格最老的百货商城，一度是武汉商业的潮流窗口，但在新时代的商业竞争中却渐显“老迈”。去年，这里经过大力改造，变身成为了武汉最大的潮牌聚集地之一。除了ZARA在此开出华中地区最大的旗舰店，这里还有香港潮牌CHOCOOLATE的内地家旗舰店、国际级居家软装品牌HOLA特力屋的华中最大旗舰店，vero moda的武汉最大旗舰店，周大福的第一家青春形象店……世界第三大珠宝品牌pandora，法国的AGATHA配饰、意大利的morellato、日韩的randa、pink mars、benetton等，也都是通过这里首次进入武汉市场。"},
+				{"title":"万达广场", "p":"走进这里，最大的感觉就是目不暇接，一间接一间的格子小铺，有卖服装的，有卖数码的，有卖饰品的，把一个巨大的MALL城挤得满满当当。如果你对价廉物美的潮流小物们不感兴趣，那么去楼上的万达影城看场电影，到电玩城玩玩游戏也挺不错。如果你是好吃佬，这里的炒冰、炕土豆、烤海鲜、煎包子啥也绝对能满足你的口腹之欲。对了，万达广场的“邻居”还有新民众乐园、HAPPY站台等，他们也都是主打小铺子，绝对是好吃好玩又好逛的地方。"},
+				{"title":"新佳丽时尚", "p":"曾经辉煌过的佳丽广场，因为一场经济纠纷没落了很久，在人们渐渐遗忘他的时候，新佳丽却悄然出现在在了人们的视线。新佳丽改变了商场的经营模式，走小店铺个体经营，类似民众和万达。但是购物环境更好，让人在购物的同时心情也保持愉快。小商户以销售时尚服饰、新奇家居、包包美鞋为主，成功抓住了年轻消费人群的心理。"}
+			]; break;
+	}
+}
+
+$('.other-page li').hover(function(){
+	$(this).find('p').stop().fadeIn(300);
+},function(){
+	$(this).find('p').stop().fadeOut(300);
+})
+</script>
+</body>
+</html>

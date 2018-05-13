@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最武汉 || 购</title>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/commen-style.css">
+<link rel="stylesheet" href="../css/play-style.css">
+</head>
+
+<body class="play-main">
+<div class="container-fluid">
+	<div class="content play-content">
+    	<div class="logo"></div>
+        <div class="menu play-menu">
+        	<ul>
+            	<li class="home"><a href="../index.html"><span></span>首页</a></li>
+            	<li class="buy"><a href="../buy/buy-index.html"><span></span>购</a></li>
+            	<li class="eat"><a href="../eat/eat-index.html"><span></span>吃</a></li>
+            	<li class="play active"><a href="play-index.html"><span></span>玩</a></li>
+            	<li class="walk"><a href="../walk/walk-index.html"><span></span>行</a></li>
+            </ul>
+        </div>
+        
+        <table>
+        	<tr>
+            	<td class="bigger-pic"><a href="university.html"><img src="img/ex/1.png" id="p1"></a></td>
+            	<td><a href="#"><img src="img/ex/2.png" id="p2"></a></td>
+            	<td><a href="#"><img src="img/ex/3.png" id="p3"></a></td>
+            	<td><a href="#"><img src="img/ex/4.png" id="p4"></a></td>
+            	<td class="bigger-pic"><a href="river.html"><img src="img/ex/5.png" id="p5"></a></td>
+            </tr>
+        	<tr>
+            	<td><a href="#"><img src="img/ex/7.png" id="p14"></a></td>
+            	<td colspan="3" rowspan="2" class="bigger-pic">
+                	<a href="play-index.html"><img src="img/ex/middle.png" id="p15"></a>
+                </td>
+            	<td><a href="#"><img src="img/ex/8.png" id="p6"></a></td>
+            </tr>
+        	<tr>
+            	<td><a href="#"><img src="img/ex/9.png" id="p13"></a></td>
+            	<td><a href="#"><img src="img/ex/11.png" id="p7"></a></td>
+            </tr>
+        	<tr>
+            	<td class="bigger-pic"><a href="#"><img src="img/ex/6.png" id="p12"></a></td>
+            	<td><a href="#"><img src="img/ex/12.png" id="p11"></a></td>
+            	<td><a href="#"><img src="img/ex/13.png" id="p10"></a></td>
+            	<td><a href="#"><img src="img/ex/14.png" id="p9"></a></td>
+            	<td class="bigger-pic"><a href="#"><img src="img/ex/10.png" id="p8"></a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script src="../js/jquery-2.1.1.min.js"></script>
+<!-- [if lt IE 9] >
+	<script src="js/no-css3.js"></script>
+    <script></script>
+<! [endif] -->
+<script>
+$(function(){
+	var index = 0, timer = setTimeout(function(){picShow()},0);
+	function picShow() {
+		index += 1;
+		$('#p'+index).addClass('bigger');
+		if(index<15) setTimeout(function(){picShow()},150);
+	}
+})
+</script>
+</body>
+</html>

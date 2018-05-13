@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最武汉 || 购</title>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/commen-style.css">
+<link rel="stylesheet" href="../css/buy-style.css">
+</head>
+
+<body class="buy-main">
+<div class="container-fluid">
+	<div class="content buy-content">
+    	<a href="index.html"><div class="logo"></div></a><!-- logo ending -->
+        <div class="menu buy-menu">
+        	<ul>
+            	<li class="home"><a href="../index.html"><span></span>首页</a></li>
+            	<li class="buy active"><a href="buy-index.html"><span></span>购</a></li>
+            	<li class="eat"><a href="../eat/eat-index.html"><span></span>吃</a></li>
+            	<li class="play"><a href="../play/play-index.html"><span></span>玩</a></li>
+            	<li class="walk"><a href="../walk/walk-index.html"><span></span>行</a></li>
+            </ul>
+        </div><!-- menu ending -->
+        
+        <div class="col-xs-12">
+        	<div class="buy-choose">
+            	<ul>
+                	<li class="active"><a href="#chuhe-0">楚河汉街</a></li>
+                	<li><a href="#tiandi-1">武汉天地</a></li>
+                	<li><a href="#guangdu-2">光谷商圈</a></li>
+                	<li><a href="#wushang-3">武商商圈</a></li>
+                	<li><a href="#jianghan-4">江汉路</a></li>
+                </ul>
+            </div>
+        	<div class="center-box buy-center-box">
+            	<div class="pic-pre"></div>
+            	<div class="main-box pic-show">
+                	<div class="pic-show-word">
+                        <h3>楚河汉街<span>最年轻最活力商圈</span></h3>
+                        <p></p>
+                    </div>
+                    <div class="other-page">
+                    	<ul>
+                        	<li class="location active"><a href="buy-index.html"><span class="location-icon active"></span><p>楚河汉街</p></a></li>
+                        	<li class="address"><a href="buy-address.html"><span class="address-icon"></span><p>地理位置</p></a></li>
+                        	<li class="market"><a href="buy-market.html"><span class="market-icon"></span><p>特色推荐</p></a></li>
+                        </ul>
+                    </div>
+                </div>
+            	<div class="pic-next"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery-2.1.1.min.js"></script>
+<!-- [if lt IE 9] >
+	<script src="js/no-css3.js"></script>
+    <script></script>
+<! [endif] -->
+<script>
+// 定义标量
+var nowIndex = 0,						// 记录当前正处在的索引
+	name = "", title = "", word = "",	// 记录当前索引对呀的字
+	bLi = $('.buy-choose li'),		// 顶部导航
+	pLi = $('.pic-show'),			// 主图
+	nLi = $('.location p'),			// 名称
+	tLi = $('.pic-show-word h3'),	// 标题
+	wLi = $('.pic-show-word p'),	// 内容
+	Timer;		// 计数器
+
+// 检测事件
+getHref();
+Show(nowIndex);
+$('.pic-pre').on('click',function(){Show(nowIndex-1)});
+$('.pic-next').on('click',function(){Show(nowIndex+1)});
+bLi.on('click',function(){Show(bLi.index(this))});
+
+
+// 从其他页面跳转至本页时更新索引
+function getHref() {
+	var ll = window.location.hash;
+	if(ll) nowIndex = parseInt(ll.substring(ll.length-1));
+		else nowIndex = 0;
+}
+
+// 合装所有效果
+function Show(index) {
+	// 更新索引
+	nowIndex = index;
+	if(nowIndex < 0) {nowIndex = bLi.length-1;}
+	if(nowIndex > bLi.length-1) {nowIndex = 0;}
+	
+	getWord();
+	nameShow();
+	titleShow();
+	wordShow();
+	picShow();
+	navShow();
+	changeLocation();	
+}
+function changeLocation() {
+	var hh = bLi.eq(nowIndex).children('a').attr('href');
+	window.location,hash = hh;
+	$('.location a').attr('href',"buy-index.html"+hh);
+	$('.address a').attr('href',"buy-address.html"+hh);
+	$('.market a').attr('href',"buy-market.html"+hh);
+}
+function nameShow() {
+	nLi.text("")		// 初始化清空
+	nLi.text(name);		// 更新左侧导航名称
+	nLi.prev('span')
+		.css({'background-color':'#47a6eb',
+			  'background-image':'url(images/icon/location_'+nowIndex+'_hover.png)',
+			  'background-position':'center center',
+			  'background-repeat':'no-repeat'});
+}
+function titleShow() {
+	tLi.html("");			// 初始化清空
+	tLi.html(title);		// 更新标题
+	// 更新背景图并产生滑动效果
+	tLi.hide().css({'background':'url(images/title'+nowIndex+'.png) no-repeat'});
+	tLi.css({'background-position':'-350px center'}).show();
+	tLi.stop().animate({backgroundPositionX:"0px"},1000);
+}
+function picShow() {
+	pLi.css({'background':'url(images/big-img/'+nowIndex+'.jpg) no-repeat',
+			 'background-size':'110%',
+			 'background-position':'0px center'});
+	pLi.stop().animate({backgroundPositionX:'-100px'},5000,"linear");
+}
+function wordShow() {
+	clearTimeout(Timer);
+	
+	var text = word,	// 获取文字
+		tt = "",		// 存储文字
+		count = 0;		// 计算字数
+	wLi.text("").show();	// 初始化清空
+	
+	Timer = setTimeout(function(){Word()},30);
+	function Word() {
+		if(tt.length <= text.length) {
+			count += 1;
+			tt = text.substring(0 ,count);
+			wLi.text(tt);
+			Timer = setTimeout(function(){Word()},30);
+		} else {
+			clearTimeout(Timer);
+			count = 0;
+		}
+	}
+}
+function navShow() {
+	bLi.removeClass('active');
+	bLi.eq(nowIndex).addClass('active');
+}
+function getWord() {
+	switch (nowIndex+"") {
+		case "0" :
+			name = "楚河汉街";
+			title = "楚河汉街<span>最年轻最活力商圈</span>";
+			word = "在武汉的众多商圈里，楚河汉街是最年轻的一个，也是最具有活力的一个。逛汉街、坐游船、品翠华、看时尚show场，这里有无数个理由，让你爱上这条街。";
+			break;
+		case "1" :
+			name = "武汉天地";
+			title = "武汉天地<span>左手潮流 右手怀旧</span>";
+			word = "看到“新天地”三个字，大家应该已经自动联想起“小资”、“腔调”等字眼，黎元洪曾住过的永清旧宅，9栋百年老建筑，如今融入青砖步行街、两旁的清水砖墙、乌漆大门、异域情调的店铺招牌里，这里是最武汉但也最不武汉的一个商圈。";
+			break;
+		case "2" :
+			name = "光谷商圈";
+			title = "光谷商圈<span>大学城外“一站式”逛街</span>";
+			word = "光谷商圈紧邻华中科技大学、中国地质大学等高校，如果不想走太远闲逛，那么就在学校不远处的光谷商圈走走也是不错的选择，基本上，这里的吃喝玩乐都齐备了。";
+			break;
+		case "3" :
+			name = "武商商圈";
+			title = "武商商圈<span>购物狂的逛街首选</span>";
+			word = "这里是见证武汉商业发展的源头，也是外地人来武汉的必逛之处，如今更是时尚大牌的聚集地。在这里既可以买到李宁、安踏这样的平价运动休闲服装，也可以有淑女屋等青春系列，更有HERMES，DIOR一些养眼的时尚大牌。也许，只有在这个商圈，你才能感受到平价和天价仅是一步之遥。";
+			break;
+		case "4" :
+			name = "江汉路";
+			title = "江汉路步行街<span>最老牌的潮街</span>";
+			word = "欧陆风格、罗马风格、拜占庭风格、文艺复兴式、古典主义、现代派……人们说，江汉路是武汉二十世纪建筑的博物馆。到了武汉的外地人，都会到江汉路步行街走一走，除了参观这里的老建筑，同时也能感受到这条百年商业老街的今日繁华。";
+			break;
+	}
+}
+
+$('.other-page li').hover(function(){
+	$(this).find('p').stop().fadeIn(300);
+},function(){
+	$(this).find('p').stop().fadeOut(300);
+});
+</script>
+</body>
+</html>

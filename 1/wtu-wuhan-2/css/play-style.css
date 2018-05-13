@@ -1,0 +1,316 @@
+@charset "utf-8";
+.play-content table {
+	height: 450px;
+	width: 700px;
+	margin: 25px 0 0 250px;
+}
+.play-content table tr {
+	height: 25%;
+	text-align: center;
+}
+.play-content table td {
+	width: 20%;
+}
+.play-content table img {
+	height: 60%;
+	transform: scale(0);
+	transition: all 0.4s;
+}
+.bigger-pic img {
+	height: 80% !important;
+}
+.bigger {
+	transform: scale(1) !important;
+}
+/* ------------------------- play首页 ending ---------------------- */
+
+/* ------------------------- university start ---------------------- */
+.un-show {
+	height: 450px;
+	width: 1100px;
+	background: #c9ece5;
+	margin: 25px 0 0 50px;
+	border-radius: 10px;
+}
+.un-show ul {
+	height: 400px;
+	width: 1000px;
+	padding: 0;
+	margin: 25px 0 0 50px;
+	display: inline-block;
+}
+.un-show li {
+	float: left;
+}
+.un-show h3 {
+	position: relative;
+	height: 400px;
+	width: 2em;
+	padding: 0.7em;
+	margin: 0 0 0 10px;
+	background: url(../play/img/university/choose.png) top left no-repeat;
+	font-family: "楷体";
+	float: left;
+	cursor: pointer;
+}
+.un-show .direction {
+	position: absolute;
+	bottom: 10px;
+	height: 25px;
+	width: 25px;
+	display: block;
+	background: url(../play/img/university/arrow.png);
+	transition: all 0.7s;
+}
+.un-show li.active .direction {
+	transform: rotate(90deg);
+}
+.pic-content {
+	position: relative;
+	height: 350px;
+	width: 0px;
+	margin-top: 25px;
+	background: #000;
+	float: left;
+	vertical-align: top;
+	color: #FFF;
+	overflow: hidden;
+	transition: all 0.8s;
+}
+.un-show li.active .pic-content {
+	width: 650px;
+}
+.pic-content img {
+	height: 350px;
+	width: 650px;
+	display: block;
+	opacity: 1;
+	transition: all 0.5s;
+}
+.pic-content:hover img {
+	opacity: 0.5;
+	transform: scale(1.05);
+}
+.pic-content div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 0 20px;
+	text-indent: 2em;
+	z-index: 100;
+	opacity: 0;
+	transition: all 0.8s;
+}
+.pic-content:hover div {
+	opacity: 1;
+}
+.pic-content p {
+	position: absolute;
+	bottom: 10px;
+	right: 20px;
+	z-index: 100;
+	text-align: right;
+	padding: 0 10px;
+	border-right: 3px solid rgba(255,255,255,0.6);
+	opacity: 0;
+	transition: all 0.8s;
+}
+.pic-content:hover p {
+	opacity: 1;
+}
+.pic-content .cover {
+	position: absolute;
+	top: -150%;
+	left: 0%;
+	z-index: 10;
+	height: 150%;
+	width: 200%;
+	transform: rotate(15deg);
+	background: rgba(255,255,255,0.6);
+	transition: all 0.5s;
+}
+.pic-content:hover .cover {
+	top: 100%;
+	left: -100%;
+}
+/* ------------------------- university ending ---------------------- */
+
+/* ------------------------- river start ---------------------- */
+.focus ul, .focus p, .focus h5 {
+	margin: 0;
+	padding: 0;
+}
+.focus {
+	width: 1000px;
+	height: 500px;
+	margin: 0 auto;
+}
+.focusbox {
+	background-color: #87b6ab;
+}
+.focusimg {
+	border: 5px solid #8ebfb4;
+	width: 1000px;
+	height: 385px;
+	overflow: hidden;
+	-webkit-perspective: 1300px;
+}
+.fimglist {
+	width: 99300px;
+	-moz-perspective: 1300px;
+}
+.fimglist img {
+	display: block;
+	width: 1000px;
+	height: 385px;
+	cursor: pointer;
+}
+.fimglist li {
+	width: 1000px;
+	height: 385px;
+	float: left;
+	transition: all 1.2s;
+}
+.fimglist li.onpre {
+	opacity: 0;
+}
+.focustool {
+	width: 910px;
+	margin: 0 auto;
+}
+.ftoollist img {
+	display: block;
+	width: 120px;
+	height: 70px;
+	margin: 5px 0;
+}
+.ftoollist li {
+	position: relative;
+	height: 105px;
+	margin: 5px;
+	float: left;
+	text-align: center;
+	color: #FFF;
+	cursor: pointer;
+	transition: all 0.5s;
+}
+.ftoollist .on h5 {
+	color:#DBC98C;
+}
+.ftoollist li div {
+	position: absolute;
+	top: -10px;
+	left: 0;
+	height: auto;
+	width: 500px;
+	transform: translateY(-100%);
+	padding: 10px;
+	background: rgba(0,0,0,0.7);
+	text-align: left;
+	text-indent: 2em;
+	display: none;
+}
+.ftoollist li div:after {
+	position: absolute;
+	bottom: -20px;
+	left: 40px;
+	content: '';
+	border: 10px solid transparent;
+	border-top-color: rgba(0,0,0,0.7);
+}
+div.move-to-left {
+	left: auto !important;
+	right: 0;
+}
+div.move-to-left:after {
+	left: auto !important;
+	right: 40px;
+}
+.ftoollist li:hover div {
+	display: block;
+}
+/* ------------------------- river ending ---------------------- */
+
+/* ------------------------- play start ---------------------- */
+.pl-show {
+}
+.pl-show .bg-pic {
+	position: relative;
+	overflow: hidden;
+	width: 1180px;
+	height: 480px;
+	margin: 10px;
+}
+.pl-show .bg-pic img {
+	position: absolute;
+	top: -35%;
+	left: -10%;
+	width: 120%;
+	opacity: 0.5;
+}
+.main-box > div {
+	position: absolute;
+	top: 35px;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+	height: 300px;
+	width: 500px;
+	overflow: hidden;
+	border: 10px solid #FFF;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	opacity: 1;
+	-webkit-transition: all 0.8s;
+			transition: all 0.8s;
+}
+.main-box > div > img {
+	width: 100%;
+}
+.main-box .left {
+	opacity: 0;
+	-webkit-transform: scale(0.3) translateX(-350%);
+			transform: scale(0.3) translateX(-350%);
+}
+.main-box .right {
+	opacity: 0;
+	-webkit-transform: scale(0.3) translateX(50%);
+			transform: scale(0.3) translateX(50%);
+}
+.main-box i {
+	position: absolute;
+	top: 150px;
+	z-index: 999;
+	width: 40px;
+	height: 70px;
+	display: block;
+	cursor: pointer;
+}
+.main-box i.prev {
+	left: 250px;
+	background: url(../play/img/play/pre.png);
+}
+.main-box i.next {
+	right: 250px;
+	background: url(../play/img/play/next.png);
+}
+.word-box {
+	position: absolute;
+	top: 360px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 500px;
+	background: rgba(204,204,204,0.8);
+	border-radius: 5px;
+	overflow: hidden;
+}
+.word-box .title {
+	background: #FFF;
+	margin: 0;
+	padding: 8px 10px 5px;
+}
+.word-box .word {
+	padding: 10px;
+	margin: 0;
+	text-indent: 2em;
+}
+/* ------------------------- play ending ---------------------- */

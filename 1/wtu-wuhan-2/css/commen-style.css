@@ -1,0 +1,102 @@
+@charset "utf-8";
+body {
+	font-family: "黑体";
+}
+li {
+	list-style: none;
+}
+a:hover {
+	text-decoration: none;
+}
+/* 自定义样式 end */
+
+/* 背景颜色，版块颜色，菜单，及其颜色 */
+.index-main {background: #4E888B;}
+.buy-main {background: #7972A3;}
+.eat-main {background: #c55143;}
+.play-main {background: #61A091;}
+.walk-main {background: #92B463;}
+.content {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -210px 0 0 -600px;
+	height: 500px;
+	width: 1200px;
+}
+@media (max-width:1220px) {
+	.content {
+		left: 0;
+		margin-left: 15px;
+	}
+}
+.index-content {background: #66cccc;}
+.buy-content {background: #c7c8f9;}
+.eat-content {background: #ddc37d;}
+.play-content {background: #a7d5ca;}
+.walk-content {background: #b8dd7d;}
+.logo {
+	position: absolute;
+	top: -90px;
+	left: 50px;
+	height: 70px;
+	width: 226px;
+	background: url(../images/logo.png) center center no-repeat;
+}
+.menu {
+	position: absolute;
+	top: -45px;
+	right: 10px;
+	z-index: -1;
+}
+.menu li {
+	height: 70px;
+	width: 130px;
+	float: left;
+	text-align: center;
+	line-height: 45px;
+	margin-right: -10px;
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.index-menu li.active {background: url(../images/menu-index.png) right center;}
+.index-menu li {background: url(../images/menu-index.png);}
+.buy-menu li.active {background: url(../images/menu-buy.png) right center;}
+.buy-menu li {background: url(../images/menu-buy.png);}
+.eat-menu li.active {background: url(../images/menu-eat.png) right center;}
+.eat-menu li {background: url(../images/menu-eat.png);}
+.play-menu li.active {background: url(../images/menu-play.png) right center;}
+.play-menu li {background: url(../images/menu-play.png);}
+.walk-menu li.active {background: url(../images/menu-walk.png) right center;}
+.walk-menu li {background: url(../images/menu-walk.png);}
+.menu li:hover {
+	margin-top: -8px;
+	-webkit-animation: menuShow 0.2s;
+			animation: menuShow 0.2s;
+}
+@keyframes menuShow {
+	40% {margin-top: -14px;}
+	100% {margin-top: -8px;}
+}
+@-webkit-keyframes menuShow {
+	40% {margin-top: -14px;}
+	100% {margin-top: -8px;}
+}
+.menu li a {
+	display: block;
+	font-size: 1.5em;
+	color: #FFF;
+}
+.menu li span {
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+	margin-right: 10px;
+	vertical-align: sub;
+	background-repeat: no-repeat;
+}
+.menu li.home span {background: url(../images/menupic.png) 0px center;}
+.menu li.buy span {background: url(../images/menupic.png) -31px center;}
+.menu li.eat span {background: url(../images/menupic.png) -62px center;}
+.menu li.play span {background: url(../images/menupic.png) -93px center;}
+.menu li.walk span {background: url(../images/menupic.png) -124px center;}

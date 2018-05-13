@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最武汉 || 玩</title>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/commen-style.css">
+<link rel="stylesheet" href="../css/play-style.css">
+</head>
+
+<body class="play-main">
+<div class="container-fluid">
+	<div class="content play-content">
+    	<div class="logo"></div>
+        <div class="menu play-menu">
+        	<ul>
+            	<li class="home"><a href="../index.html"><span></span>首页</a></li>
+            	<li class="buy"><a href="../buy/buy-index.html"><span></span>购</a></li>
+            	<li class="eat"><a href="../eat/eat-index.html"><span></span>吃</a></li>
+            	<li class="play active"><a href="play-index.html"><span></span>玩</a></li>
+            	<li class="walk"><a href="../walk/walk-index.html"><span></span>行</a></li>
+            </ul>
+        </div><!-- menu ending -->
+        
+        <div class="pl-show">
+        	<div class="bg-pic"><img src="img/play/1.jpg"></div>
+        	<div class="main-box">
+            	<i class="prev"></i>
+                <div id="pic2"><img src="img/play/2.jpg"></div>
+                <div id="pic1"><img src="img/play/1.jpg"></div>
+                <i class="next"></i>
+            </div>
+            <div class="word-box">
+            	<h4 class="title">白云洞</h4>
+            	<p id="word">白云洞位于武汉江夏区纸坊镇城西，八分山南麓。距武汉市区20公里。该洞为一天然大溶洞，纵穿于一座石山，全长300余米，由前洞、中洞、天井和后洞组成。洞中冬暖夏凉，泉水淙淙，遍布石刻和钟乳石。</p>
+            </div>
+        </div>
+    </div><!-- content ending -->
+</div><!-- container-fluid ending -->
+<script src="../js/jquery-2.1.1.min.js"></script>
+<!-- [if lt IE 9] >
+	<script src="js/no-css3.js"></script>
+    <script></script>
+<! [endif] -->
+<script>
+var index = 1, step1 = step2 = "";
+$('.prev').on('click',function(){picShow(-1);});
+$('.next').on('click',function(){picShow(1);});
+function picShow(direction) {
+	$('#pic1 img').attr('src','img/play/'+index+'.jpg');
+	index = index + direction;
+	if(index<1) {index=10;}
+	if(index>10) {index=1;}
+	$('.bg-pic img').attr('src','img/play/'+index+'.jpg');
+	$('#pic2 img').attr('src','img/play/'+index+'.jpg');
+	if(direction == 1) {step1 = "left", step2 = "right";}
+		else {step1 = "right", step2 = "left";}
+	$('#pic2').hide().addClass(step1);
+	$('#pic1').hide().removeClass().show(10).addClass(step2);
+	$('#pic2').show(10).removeClass();
+}
+
+var ll = $('.bg-pic img').css('left'), tt = $('.bg-pic img').css('top');
+$(document).on('mousemove',function(event){
+	var xx = parseInt(event.clientX + ll), yy = parseInt(event.clientY + tt);
+	document.getElementById('word').innerHTML = xx+' '+yy;
+	$('.bg-pic img').css({'top':yy*0.1+'px','left':xx*0.1+'px'});
+	return false;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+@charset "utf-8";
+.video {
+	position: relative;
+	height: 320px;
+	width: 526px;
+	background: url(../temp/bigflag.png) center center no-repeat;
+	margin: 40px 0 0 50px;
+}
+.video embed {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -120px 0 0 -220px;
+}
+.recommend {
+	position: relative;
+	height: 150px;
+	width: 550px;
+	margin: 40px 0 0 20px;
+	padding: 15px;
+	background: #DCE19B;
+	border-radius: 5px;
+}
+.recommend ul {
+	position: relative;
+}
+.recommend li {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 120px;
+	width: 520px;
+	border-radius: 5px;
+	border: 2px solid #DCE19B;;
+	overflow: hidden;
+}
+.recommend li:hover {
+	box-shadow: 0 0 5px rgba(0,0,0,0.7);
+}
+.recommend li.active {
+	display: block;
+}
+.recommend-pic {
+	float: left;
+}
+.recommend-pic img {
+	height: 120px;
+}
+.recommend-word {
+	width: 380px;
+	float: right;
+}
+.recommend a {
+	position: absolute;
+	bottom: 0;
+	right: 30px;
+	font-size: 1.2em;
+}
+.more {
+	margin-left: 25px;
+}
+.more div {
+	height: 98px;
+	width: 201px;
+	margin: 20px 0 0 50px;
+	background: url(../images/look.png) center center no-repeat;
+	text-align: center;
+}
+.more a {
+	padding: 5px;
+	font-size: 1.5em;
+	line-height: 120px;
+}
+.more span.go-icon {
+	height: 30px;
+	width: 30px;
+	vertical-align: sub;
+	margin-left: 5px;
+	background: url(../images/arrow.png) center center no-repeat;
+	display: inline-block;
+}
+.more a:hover span.go-icon {
+	animation: goIconMove 0.3s ease 0s;
+	-webkit-animation: goIconMove 0.3s ease 0s;
+}
+@keyframes goIconMove {
+	50% {margin-left: 12px;}
+}
+@-webkit-keyframes goIconMove {
+	50% {margin-left: 12px;}
+}
+
+.thing {transition: all 0.2s;}
+.bridge {position: absolute;bottom: 0;left: 0;}
+.university {position: absolute;bottom: 0;left: 650px;}
+.hat {position: absolute;bottom: 50px;right: 240px;}
+.glasses {position: absolute;bottom: 120px;right: 200px;}
+.camera {position: absolute;bottom: 130px;right: 120px;opacity: 0.9;}
+.bus {position: absolute;bottom: 10px;right: 140px;}
+.tomb {position: absolute;bottom: 10px;right: 20px;}
+
+.university:hover {transform: scale(1.05);bottom: 3px;}
+.hat:hover {transform: rotateY(180deg);}
+.glasses:hover {transform: skewX(-10deg);}
+.camera:hover {opacity:1;}
+.bus:hover {animation: bus 0.2s ease 0s;-webkit-animation: bus 0.4s ease 0s;}
+.tomb:hover {bottom: 0px;}
+@keyframes bus {
+	33%{transform:rotate(-5deg);transform:translateY(1.01);}
+	66%{transform:rotate(20deg);transform:translateY(1.01);}
+}
+@-webkit-keyframes bus {
+	33%{transform:rotate(-15deg);transform:translateY(1.1);}
+	66%{transform:rotate(20deg);transform:translateY(1.01);}
+}
+
