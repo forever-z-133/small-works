@@ -450,7 +450,8 @@ if (!first) {
           <img class="footer-temp" src="img/footer-temp.jpg" alt="万物至上宠物服务">
           <div class="company-info">
             <p><span class="label">电话：</span><span class="phone"><a href="tel:13554530068">135-5453-0068</a>（24小时服务）</span></p>
-            <p><span class="label">公司地址：</span><span class="address">武汉市 东西湖区 长源假日·港湾</span></p>
+            <!-- <p><span class="label">公司地址：</span><span class="address">武汉市 东西湖区 长源假日·港湾</span></p> -->
+            <p><span class="label">公司地址：</span><span class="address">武汉市 东西湖区</span></p>
             <p><span class="label">场所开放时间：</span><span class="time">9:00 AM - 6:00 PM</span></p>
           </div>
         </div>
@@ -476,13 +477,13 @@ if (!first) {
 <script src="http://api.map.baidu.com/api?v=2.0&ak=twtkufzMe1HGIXZ5TpdtuVBhQdDIfOAu"></script>
 <script>
 var map = new BMap.Map("map");
-map.centerAndZoom(new BMap.Point(114.174681,30.647457), 15);//(116.331398, 39.897445), 15);
+map.centerAndZoom(new BMap.Point(114.174681,30.647457), 10);//(116.331398, 39.897445), 15);
 map.enableScrollWheelZoom(true);
 $(document).ready(function () {
     map.clearOverlays();
     var new_point = new BMap.Point(114.174681,30.647457);
-    var marker = new BMap.Marker(new_point);
-    map.addOverlay(marker);
+    // var marker = new BMap.Marker(new_point);
+    // map.addOverlay(marker);
     map.panTo(new_point);
 });
 
