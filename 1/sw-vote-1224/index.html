@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)#list -->
+<html lang="zh-cmn-Hans"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="viewport" content="width=750,user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="wap-font-scale" content="no">
+  <title>岁末迎新优秀商业景观推选</title>
+  <meta name="keywords" content="张永恒, foreverZ, 案例库">
+  <meta name="description" content="">
+  <!--[if lt IE 9]><script>alert('您的浏览器版本过低，请更新本版本浏览器，或更换为诸如谷歌浏览器的现代浏览器')</script><![endif]-->
+  <link rel="stylesheet" href="libs/common.css">
+  <link rel="stylesheet" href="libs/style.css">
+  <style>
+  </style>
+<style id="RoateStyle">@media (max-width: 768px) and (orientation: landscape) {.body {bottom: auto;height: 200%;}}</style></head>
+
+<body>
+  <div class="rotate-info hide" id="rotate-info">请保持锁屏状态浏览</div>
+  <div class="body mobile" id="main">
+    <div class="main-load" id="main-load" style="display: none;">
+      <div class="load-img"><img src="img/city.png"></div>
+      <div class="load-text"><span id="load-text">100</span>%</div>
+    </div>
+    <!-- 主页 -->
+    <div class="page list" id="list" style="display: block;">
+      <div class="list-wrap cover scroller">
+        <div class="city-box">
+          <div class="tree"><img src="img/city.png"></div>
+          <div class="tree-row ratio slide" style="transform: rotateX(-5deg) rotateY(-172deg);">
+            <div class="item" data-id="12132" style="transform: rotateY(0deg) translateZ(90px);"><img src="img/dwbh.jpg"></div>
+            <div class="item" data-id="12137" style="transform: rotateY(120deg) translateZ(90px);"><img src="img/bobh.jpg"></div>
+            <div class="item" data-id="12139" style="transform: rotateY(240deg) translateZ(90px);"><img src="img/hqg.jpg"></div>
+          </div>
+          <div class="tree-row ratio slide" style="transform: rotateX(-5deg) rotateY(-172deg);">
+            <div class="item" data-id="12136" style="transform: rotateY(0deg) translateZ(190px);"><img src="img/hl.jpg"></div>
+            <div class="item" data-id="12141" style="transform: rotateY(90deg) translateZ(190px);"><img src="img/yf.jpg"></div>
+            <div class="item" data-id="12140" style="transform: rotateY(180deg) translateZ(190px);"><img src="img/qbwk.jpg"></div>
+            <div class="item" data-id="12130" style="transform: rotateY(270deg) translateZ(190px);"><img src="img/dybbb.jpg"></div>
+          </div>
+          <div class="tree-row ratio slide" style="transform: rotateX(-5deg) rotateY(-172deg);">
+            <div class="item" data-id="12134" style="transform: rotateY(0deg) translateZ(270px);"><img src="img/dsdgc.jpg"></div>
+            <div class="item" data-id="12131" style="transform: rotateY(72deg) translateZ(270px);"><img src="img/hzzx.jpg"></div>
+            <div class="item" data-id="12126" style="transform: rotateY(144deg) translateZ(270px);"><img src="img/jlzx.jpg"></div>
+            <div class="item" data-id="12138" style="transform: rotateY(216deg) translateZ(270px);"><img src="img/xytgh.jpg"></div>
+            <div class="item" data-id="12133" style="transform: rotateY(288deg) translateZ(270px);"><img src="img/xtd.jpg"></div>
+          </div>
+        </div>
+        <a href="#" class="btn btn-rule"><img src="img/btn-rule.png"></a>
+        <a href="#" class="btn btn-music"></a>
+        <div class="list-title"><img src="img/list-title.png"></div>
+        <div class="list-box"></div>
+        <div class="list-load end"></div>
+      </div>
+    </div>
+    <!-- 规则页 -->
+    <div class="modal rule" id="rule">
+      <div class="modal-bg bg cancel"></div>
+      <div class="modal-box rule-box">
+        <div class="rule-img"><img src="img/rule.png"></div>
+        <a href="#" class="btn btn-close cancel"><img src="img/btn-close.png"></a>
+      </div>
+    </div>
+    <!-- 详情页 -->
+    <div class="modal detail item" id="detail" data-id="">
+      <div class="bg cancel"></div>
+      <div class="modal-box cover detail-box">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide ratio slide btn-video">
+              <img class="video-img">
+              <a href="#" class="btn btn-play"><img src="img/btn-play.png"></a>
+            </div>
+          </div>
+        </div>
+        <div class="content">
+          <h3 class="h1"></h3>
+          <h4 class="h2"></h4>
+          <p class="showTime"></p>
+          <p class="addr"></p>
+          <p class="desc"></p>
+        </div>
+        <a href="#" class="btn btn-vote">投票</a>
+        <a href="#" class="btn btn-share">拉票</a>
+        <a href="#" class="btn btn-cancel cancel">返回</a>
+        <div class="detial-tip"><img src="img/detail-tip.png"></div>
+      </div>
+    </div>
+    <!-- 欢迎页 -->
+    <div class="page welcome anim" id="welcome" style="display: none;">
+      <div class="modal-bg bg cancel"></div>
+      <div class="list-wrap cover">
+        <div class="city"><img src="img/city.png"></div>
+        <div class="main-title"><img src="img/title.png"></div>
+      </div>
+    </div>
+    <!-- 分享页 -->
+    <div class="modal share" id="share">
+      <div class="bg cancel"></div>
+    </div>
+    <!-- 视频 -->
+    <div class="modal video" id="video">
+      <div class="modal-bg bg cancel"></div>
+      <div class="modal-box cover">
+        <video class="cover" width="100%" height="100%" preload="" x5-video-player-type="h5" x-webkit-airplay="true" x5-video-player-fullscreen="true" webkit-playsinline="true" playsinline="true"></video>
+      </div>
+    </div>
+    <!-- 其他 -->
+    <div class="other">
+      <audio loop="" src="img/bgm.mp3" id="bgm" __idm_id__="297828353"></audio>
+      <div class="toast load" id="load"><div class="toast-wrap"></div></div>
+      <div class="tips center" id="tips"></div>
+    </div>
+  </div>
+  <div class="template" id="tpl-list-item">
+    <div class="item" data-id="">
+      <div class="image ratio"><img src="http://sum.kdcer.com/sw-vote-1224/"></div>
+      <div class="content">
+        <h3 class="title text">商场名称</h3>
+        <h3 class="name title text">美陈名称</h3>
+        <p class="desc">总票数：<span class="vote">0</span></p>
+      </div>
+      <div class="buttons">
+        <a href="#" class="btn btn-view">查看</a>
+        <a href="#" class="btn btn-vote">投票</a>
+      </div>
+    </div>
+  </div>
+  <script src="libs/jquery.min.js"></script>
+  <script src="libs/swiper.min.js"></script>
+  <script src="libs/common.js"></script>
+  <script>
+    var imgs = ['img/city.png', 'img/btn-close.png', 'img/btn-rule.png', 'img/list-title.png', 'img/rule-title.png', 'img/star.png'];
+    var $load_text = $('#load-text');
+    preloadImage(imgs, function (per) {
+      $load_text.text(parseInt(per));
+    }, Entry);
+    // 入口
+    var rest = 0, mainList = [];
+    function Entry() {
+      $('#main-load').fadeOut('fast');
+      var hash = location.hash.slice(1)
+      bindRouter();
+      rest = 10;
+      router.resolve();
+      var queryId = GetQueryString('Id');
+      if (queryId != null) {
+        location.hash = 'detail?id=' + queryId;
+      }
+      mainList = [
+        { Id: 1, title: '“圣斗士星矢·燃烧三十年”主题展', name: '上海新世界大丸百货', count: Math.random()*1000>>0, pic: 'img/dwbh.jpg' },
+        { Id: 1, title: '漫游星河—芮欧2017圣诞之旅', name: '芮欧百货', count: Math.random()*1000>>0, pic: 'img/bobh.jpg' },
+        { Id: 1, title: '丁小球的环球日记', name: '上海环球港', count: Math.random()*1000>>0, pic: 'img/hqg.jpg' },
+        { Id: 1, title: '2017圣诞焕境之旅', name: '恒隆广场 • 上海', count: Math.random()*1000>>0, pic: 'img/hl.jpg' },
+        { Id: 1, title: 'Beside us beyond fun史于起点，精彩比邻', name: '上海悠方', count: Math.random()*1000>>0, pic: 'img/yf.jpg' },
+        { Id: 1, title: 'LIGHT THE XMAS（流光溢彩）圣诞季', name: '上海万科广场', count: Math.random()*1000>>0, pic: 'img/qbwk.jpg' },
+        { Id: 1, title: '生而由我· 瓶熠心声', name: '第一八佰伴', count: Math.random()*1000>>0, pic: 'img/dybbb.jpg' },
+        { Id: 1, title: '“魔幻乐章圣诞游”主题活动', name: '大上海时代广场', count: Math.random()*1000>>0, pic: 'img/dsdgc.jpg' },
+        { Id: 1, title: 'Barbara`s Christmas fair 芭芭拉游园会', name: '汇智国际商业中心', count: Math.random()*1000>>0, pic: 'img/hzzx.jpg' },
+        { Id: 1, title: '妙想圣诞之圣诞星球', name: '浦东嘉里城 ', count: Math.random()*1000>>0, pic: 'img/jlzx.jpg' },
+        { Id: 1, title: '趣玩圣诞 混放心光', name: '兴业太古汇', count: Math.random()*1000>>0, pic: 'img/xytgh.jpg' },
+        { Id: 1, title: 'Rolling X 放大喜悦', name: '上海新天地', count: Math.random()*1000>>0, pic: 'img/xtd.jpg' },
+        { Id: 1, title: '相约•幸福', name: '香港广场', count: Math.random()*1000>>0, pic: 'img/xggc.jpg' },
+        { Id: 1, title: '闪耀欧“鹿”圣诞之旅', name: '国金中心', count: Math.random()*1000>>0, pic: 'img/gjzx.jpg' },
+      ];
+      draw_list(mainList);
+      $('.list-load').addClass('end');
+    }
+
+    var _tpl_item = _tpl('#tpl-list-item');
+    var $tree = $('.city-box .item');
+    function draw_list(r, box) {
+      var _html = '';
+      var $list = $(box || '.list-box').empty();
+      for (var i in r) {
+        var $li = $(_tpl_item);
+        $li.attr('data-id', r[i].Id);
+        $li.find('.title').text(r[i].title);
+        $li.find('.name').text(r[i].name);
+        $li.find('.vote').text(r[i].count);
+        $li.find('img').attr('src', r[i].pic);
+        _html += $li.prop('outerHTML');
+      }
+      for (var i in r) {
+        var $li = $tree.eq(i);
+        $li.attr('data-id', r[i].Id);
+        $li.find('img').attr('src', r[i].pic);
+      }
+      return $(_html).appendTo($list);
+    }
+    var newState;
+    var treeAnim = null; // 旋转效果是否开启
+    // -----------  主要页面逻辑
+    function bindRouter() {
+      router.route('/', function () {
+        $('#list').fadeIn(0);
+        $('#rule, #detail, #share').removeClass('in');
+        $('#welcome').show(0).addClass('anim');
+        var queryId = GetQueryString('Id');
+        if (queryId == null) {
+          setTimeout(function () {
+            history.replaceState({}, '', '#list');
+          }, 3800);
+        }
+      });
+      router.route('list', function () {
+        $('#rule, #detail, #share').removeClass('in');
+        $('#welcome').fadeOut('slow');
+        $('#list').fadeIn(0);
+        if (treeAnim) return;
+        treeAnim = true;
+        TreeRow('.city-box');
+      });
+      router.route('rule', function () {
+        $('#rule').addClass('in');
+      });
+      router.route('share', function () {
+        $('#share').addClass('in');
+      });
+      router.route('detail', function (state) {
+        $('video')[0].pause();
+        $('#share').removeClass('in');
+        $('#video').removeClass('in');
+        newState = state;
+        var id = state.id;
+        var data = mainList.filter(function (x) { return x.Id == id });
+        if (!data[0]) { return }
+        $('#detail').addClass('in');
+        data = data[0];
+        $detail.attr('data-id', data.Id);
+        $detail.find('.h1').text("景观主题：" + data.title);
+        $detail.find('.h2').text("报送单位：" + data.name);
+        $detail.find('.showTime').text(data.ShowTime);
+        $detail.find('.addr').text(data.addr);
+        $detail.find('.desc').text(data.desc);
+        $detail.find('.btn-video').attr('data-url', data.videoUrl);
+        $detail.find('.video-img').attr('src', data.pic);
+      });
+    }
+
+    // ------------  主要事件
+    // 返回按钮
+    $('.modal').on('click', '.cancel', function () {
+      history.replaceState({}, '', '#list');
+    });
+    //视频全屏返回详情页
+    $('#video').on('click', function () {
+      $('#video').find('video')[0].pause();
+      $('#video').removeClass('in');
+      var id = $("#detail").attr('data-id');
+      location.hash = 'detail?id=' + id;
+    });
+    // 浏览详情
+    var $detail = $('#detail');
+    $('.body').on('click', '.btn-view, .city-box .item, .list-box .image', function () {
+      var $this = $(this).closest('.item');
+      var id = $this.attr('data-id');
+      location.hash = 'detail?id=' + id;
+    });
+
+    // 点击投票
+    var $tips = $('#tips'), tipTime, posting = false, clickArr = [];
+    $('.body').on('click', '.btn-vote', function () { 
+      var $this = $(this).closest('.item');
+      var id = $this.attr('data-id');
+      // 是否还有次数
+      rest--;
+      var tip = '投票成功！您还剩余' + rest + '票!';
+      if (rest < 0) { tip = '您的投票次数已用完'; }
+      // 进行提示
+      clearTimeout(tipTime);
+      tipTime = setTimeout(function () {
+        $tips.removeClass('in').text('');
+      }, 3000);
+      $tips.hide(0).removeClass('in').text(tip).show(0).addClass('in');
+      // 进行动画与修改
+      if (rest < 0) return;
+      var $vote = $this.find('.vote')
+      if ($vote.length > 0) $vote.text(parseInt($vote.text()) + 1);
+      // 开始通信 
+      clickArr.push(id);
+      // 循环请求
+      post_vote_loop();
+    });
+
+    function post_vote_loop() {
+      if (clickArr.length < 1) return;
+      if (posting) return;
+      posting = true;
+      var send = clickArr;
+      clickArr = [];
+      setTimeout(function (r) {
+        posting = false;
+        if (r.ErrorMessage) {
+          alert(r.ErrorMessage || '系统错误');
+        }
+        mainList = mainList.map(function (x) {
+          for (var i in send) {
+            if (x.Id == send[i]) { ++x.count; console.log(x.count); }
+          }
+          return x;
+        });
+        draw_list(mainList);
+        post_vote_loop();
+      }, 100);
+    }
+
+    // 点击分享
+    $('.body').on('click', '.btn-share', function () {
+      location.hash = 'share';
+      var id = newState.id;;
+      var data = mainList.filter(function (x) { return x.Id == id });
+      data = data[0];
+      var shareJson = {
+        title: '我在为' + data.name + '打call，快来助我一臂之力',
+        desc: '魔都优秀商业景观 点亮绚烂星空!',
+        icon: 'http://sum.kdcer.com/sw-vote-1224/img/icon.jpg',
+        url: 'http://sum.kdcer.com/Event?EventId=84&Id=' + id + '',
+      }
+      var s = shareJson;
+      WeChat(s.title, s.desc, s.icon, s.url);
+    });
+
+    // 点击规则
+    $('.body').on('click', '.btn-rule', function () {
+      location.hash = 'rule';
+    });
+
+    $('.body').on('click', '.btn-video', function () {
+      location.hash = 'video';
+      var $this = $(this).closest('.btn-video');
+      var url = $this.attr('data-url');
+      var $box = $('#video').addClass('in');
+      var $video = $box.find('video');
+      $video[0].src = url || 'http://sum.kdcer.com/test/video.mp4';
+      $video[0].play();
+      var $bgm = $('#bgm')[0];
+      $bgm.pause();
+
+      $video.off().on('ended pause', function () {
+        $bgm.play();
+        $video[0].pause();
+        $box.removeClass('in');
+        //history.back();
+        var id = $("#detail").attr('data-id');
+        location.hash = 'detail?id=' + id;
+      });
+    });
+
+    // ------------  主要接口
+    var baseUrl = '/Event/'
+    // 入口 - 接口
+    function post_entry(callback) {
+      $.post(baseUrl + 'GetAnyList', {
+        eventId: 84,
+        pageNo: 1,
+        pageSize: 14,
+      }, function (r) {
+        console.log('入口', r);
+        callback && callback(r);
+      })
+    }
+    // 投票 - 接口
+    function post_vote(arr, callback) {
+      var str = arr.join(',');
+      console.log(str);
+      $.post(baseUrl + 'SaveVote', {
+        eventId: 84,
+        Id: str,
+      }, function (r) {
+        console.log('投票', r);
+      })
+    }
+
+    // ------------  其他公共方法
+    function _tpl(dom) {
+      return $(dom).clone().html();
+    }
+
+    function TreeRow(dom) {
+      var $box = $(dom);
+      var $wrap = $box.children('.tree-row');
+      var touched = false;
+      var animing = true;
+      var pos = {};
+      var anim = {};
+      var gap = [90, 190, 270];
+      var now = [];
+
+      _init();
+      _bind();
+
+      function _init() {
+        $wrap.each(function (i) {
+          var $items = $(this).children('.item');
+          var length = $items.length;
+          var avg = 360 / length;
+          $items.each(function (ii) {
+            var $item = $(this);
+            $item.css({
+              'transform': 'rotateY(' + avg * ii + 'deg) translateZ(' + gap[i] + 'px)',
+            });
+          });
+        });
+      }
+
+      pos.offsetX = 0;
+      var boxHeight = $box.height();
+      var boxOffsetY = $box.offset().top;
+      var avgHeight = boxHeight / $wrap.length;
+      var nowIndex = 0;
+      function _bind() {
+        $box.off().on('touchstart mousedown', function (evt) {
+          touched = true;
+          animing = true;
+          var e = evt.touches ? evt.touches[0] : evt;
+          pos.startX = e.clientX;
+          pos.lastX = pos.lastX == undefined ? pos.startX : pos.lastX;
+          nowIndex = parseInt((e.clientY - boxOffsetY) / avgHeight);
+        });
+        $(window).on('touchmove mousemove', function (evt) {
+          if (!touched) return;
+          var e = evt.touches ? evt.touches[0] : evt;
+          pos.offsetX = e.clientX - pos.lastX;
+          pos.lastX = e.clientX;
+        }).on('touchend mouseup', function () {
+          if (!touched) return;
+          touched = false;
+          // animing = false;
+          pos.lastX = null;
+        });
+      }
+
+      anim.rotate = -5;
+      var now = new Array($wrap.length + 1).join('0').split('').map(function (x) { return parseInt(x) });
+      function _update() {
+        for (var i in now) {
+          if (pos.lastX != undefined && i == nowIndex) {
+            now[i] += pos.offsetX;
+          } else {
+            now[i] += -1;
+          }
+          now[i] = now[i] % 360;
+        }
+        pos.offsetX = 0;
+        _draw();
+      }
+
+      function _draw() {
+        $wrap.each(function (i) {
+          $(this).css({
+            'transform': 'rotateX(-5deg) rotateY(' + now[i] + 'deg)',
+          });
+        });
+      }
+
+      (function _loop() {
+        if (animing) _update();
+        requestAnimationFrame(_loop);
+      })();
+    }
+
+  </script>
+  <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <script id="share">
+    var shareJson = {
+      title: '夜上海，星闪耀，上海最美景观都在这！',
+      desc: '魅力“星”上海，璀璨新年鸿！你心目中的最美上海！',
+      icon: 'http://sum.kdcer.com/sw-vote-1224/img/icon.jpg',
+      url: 'http://sum.kdcer.com/Event?EventId=84',
+    }
+    var s = shareJson;
+    $.ajaxSetup({ async: false });
+    WeChat(s.title, s.desc, s.icon, s.url);
+    $.ajaxSetup({ async: true });
+  </script>
+
+</body></html>

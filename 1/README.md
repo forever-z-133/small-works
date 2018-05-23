@@ -12,3 +12,4 @@
 * [【口碑】口碑吃货节商户问卷](https://github.com/foreverZ133/small-works/tree/master/1/koubei-question/) # [预览](https://foreverz133.github.io/small-works/1/koubei-question/)
 * [【百联】金鸡来签到，福袋抽回家](https://github.com/foreverZ133/small-works/tree/master/1/bb-lucky-bag/) # [预览](https://foreverz133.github.io/small-works/1/bb-lucky-bag/)
 * [【百联】鸡年送福，一起莱年报](https://github.com/foreverZ133/small-works/tree/master/1/bl-year-report/) # [预览](https://foreverz133.github.io/small-works/1/bl-year-report/)
+* [【商委】上海圣诞景观投票](https://github.com/foreverZ133/small-works/tree/master/1/sw-vote-1224/) # [预览](https://foreverz133.github.io/small-works/1/sw-vote-1224/)
