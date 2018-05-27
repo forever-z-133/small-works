@@ -3,6 +3,7 @@
 * [【坤鼎】坤鼎创意部官网](https://github.com/foreverZ133/small-works/tree/master/1/kdc-creative/) # [预览](https://foreverz133.github.io/small-works/1/kdc-creative/)
 * [【青浦】青浦智造](https://github.com/foreverZ133/small-works/tree/master/1/qp-factory-map/) # [预览](https://foreverz133.github.io/small-works/1/qp-factory-map/)
 * [【青浦】环球港大寻宝](https://github.com/foreverZ133/small-works/tree/master/1/qp-treasure/) # [预览](https://foreverz133.github.io/small-works/1/qp-treasure/)
+* [【青浦】青浦品牌之旅](https://github.com/foreverZ133/small-works/tree/master/1/qp-brands-travel/) # [预览](https://foreverz133.github.io/small-works/1/qp-brands-travel/)
 * [【纺大】最武汉 2.0](https://github.com/foreverZ133/small-works/tree/master/1/wtu-wuhan-2/) # [预览](https://foreverz133.github.io/small-works/1/wtu-wuhan-2/)
 * [【佳佳】我的美丽旅程](https://github.com/foreverZ133/small-works/tree/master/1/jj-nice-travel/) # [预览](https://foreverz133.github.io/small-works/1/jj-nice-travel/1.html)
 * [【杨杨】万物至上宠物纪念馆](https://github.com/foreverZ133/small-works/tree/master/1/yy-petwwzs/) # [预览](https://foreverz133.github.io/small-works/1/yy-petwwzs/)
