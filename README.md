@@ -22,3 +22,6 @@
 * [【百联】鸡年送福，一起莱年报](https://github.com/foreverZ133/small-works/tree/master/1/bl-year-report/) # [预览](https://foreverz133.github.io/small-works/1/bl-year-report/)
 * [【商委】上海圣诞景观投票](https://github.com/foreverZ133/small-works/tree/master/1/sw-vote-1224/) # [预览](https://foreverz133.github.io/small-works/1/sw-vote-1224/)
 
+> ### ···················· [Vol.2](https://github.com/foreverZ133/small-works/tree/master/2/) ··········
+
+* [【八佰伴】桃花十里，魔镜探前世](https://github.com/foreverZ133/small-works/tree/master/2/bbb-prev-life/) # [预览](https://foreverz133.github.io/small-works/2/bbb-prev-life/)
