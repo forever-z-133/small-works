@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html class="mobile">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html" />
+<meta name="viewport" content="width=640,user-scalable=no" />
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<title>幽游白书</title>
+<!--[if lt IE 9]><script>alert('您的浏览器版本过低，请更新本版本浏览器，或更换为诸如谷歌浏览器的现代浏览器')</script><![endif]-->
+<style>
+.bg, .modal {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+}
+.modal {
+  opacity: 0;
+  z-index: -1;
+  overflow: hidden;
+  transition: opacity .3s, z-index 0s .3s;
+}
+.modal-bg {
+  background: rgba(0,0,0,.7);
+}
+.modal.in {
+  opacity: 1;
+  z-index: 1;
+  transition: opacity .3s;
+}
+.modal-box {
+  transform: translate3d(0,0,0);
+}
+.pos-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+.alert {
+  width: 80%;
+  max-height: 100%;
+  max-width: 600px;
+}
+</style>
+</head>
+
+<body>
+<div id="number"></div>
+<button id="control">控制暂停</button>
+<ul class="list" id="list"></ul>
+
+<div class="modal" id="yourResultModal">
+  <div class="bg modal-bg"></div>
+  <div class="modal-box alert">
+    <div class="alert-body">
+      少侠您的灵力值为<span id="result"></span>
+    </div>
+    <div class="alert-foot">
+      <button class="cancel">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 输入名字 -->
+<div class="modal" id="inputNameModal">
+  <div class="bg modal-bg"></div>
+  <div class="modal-box">
+    <div class="alert">
+      <div class="alert-head">
+        <span>请输入你的名字</span>
+        <button>×</button>
+      </div>
+      <div class="alert-body">
+        <input type="text" placeholder="^_^">
+      </div>
+      <div class="alert-foot">
+        <button id="submit">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var $num = document.getElementById('number');
+var $control = document.getElementById('control');
+var $resultModal = document.getElementById('yourResultModal');
+var $result = document.getElementById('result');
+
+
+// ------- 动画部分
+var stop = false, temp = 0;
+
+function update() {
+  if (temp = ++temp % 10) return;
+  var text = _random(1e3, 1e4) >> 0;
+  $num.innerText = text;
+}
+
+(function loop() {
+  !stop && update();
+  requestAnimationFrame(loop);
+})()
+
+// ------- 事件部分
+$control.addEventListener('click', _control, false);
+window.addEventListener('click', _cancelModal, false);
+
+function _control(e) {
+  stop = true;
+  var text = _random(1e3, 1e4) >> 0;
+  $num.innerText = text;
+  $resultModal.classList.add('in');
+}
+
+function _cancelModal(e) {
+  console.log(e.target);
+}
+
+function _random(max = 1, min = 0) {
+  return min + Math.random() * (max - min);
+}
+</script>
+</body>
+</html>
