@@ -1,4 +1,5 @@
 
+* [【东方童话】幼儿绘画大赛](https://github.com/foreverZ133/small-works/tree/master/2/dfth-photo-vote/) # [预览](https://foreverz133.github.io/small-works/2/dfth-photo-vote/dist/)
 * [【八佰伴】桃花十里，魔镜探前世](https://github.com/foreverZ133/small-works/tree/master/2/bbb-prev-life/) # [预览](https://foreverz133.github.io/small-works/2/bbb-prev-life/)
 * [【八佰伴】有缘千里来对诗](https://github.com/foreverZ133/small-works/tree/master/2/bbb-love-poems/) # [预览](https://foreverz133.github.io/small-works/2/bbb-love-poems/)
 * [【八佰伴】“伊”声母亲的祝福](https://github.com/foreverZ133/small-works/tree/master/2/bbb-mother-day/) # [预览](https://foreverz133.github.io/small-works/2/bbb-mother-day/)
