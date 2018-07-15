@@ -1,0 +1,381 @@
+.content-box {
+	width: 960px;
+	/*height: 626px;*/
+	background: #fff;
+	overflow: hidden;
+	box-sizing: border-box;
+	margin: 0 auto;
+	padding: 0;
+	padding-bottom: 40px;
+}
+
+.login-title {
+	overflow: hidden;
+	border-bottom: 1px solid #ddd;
+	padding: 12px 30px;
+	height: 42px;
+}
+
+.login-title>div:nth-child(1) {
+	float: left;
+	font-size: 24px;
+	color: #3D3D3D;
+	margin-top: 10px;
+}
+
+.login-title .new-link {
+	float: right;
+	width: 148px;
+	height: 42px;
+	border: 1px solid #E73929;
+	border-radius: 100px;
+	line-height: 42px;
+	text-align: center;
+	color: #E73929;
+	cursor: pointer;
+}
+
+.border-title {
+	border-left: 8px solid #E83929;
+	padding-left: 12px;
+	height: 24px;
+	line-height: 24px;
+	display: block;
+}
+
+.login-form {
+	width: 388px;
+	margin: 0 auto;
+	padding-top: 64px;
+}
+
+.form-input {
+	width: 388px;
+	height: 64px;
+	background: #FFFFFF;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.12);
+	border-radius: 4px;
+	padding: 0 10px;
+	box-sizing: border-box;
+	font-size: 16px;
+	color: #555555;
+}
+
+.login-form>.form-input {
+	margin-bottom: 20px;
+}
+
+.form-icon {
+	padding-left: 50px;
+}
+
+.login-tele {
+	background: url(../login/login-tele.png) no-repeat;
+	background-size: 20px 24px;
+	background-position: 16px 20px;
+}
+
+.form-code {
+	/*overflow: hidden;*/
+	position: relative;
+}
+
+.login-pwd {
+	background: url(../login/login-pwd.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+
+
+.icon-name{
+	background: url(../login/icon-name.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+.icon-pwd{
+	background: url(../login/icon-pwd.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+.icon-depart{
+	background: url(../login/icon-depart.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+.icon-corp{
+	background: url(../login/icon-corp.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+.icon-province{
+	background: url(../login/icon-province.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+.icon-tele{
+	background: url(../login/icon-tele.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+.icon-position{
+	background: url(../login/icon-position.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+
+.icon-add{
+	/*padding: 0;*/
+	padding-left: 10px;
+	background: url(../login/add.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 345px 20px;
+	line-height: 64px;
+}
+
+.login-img {
+	width: 210px;
+	background: url(../login/login-img.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+
+.login-code {
+	width: 210px;
+	background: url(../login/login-code.png) no-repeat;
+	background-size: 24px 24px;
+	background-position: 16px 20px;
+}
+
+.form-code-img {
+	width: 154px;
+	height: 64px;
+	overflow: hidden;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.file-upload,
+.file-upload-btn{
+	width: 388px;
+	height: 64px;
+	opacity: 0;
+}
+.form-code-btn {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 152px;
+	height: 62px;
+	border: 1px solid #E83929;
+	border-radius: 4px;
+	font-size: 16px;
+	color: #E83929;
+	text-align: center;
+	line-height: 62px;
+	cursor: pointer;
+}
+
+.form-code-btn.disable {
+	cursor: no-drop;
+}
+
+.form-code {
+	margin-bottom: 20px;
+}
+
+.form-code>.tips {
+	position: absolute;
+	right: 0;
+	top: 85px;
+	font-size: 14px;
+	color: #E83929;
+}
+
+.form-code-img>img {
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+.code-reload {
+	position: absolute;
+	right: -50px;
+	top: 16px;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	background: url(../login/code-reload.png) no-repeat;
+	background-size: 100% 100%;
+}
+
+.btn {
+	width: 388px;
+	height: 58px;
+	background: #E83929;
+	border-radius: 4px;
+	outline: none;
+	border: 1px solid #E83929;
+	color: #FFFFFF;
+	font-size: 16px;
+}
+
+.btn.btn-disable,
+.btn.btn-disable:hover,
+.btn.btn-disable:focus {
+	border-color: #E83929;
+	background-color: #E83929;
+	color: #fff;
+}
+
+.login-type {
+	overflow: hidden;
+	height: 60px;
+	line-height: 60px;
+	position: relative;
+}
+
+.login-type:after {
+	content: "";
+	position: absolute;
+	width: 1px;
+	height: 18px;
+	background-color: #999;
+	left: 50%;
+	top: 20px;
+}
+
+.login-type>div {
+	font-size: 14px;
+	color: #555555;
+	cursor: pointer;
+	position: relative;
+	padding-left: 40px;
+	float: left;
+	margin-left: 57px;
+	margin-right: 25px;
+	box-sizing: border-box;
+}
+
+.login-type .login-wx:after,
+.login-type .login-tb:after {
+	position: absolute;
+	content: "";
+	width: 32px;
+	height: 32px;
+	left: 0px;
+	top: 50%;
+	margin-top: -16px;
+}
+
+.login-type .login-wx:after {
+	background: url(../login/icon-wx.png) no-repeat;
+	background-size: 100%;
+}
+
+.login-type .login-tb:after {
+	background: url(../login/icon-tb.png) no-repeat;
+	background-size: 100%;
+}
+
+.siginin-wrap {
+	background-color: #ebebeb;
+	padding: 20px 0;
+}
+
+.siginin-wrap .new-link {
+	border: none;
+	font-size: 16px;
+	color: #E83929;
+}
+
+.forget-tele {
+	font-size: 18px;
+	color: #999999;
+	height: 40px;
+	line-height: 40px;
+	margin-bottom: 10px;
+}
+
+.user-info-wrap .content-box {
+	width: 1200px;
+}
+
+.user-info-wrap .login-form {
+	float: left;
+}
+
+.user-info-wrap .signin-wrap {
+	margin: 0 auto;
+	width: 836px;
+	/*overflow: hidden;*/
+	box-sizing: border-box;
+}
+
+.edit-radios {
+	clear: both;
+	overflow: hidden;
+	line-height: 22px;
+	height: 64px;
+	margin-bottom: 20px;
+}
+
+.edit-radios>div {
+	font-size: 16px;
+	color: #555555;
+	float: left;
+	margin-right: 10px;
+}
+
+.select-radio {
+	font-size: 16px;
+	color: #333333;
+}
+
+.radio-list {
+	overflow: hidden;
+}
+
+.select-radio {
+	width: 50px;
+	float: left;
+	padding-left: 30px;
+	margin-right: 20px;
+	margin-bottom: 10px;
+	cursor: pointer;
+	background: url(../userCenter/radio.png) no-repeat;
+	background-position: 5px 50%;
+}
+.select-radio.active{
+	background: url(../userCenter/radio-active.png) no-repeat;
+	background-position: 5px 50%;
+	color: #E83929;
+}
+.select-radio.disable{
+	background: url(../userCenter/radio-disable.png) no-repeat;
+	background-position: 5px 50%;
+	color: #999;
+	cursor: no-drop;
+}
+
+.form-code-btn.disable {
+	cursor: no-drop;
+	border-color: #eaeaea;
+	color: #eaeaea;
+}
+
+.form-items {
+	margin-bottom: 20px;
+	position: relative;
+}
+
+.err-tips {
+	position: absolute;
+	display: block;
+	width: 200px;
+	left: 400px;
+	font-size: 14px;
+	color: #999999;
+	height: 64px;
+	line-height: 64px;
+	top: 0;
+}
