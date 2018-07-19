@@ -7,4 +7,5 @@
 * [【商委】上海购物节普陀 Style](https://github.com/foreverZ133/small-works/tree/master/2/pt-paper/) # [预览](https://foreverz133.github.io/small-works/2/pt-paper/)
 * [【吉买盛】岁末华泾重装新开业](https://github.com/foreverZ133/small-works/tree/master/2/gms-12-19/) # [预览](https://foreverz133.github.io/small-works/2/gms-12-19/)
 * [【耗子】中经基金有限公司](https://github.com/foreverZ133/small-works/tree/master/2/zj-office-web/) # [预览](https://foreverz133.github.io/small-works/2/zj-office-web/)
+* [【娜娜】ChinaJoy 死神激斗](https://github.com/foreverZ133/small-works/tree/master/2/ll-china-joy/) # [预览](https://foreverz133.github.io/small-works/2/ll-china-joy/)
 * [【头豹】投融资咨询平台](https://github.com/foreverZ133/small-works/tree/master/2/tb-invesetment/) # [无预览](#)
