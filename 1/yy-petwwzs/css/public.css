@@ -1635,11 +1635,15 @@
     padding: .5em;
     -webkit-box-align: start;
             align-items: flex-start;
+    margin: 10px 0;
+}
+.coment-list .item img {
+    object-fit: cover;
 }
 .coment-list .image {
     width: 5em;
     flex-shrink: 0;
-    margin-right: .5em;
+    margin-right: 1em;
 }
 .coment-list .image img {
     border-radius: 100%;
@@ -1701,7 +1705,7 @@
 .news-image-swiper .image:before {
     content: "";
     display: block;
-    padding-top: 75%;
+    padding-top: 70%;
 }
 .news-image-swiper .image > img {
     position: absolute;

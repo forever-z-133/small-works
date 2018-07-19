@@ -9,14 +9,15 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <meta name="format-detection" content="telephone=no" />
-<title>幽游白书</title>
+<title>死神激斗，热血青春</title>
 <!--[if lt IE 9]><script>alert('您的浏览器版本过低，请更新本版本浏览器，或更换为诸如谷歌浏览器的现代浏览器')</script><![endif]-->
 <style>
-.bg, .modal {
+.bg, .modal, .page {
   position: absolute;
   top: 0; bottom: 0;
   left: 0; right: 0;
 }
+.bg > img { width: 100%; height: 100%; }
 .modal {
   opacity: 0;
   z-index: -1;
@@ -44,82 +45,420 @@
   max-height: 100%;
   max-width: 600px;
 }
+body {
+  overflow: hidden;
+  background: #000;
+  user-select: none;
+}
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  margin: -540px 0 0 -960px;
+}
+.page > * {
+  position: absolute;
+}
+.state { position: absolute; z-index: 1; bottom: 10px; left: 10px; font-size: 1em; color: #aaa; }
+.page { z-index: -1; opacity: 0; overflow: hidden; transition: opacity .5s, z-index 0s .5s }
+.page.in { z-index: 0; opacity: 1; transition: opacity .5s, z-index 0s }
+.shadow { left: 0; bottom: 0; width: 100%; height: 30%; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.8)); }
+.waiting .copyright { right: 20px; bottom: 15px; width: auto; }
+.small-logo { left: 60px; bottom: 60px; }
+.man5 { right: 0; bottom: 0; }
+.man4 { right: 0; bottom: 0; }
+.man3 { right: 0; bottom: 0; }
+.man2 { right: 0; bottom: 0; }
+.man1 { right: 28%; bottom: 0; }
+.slogan { top: 240px; left: 25px; }
+.slogan2 { top: 60px; left: 140px; }
+.some-words > p { position: absolute; color: #4c0c0c; font-size: 20px; font-weight: bold; }
+.some-words .w1 { top: 10%; left: 44%; transform: rotate(30deg); }
+.in [class*="man"] { animation: slideUp 1.2s; }
+.in .man5 { animation-delay: -.1s; }
+.in .man4 { animation-delay: -.2s; }
+.in .man3 { animation-delay: -.3s; }
+.in .man2 { animation-delay: -.4s; }
+.in .man1 { animation-delay: -.5s; }
+.in .slogan { animation: slogan 4s infinite; }
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(20%); }
+  30% { opacity: 1 }
+  100% { opacity: 1; transform: translateY(0%); }
+}
+@keyframes slogan {
+  0% { transform: translate(0px, 0px); }
+  40% { transform: translate(0px, 0px); }
+  42% { transform: translate(-30px, 30px); }
+  43% { transform: translate(20px, -30px); }
+  44% { transform: translate(30px, 30px); }
+  45% { transform: translate(0px, 0px); }
+  93% { transform: translate(0px, 0px); }
+  94% { transform: translate(30px, -20px); }
+  96% { transform: translate(-10px, 30px); }
+  97% { transform: translate(30px, 10px); }
+  100% { transform: translate(0px, 0px); }
+}
+.stage { left: 50%; bottom: 0; transform: translate(-50%,0); }
+.copyright { right: 0; bottom: 10px; width: 100%; text-align: center; }
+.logo { left: 0; top: 40px; width: 100%; text-align: center; }
+.number .number-box { top: 50%; left: 0; width: 100%; text-align: center; transform: translate(0,-50%); }
+.number-box .num { position: relative; display: inline-block; width: 300px; margin: 0 -20px; background: url(img/number.png) left top / 500% 200%; }
+.number-box .num:before { content: ""; display: block; padding-top: 125%; }
+.number-box .num0 { background-position: 0 0 }
+.number-box .num1 { background-position: 25% 0 }
+.number-box .num2 { background-position: 50% 0 }
+.number-box .num3 { background-position: 75% 0 }
+.number-box .num4 { background-position: 100% 0 }
+.number-box .num5 { background-position: 0 100% }
+.number-box .num6 { background-position: 25% 100% }
+.number-box .num7 { background-position: 50% 100% }
+.number-box .num8 { background-position: 75% 100% }
+.number-box .num9 { background-position: 100% 100% }
+.light { opacity: 0 }
+.result .light { opacity: 1 }
+.result .number-box { animation: scale .5s }
+@keyframes scale {
+  50% { transform: translate(0,-50%) scale(1.2); }
+}
+.good .word { top: 190px; left: 0; width: 100%; text-align: center; }
+.bad .word { top: 230px; left: 0; width: 100%; text-align: center; font-size: 80px; font-weight: bold; color: #a6070e; text-shadow: 0 0 1em #000; }
+.restart { right: 0; bottom: 0; width: 20%; height: 20%; background: rgba(0,0,0,.1); cursor: pointer; }
+.sort-list { right: 0; top: 0; width: 20%; height: 20%; background: rgba(0,0,0,.1); cursor: pointer; }
+.left-logo { left: 60px; top: 40px; }
+.form { text-align: center; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.input-box input { background: #000; color: #585858; font-size: 76px; padding: 30px 50px; border-radius: 15px; border: none; margin: 70px auto; }
+input:focus, button:focus { outline: 0; }
+.btn-ok { font-size: 76px; color: #fff; border: 4px solid #000; box-shadow: inset 0 0 0 4px #ff0000; background: rgba(178,1,1,.6); padding: 15px 180px; border-radius: 999em; cursor: pointer; }
+.btn-back { font-size: 64px; color: #a6070e; margin-top: 30px; opacity: .3; cursor: pointer; }
+.right-slogan { top: 60px; right: 60px; }
+.right-logo { top: 40px; left: 840px;  }
+.list-wrap { top: 250px; bottom: 70px; left: 210px; right: 210px; display: flex; flex-direction: column; color: #f5cd5b; font-size: 60px; line-height: 1 }
+.list-wrap .number-box { display: flex; justify-content: center; }
+.list-wrap .num { width: 65px; margin: 0 -5px; display: block; }
+.tabs-box { flex-shrink: 0; display: flex; align-items: center; margin: 0 -10px; }
+.tab { flex-grow: 1; margin: 0 10px; height: 100px; line-height: 100px; background: url(img/btn.png) center / 100%; border: none; font-size: 60px; color: inherit; cursor: pointer; opacity: .7; }
+.tab:hover { opacity: .9 }
+.tab.active { opacity: 1; font-weight: bold; }
+.list-box { overflow-x: hidden; overflow-y: auto; flex-grow: 1; padding: 0 40px; background: #000; margin: 30px 0 20px; display: none; }
+.list-box.active { display: block; }
+.list-box .item { display: flex; align-items: center; padding: 30px 200px 30px 20px; border-bottom: 4px solid #5f0408 }
+.list-box .name { flex-grow: 1; word-wrap: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.list-box .desc { margin: 0 80px; }
+.list-foot { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 30px 240px 30px 60px; background: #000; }
+.btn-restart { top: 0; left: 0; width: 100%; cursor: pointer; }
+.tpl { display: none !important; }
 </style>
 </head>
 
 <body>
-<div id="number"></div>
-<button id="control">控制暂停</button>
-<ul class="list" id="list"></ul>
-
-<div class="modal" id="yourResultModal">
-  <div class="bg modal-bg"></div>
-  <div class="modal-box alert">
-    <div class="alert-body">
-      少侠您的灵力值为<span id="result"></span>
+<div class="container">
+  <div class="state" id="state"></div>
+  <div class="page main-bg" id="main-bg">
+    <div class="bg"><img src="img/bg2.jpg"></div>
+  </div>
+  <div class="page number" id="number">
+    <div class="stage"><img src="img/stage.png"></div>
+    <div class="copyright"><img src="img/copyright.png"></div>
+    <div class="logo"><img src="img/logo.png"></div>
+    <div class="light bg"><img src="img/light.png"></div>
+    <div class="number-box" id="number-box">
+      <div class="num num0"></div><div class="num num0"></div><div class="num num0"></div><div class="num num0"></div>
     </div>
-    <div class="alert-foot">
-      <button class="cancel">确定</button>
+    <div class="sort-list"></div>
+  </div>
+  <div class="page good" id="good">
+    <div class="word"><img src="img/good.png"></div>
+    <div class="restart"></div>
+  </div>
+  <div class="page bad" id="bad">
+    <div class="word">这灵压不行哟，兄dei</div>
+    <div class="restart"></div>
+  </div>
+  <div class="page hero" id="hero">
+    <div class="bg"><img src="img/bg2.jpg"></div>
+    <div class="left-logo"><img src="img/logo.png"></div>
+    <div class="copyright"><img src="img/copyright.png"></div>
+    <form onsubmit="return false" class="form">
+      <div class="name-tip"><img src="img/your-name.png"></div>
+      <div class="input-box"><input autocomplete="off" placeholder="请输入您的姓名"></div>
+      <button type="submit" class="btn-ok">确定</button>
+      <div class="btn-back">少年走掉了</div>
+    </form>
+  </div>
+  <div class="page list" id="list">
+    <div class="bg"><img src="img/bg2.jpg"></div>
+    <div class="btn-restart" id="restart"><img src="img/back.png"></div>
+    <div class="right-logo"><img src="img/logo.png"></div>
+    <div class="right-slogan"><img src="img/slogan2.png"></div>
+    <div class="copyright"><img src="img/copyright.png"></div>
+    <div class="list-wrap">
+      <div class="tabs-box" id="tabs">
+        <button class="tab active">今日</button>
+        <button class="tab">历史</button>
+      </div>
+      <div class="list-box active" id="today"></div>
+      <div class="list-box" id="history"></div>
+      <div class="list-foot" id="last">
+        <span>最近一位上榜者的成绩</span>
+        <div class="number-box">
+          <div class="num num0"></div><div class="num num0"></div><div class="num num0"></div><div class="num num0"></div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- 输入名字 -->
-<div class="modal" id="inputNameModal">
-  <div class="bg modal-bg"></div>
-  <div class="modal-box">
-    <div class="alert">
-      <div class="alert-head">
-        <span>请输入你的名字</span>
-        <button>×</button>
-      </div>
-      <div class="alert-body">
-        <input type="text" placeholder="^_^">
-      </div>
-      <div class="alert-foot">
-        <button id="submit">确定</button>
-      </div>
+  <div class="page waiting" id="waiting">
+    <div class="bg"><img src="img/bg.png"></div>
+    <div class="some-words">
+      <p class="w1">ISHIDA URYU</p>
+      <p class="w2">KUROSAKI IGHIGO</p>
+      <p class="w3">SODA KISUKE</p>
+      <p class="w4">INOUE ORIHIME</p>
+      <p class="w5">KUCHIKI RUKIA</p>
     </div>
+    <div class="man2"><img src="img/man2.png"></div>
+    <div class="man3"><img src="img/man3.png"></div>
+    <div class="man1"><img src="img/man1.png"></div>
+    <div class="man4"><img src="img/man4.png"></div>
+    <div class="man5"><img src="img/man5.png"></div>
+    <div class="shadow"></div>
+    <div class="small-logo"><img src="img/logo.png"></div>
+    <div class="copyright"><img src="img/copyright.png"></div>
+    <div class="slogan"><img src="img/slogan.png"></div>
+    <div class="slogan2"><img src="img/slogan2.png"></div>
   </div>
 </div>
+<script src="libs/jquery.min.js"></script>
+<script src="./cache.js"></script>
 <script>
-var $num = document.getElementById('number');
-var $control = document.getElementById('control');
-var $resultModal = document.getElementById('yourResultModal');
-var $result = document.getElementById('result');
+// --------- 视图始终在屏幕中心
+initWindowSize();
+function initWindowSize() {
+  var winW = window.innerWidth;
+  var winH = window.innerHeight;
+  var $body = $('.container');
+  var ww, hh
+  if (winW / winH < 1920 / 1080) {
+    ww = winW;
+    hh = 1920 / 1080 * ww;
+  } else {
+    hh = winH;
+    ww = 1920 / 1080 * hh;
+  }
 
+  var scale = ww / 1920;
+  $body.css('transform', 'scale(' + scale + ')')
+}
+
+var page = {
+  mainBg: $('#main-bg'),
+  waiting: $('#waiting'),
+  number: $('#number'),
+  good: $('#good'),
+  bad: $('#bad'),
+  hero: $('#hero'),
+  list: $('#list'),
+}
+
+// --------- 10s 无操作则显示等待页
+var EventTimer = null;
+removeWaiting();
+// 备用事件 mousemove keydown DOMMouseScroll mousewheel
+$(window).on('click', function(e) {
+  clearTimeout(EventTimer);
+  removeWaiting();
+  EventTimer = setTimeout(Waiting, 30*1e3);
+});
+
+function Waiting() {
+  page.waiting.addClass('in');
+}
+
+function removeWaiting() {
+  page.waiting.removeClass('in');
+  page.number.addClass('in');
+  page.mainBg.addClass('in');
+}
+
+var $state = $('#state');
 
 // ------- 动画部分
-var stop = false, temp = 0;
-
+var $nums = $('#number-box');
+var result = 0;
 function update() {
-  if (temp = ++temp % 10) return;
   var text = _random(1e3, 1e4) >> 0;
-  $num.innerText = text;
+  result = text;
+  text = (text + '').split('').reduce(function(re, x) {
+    return re + '<div class="num num' + x + '"></div>';
+  }, '');
+  $nums.html(text);
 }
 
-(function loop() {
-  !stop && update();
-  requestAnimationFrame(loop);
-})()
+var defaultSpeed = 80;
+var anim = new smooth(update, defaultSpeed);
 
-// ------- 事件部分
-$control.addEventListener('click', _control, false);
-window.addEventListener('click', _cancelModal, false);
+var data = window.localStorage.getItem('heros');
+data = data ? JSON.parse(data) : [];
+renderList(data);
 
-function _control(e) {
-  stop = true;
-  var text = _random(1e3, 1e4) >> 0;
-  $num.innerText = text;
-  $resultModal.classList.add('in');
+var last = window.localStorage.getItem('lastHeros');
+last = last ? JSON.parse(last) : 0;
+renderLast(last);
+
+var clicked = false;
+page.number.on('click', function() {
+  if (clicked) return;
+  clicked = true;
+  $state.text('灵力测试中...');
+  for (var i=1; i<6; i++) {
+    (function(i){setTimeout(function(){
+      anim.duration(i*100);
+      if (i >= 5) { anim.stop(); Finish(); }
+    }, i*1000)})(i);
+  }
+});
+
+$('.sort-list').on('click', function(e){
+  e.stopPropagation();
+  page.list.addClass('in');
+});
+
+// ----------- Finish
+
+function Finish() {
+  $state.text('结果');
+  page.number.addClass('result');
+  last = result;
+  renderLast(last);
+  window.localStorage.setItem('lastHeros', last);
+  if (result > 5000) {
+    page.good.addClass('in');
+  } else {
+    page.bad.addClass('in');
+  }
+  signHeroName();
 }
 
-function _cancelModal(e) {
-  console.log(e.target);
+function signHeroName() {
+  setTimeout(function(){
+    page.number.removeClass('in');
+    page.good.removeClass('in');
+    page.bad.removeClass('in');
+    page.hero.addClass('in');
+  }, 1000);
+}
+
+// 少年走掉了
+$('.btn-back').on('click', ReStart);
+// 从排行榜中退出
+$('.btn-restart').on('click', ReStart);
+function ReStart() {
+  clicked = false;
+  result = '';
+  $state.text('');
+  $input.val('');
+  page.number.removeClass('result');
+  for (var i in page) {
+    page[i].removeClass('in');
+  }
+  page.number.addClass('in');
+  setTimeout(function(){
+    anim.duration(defaultSpeed);
+    anim.start();
+  }, 1000);
+}
+
+// ----------- 提交表单
+
+var $input = $('input');
+$('form').on('submit', function(){
+  var val = $input.val();
+  if (!val) return alert('请留下你的姓名吧');
+  data.push({ name: val, time: Date.now(), num: result });
+  result = '';
+  renderList(data);
+  window.localStorage.setItem('heros', JSON.stringify(data));
+  page.hero.removeClass('in');
+  page.list.addClass('in');
+});
+
+
+// ---------- tab 切换
+
+$('.tab').on('click', function(){
+  var index = $(this).index();
+  $(this).addClass('active').siblings().removeClass('active');
+  $('.list-box').eq(index).addClass('active').siblings().removeClass('active');
+})
+
+// ---------- 绘制列表
+
+function renderList(data) {
+  data = data.sort(function(a, b) {
+    return b.num - a.num;
+  });
+  var todayData = data.filter(function(x){
+    var now = new Date();
+    var morning = new Date(now.getFullYear(), now.getMonth(), now.getDate(),0,0,0).getTime();
+    return x.time - morning > 0 && x.time - morning < 24*60*60*1000;
+  });
+  $('#today').html(todayData.reduce(function(re, x) {
+    return re + renderListItem(x);
+  }, ''));
+  $('#history').html(data.reduce(function(re, x) {
+    return re + renderListItem(x);
+  }, ''));
+}
+
+function renderListItem(item) {
+  var _html = '<div class="item">';
+  _html += '  <div class="name">' + item.name + '</div>';
+  _html += '  <div class="desc">灵压</div>';
+  _html += '  <div class="number-box">';
+  _html += (item.num + '').split('').reduce(function(re,x) {
+    return re + '<div class="num num' + x + '"></div>';
+  }, '');
+  _html += '  </div>';
+  _html += '</div>';
+  return _html;
+}
+
+function renderLast(num) {
+  var _html = (num + '').split('').reduce(function(re,x) {
+    return re + '<div class="num num' + x + '"></div>';
+  }, '');
+  $('#last .number-box').html(_html);
 }
 
 function _random(max = 1, min = 0) {
   return min + Math.random() * (max - min);
+}
+
+function smooth(fn, duration) {
+  var per, now = Date.now(), Timer, _stop = false;
+
+  (function _run() {
+    per = Math.min(1, (Date.now() - now) / duration);
+    if (per >= 1)  {
+      now = Date.now();
+      if (!_stop) fn();
+    }
+    Timer = requestAnimationFrame(_run);
+  })()
+
+  return {
+    duration: function(time) {
+      duration = time;
+    },
+    start: function() {
+      _stop = false;
+    },
+    stop: function() {
+      _stop = true;
+    },
+  }
 }
 </script>
 </body>
