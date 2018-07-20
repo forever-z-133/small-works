@@ -231,7 +231,7 @@ input:focus, button:focus { outline: 0; }
   </div>
 </div>
 <script src="libs/jquery.min.js"></script>
-<script src="./cache.js"></script>
+<!-- <script src="./cache.js"></script> -->
 <script>
 // --------- 视图始终在屏幕中心
 initWindowSize();
@@ -308,7 +308,13 @@ last = last ? JSON.parse(last) : 0;
 renderLast(last);
 
 var clicked = false;
-page.number.on('click', function() {
+page.number.on('click', stopNumber);
+$(window).on('keypress', function(e) {
+	if (e.keyCode == 32 || e.keyCode == 13) {
+		stopNumber();
+	}
+});
+function stopNumber() {
   if (clicked) return;
   clicked = true;
   $state.text('灵力测试中...');
@@ -318,7 +324,7 @@ page.number.on('click', function() {
       if (i >= 5) { anim.stop(); Finish(); }
     }, i*1000)})(i);
   }
-});
+}
 
 $('.sort-list').on('click', function(e){
   e.stopPropagation();
