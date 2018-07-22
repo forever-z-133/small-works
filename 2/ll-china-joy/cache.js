@@ -1,4 +1,7 @@
-var VERSION = 'v1.0.1';
+var VERSION = 'v1.0.2';
+// 1.0 初版
+// 1.0.1 添加空格键触发
+// 1.0.2 调整随机比例与最大值
 
 // 缓存
 self.addEventListener('install', function(event) {
