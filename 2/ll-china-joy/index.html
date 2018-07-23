@@ -232,7 +232,23 @@ input:focus, button:focus { outline: 0; }
   </div>
 </div>
 <script src="libs/jquery.min.js"></script>
-<script src="./cache.js"></script>
+<!-- <script src="./cache.js"></script> -->
+<script>
+if ('serviceWorker' in navigator) {
+  // 开始注册service workers
+  navigator.serviceWorker.register('./cache.js', {
+    scope: './'
+  }).then(function (registration) {
+    console.log(registration);
+    console.log('离线缓存成功');
+  }).catch (function (error) {
+    console.log(error);
+    alert('离线缓存开启失败！');
+  });
+} else {
+  alert('不支持离线缓存，换个谷歌浏览器吧！');
+}
+</script>
 <script>
 // --------- 视图始终在屏幕中心
 initWindowSize();
