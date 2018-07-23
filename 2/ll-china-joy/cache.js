@@ -1,4 +1,4 @@
-var VERSION = 'v1.0.3';
+var VERSION = 'v1.0.4';
 // 1.0 初版
 // 1.0.1 添加空格键触发
 // 1.0.2 调整随机比例与最大值
@@ -10,7 +10,6 @@ self.addEventListener('install', function(event) {
     caches.open(VERSION).then(function(cache) {
       return cache.addAll([
         './index.html',
-        './cache.js',
         './libs/jquery.min.js',
         './img/back.png',
         './img/bg.png',
@@ -54,16 +53,27 @@ self.addEventListener('activate', function(event) {
 });
 
 // 捕获请求并返回缓存数据
+// self.addEventListener('fetch', function(event) {
+// 	console.log('fetch', event)
+//   event.respondWith(caches.match(event.request).catch(function() {
+//     return fetch(event.request);
+//   }).then(function(response) {
+//     caches.open(VERSION).then(function(cache) {
+//       cache.put(event.request, response);
+//     });
+//     return response.clone();
+//   }).catch(function() {
+//     return caches.match('./img/bg.png');
+//   }));
+// });
 self.addEventListener('fetch', function(event) {
-	console.log('fetch', event)
-  event.respondWith(caches.match(event.request).catch(function() {
-    return fetch(event.request);
-  }).then(function(response) {
-    caches.open(VERSION).then(function(cache) {
-      cache.put(event.request, response);
-    });
-    return response.clone();
-  }).catch(function() {
-    return caches.match('./img/bg.png');
-  }));
+  event.respondWith(caches.match(event.request)
+    .then(function(response) {
+      console.log(event.request)
+      console.log(caches)
+      // 如果发现匹配的响应，则返回缓存的值
+      if (response) return response;
+      return fetch(event.request);
+    })
+  );
 });
