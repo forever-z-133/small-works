@@ -10,6 +10,7 @@ self.addEventListener('install', function(event) {
     caches.open(VERSION).then(function(cache) {
       return cache.addAll([
         './index.html',
+        './cache.js',
         './libs/jquery.min.js',
         './img/back.png',
         './img/bg.png',
