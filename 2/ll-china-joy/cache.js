@@ -1,7 +1,10 @@
-var VERSION = 'v1.0.4';
+var VERSION = 'v1.0.5';
 // 1.0 初版
 // 1.0.1 添加空格键触发
 // 1.0.2 调整随机比例与最大值
+// 1.0.3 尝试 Service Worker 失败
+// 1.0.4 尝试 Service Worker 失败2
+// 1.0.5 出结果后改为事件触发换页
 
 // 缓存
 self.addEventListener('install', function(event) {
@@ -9,6 +12,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(VERSION).then(function(cache) {
       return cache.addAll([
+        './',
         './index.html',
         './libs/jquery.min.js',
         './img/back.png',
