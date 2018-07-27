@@ -1871,3 +1871,11 @@
 .index-gallery .section-title {
     color: #fff;
 }
+
+.inMobile {
+    display: none;
+}
+@media (max-width: 768px) {
+    .inMobile { display: block; }
+    .inMobile + p { display: none; }
+}
