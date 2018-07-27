@@ -1,4 +1,4 @@
-var VERSION = 'v1.0.6';
+var VERSION = 'v1.0.7';
 // 1.0 初版
 // 1.0.1 添加空格键触发
 // 1.0.2 调整随机比例与最大值
@@ -6,6 +6,7 @@ var VERSION = 'v1.0.6';
 // 1.0.4 尝试 Service Worker 失败2
 // 1.0.5 出结果后改为事件触发换页
 // 1.0.6 扩展无操作监听，修改数字为补零
+// 1.0.7 延长待机出现时间 10s -> 60s
 
 // 缓存
 self.addEventListener('install', function(event) {

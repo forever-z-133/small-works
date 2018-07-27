@@ -286,7 +286,7 @@ removeWaiting();
 $(window).on('click mousemove keydown DOMMouseScroll mousewheel', function(e) {
   clearTimeout(EventTimer);
   removeWaiting();
-  EventTimer = setTimeout(Waiting, 10*1e3);
+  EventTimer = setTimeout(Waiting, 60*1e3);
 });
 
 function Waiting() {
