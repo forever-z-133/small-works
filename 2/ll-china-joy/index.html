@@ -243,10 +243,10 @@ if ('serviceWorker' in navigator) {
     console.log('离线缓存成功');
   }).catch (function (error) {
     console.log(error);
-    alert('离线缓存开启失败！');
+    console.log('离线缓存开启失败！');
   });
 } else {
-  alert('不支持离线缓存，换个谷歌浏览器吧！');
+  console.log('不支持离线缓存，换个谷歌浏览器吧！');
 }
 </script>
 <script>
