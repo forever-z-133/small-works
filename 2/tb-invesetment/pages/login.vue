@@ -1,5 +1,5 @@
 <template>
-	<div class="login-wrap" style="padding: 45px 0;">
+	<div class="login-wrap">
 		<login-form></login-form>
 	</div>
 </template>
@@ -26,5 +26,8 @@
 .login-wrap{
 	position: relative;
 	background: #eee;
+	padding: 45px 0;
+	background: url(../assets/userCenter/login-bg.png) no-repeat;
+	background-size: 100% 100%;
 }
 </style>

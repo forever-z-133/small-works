@@ -35,17 +35,27 @@ const $http = (url, method, data, header) => {
 
 //获取文章祥情
 export const getArticleDetail = id => $http(`cmsArticle/${id}`, "get")
+// 添加收藏
+export const addFavorite = articleid => $http(`/userFavorite/add`, 'post', { articleid })
+export const deleteFavorite = articleid => $http(`/userFavorite/update`, 'put', { articleid, valid: false })
+export const getFavoriteNumber = articleid => $http(`/userFavorite/getCount/${articleid}`, 'get')
+export const getFavoriteState = articleid => $http(`/userFavorite/getFavorite/${articleid}`, 'post')
+//用户阅读记录埋点 
+export const addReadLog = data => $http(`/userLogRead/update`, "post", data)
 
 // 添加留言
 export const addComment = (articleId, content) =>  $http(`/UserLeavewords/add`, "post", { articleId, content })
 // 获取留言列表
-export const getCommentList = (id) =>  $http(`/UserLeavewords/list/${id}`, "get")
+export const getCommentList = (id, pageNum) =>  $http(`/UserLeavewords/list/${id}/${pageNum}`, "get")
 
 // 添加问答
 export const addQuestion = data => $http(`/userQuestion/addUserQuestion`, 'post', data)
 
 //获取报告目录
 export const getReportDetail = (id) => $http(`/report/findReport/${id}`, "get")
+// 用 token 验证是否需要登录（UP|DOWN）
+export const getReportImageList = (id) => $http(`/report/getIllsList/${id}`, "get")
+// export const getNextReportImage = (id, direction) => $http(`/report/getNextIlls/${id}/${direction}`, "get")
 // 用 token 验证是否需要登录
 export const findUser = (id) => $http(`/user/findUser`, "get")
 

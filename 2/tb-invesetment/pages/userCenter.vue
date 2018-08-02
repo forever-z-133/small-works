@@ -3,10 +3,11 @@
 		<div class="user-header">
 			<div class="user-info">
 				<div class="user-head-img">
-					<img :src="imgbaseurl + user.namecard" />
+					<!--<img v-if="user.namecard" :src="imgbaseurl + user.namecard" />-->
+					<img src="../assets/userCenter/head-default.png" />
 				</div>
 				<div class="user-info-center">
-					<div>{{user.name || '某某某'}}</div>
+					<div>{{tele}}</div>
 					<router-link v-if="!user.name" class="link" to="editUserInfo">补全信息 <i class="el-icon-arrow-right"></i></router-link>
 				</div>
 				<div class="user-info-bottom">
@@ -18,7 +19,7 @@
 						<li v-for="(item,index) in usertags" :key="index" :index="index">{{item}}</li>
 					</ul>
 					<div class="edit-pencle" v-if="user.name" @click="edit"></div>
-					<div class="user-logout">退出账号</div>
+					<div class="user-logout" @click="logout">退出账号</div>
 				</div>
 			</div>
 		</div>
@@ -69,8 +70,10 @@
 	export default {
 		data() {
 			return {
-				user:{},
-				usertags:[],
+				info:{},
+				//tele:"",
+				user: {},
+				usertags: [],
 				activeNav: "1",
 				a: "",
 				b: "",
@@ -86,6 +89,24 @@
 			myRelease,
 			readHistory
 		},
+		computed:{
+			tele(){
+				let m = this.info.mobileno;
+				if(m){
+					let l = m.length;
+					let x = m.substr(0,3);
+					let y = m.substr(l-4,4)
+					let s = "";
+					for (var i = 0; i < l - 7; i++) {
+						s += "*"
+					}
+					return x + s + y
+				} else {
+					return ""
+				}
+
+			}
+		},
 		created() {
 			this.init()
 			this.getUser()
@@ -94,15 +115,18 @@
 			var str = window.location.search;
 			var r = str.match(new RegExp('(^|\\?|&)tab=([^&]*)(&|$)'));
 			this.activeNav = r && r.length ? r[2] : this.activeNav;
+			let info = window.localStorage.getItem("userinfo");
+			this.info = JSON.parse(info) || {};
+
 		},
 		methods: {
-			async getUser(){
+			async getUser() {
 				let res = await findUserInfoAndUserCompanyByUserId();
-				if(res.code == 0){
+				if(res.code == 0) {
 					this.user = res.data
 
 					let tags = res.data.focuson;
-					if(tags){
+					if(tags) {
 						this.usertags = tags.split(",")
 					}
 				}
@@ -130,8 +154,16 @@
 					this[keys] = 0;
 				}
 			},
-			edit(){
+			edit() {
 				this.$router.push("/editUserInfo")
+			},
+			logout() {
+				window.localStorage.removeItem("token")
+				window.localStorage.removeItem("userinfo")
+				window.localStorage.removeItem("telphone");
+				window.localStorage.removeItem("username");
+				this.$store.commit("setLogin", false);
+				this.$router.replace("/");
 			}
 		}
 	}
@@ -150,7 +182,9 @@
 	.user-header {
 		width: 1200px;
 		height: 300px;
-		background-color: cornflowerblue;
+		/*background-color: cornflowerblue;*/
+		background: url(../assets/userCenter/timg.png) no-repeat;
+		background-size: 100% 200px;
 		position: relative;
 		margin: 0 auto;
 	}
@@ -224,28 +258,31 @@
 		padding-left: 25px;
 		cursor: pointer;
 	}
-
 	/*.user-tag-icon>li:hover,*/
 	/*.user-tag-border>li:hover,*/
+
 	.user-logout:hover {
 		color: #E83929;
 		border-color: #E83929;
 	}
-	.user-tag-icon>li:nth-child(1){
+
+	.user-tag-icon>li:nth-child(1) {
 		background: url(../assets/login/icon-position.png) no-repeat;
 		background-size: 17px 14px;
 		background-position: 0 50%;
 	}
-	.user-tag-icon>li:nth-child(2){
+
+	.user-tag-icon>li:nth-child(2) {
 		background: url(../assets/login/icon-corp.png) no-repeat;
 		background-size: 17px 14px;
 		background-position: 0 50%;
 	}
+
 	.user-tag-border>li {
 		float: left;
 		border: 1px solid #ACA0A0;
 		border-radius: 8px;
-		width: 40px;
+		min-width: 40px;
 		height: 22px;
 		line-height: 22px;
 		color: #ACA0A0;
@@ -253,6 +290,7 @@
 		font-size: 12px;
 		margin-right: 16px;
 		cursor: pointer;
+		padding: 0 5px;
 	}
 
 	.edit-pencle {

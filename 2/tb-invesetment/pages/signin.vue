@@ -1,6 +1,6 @@
 <template>
 	<div class="siginin-wrap" style="padding: 45px 0;">
-		<div class="content-box">
+		<div class="content-box" style="width: 75%;min-width: 960px;">
 			<div class="login-title">
 				<div class="border-title">注册头豹，及时准确的行业理解助力您的决策</div>
 				<router-link class="new-link" to="../login">使用已有账号登录</router-link>
@@ -8,6 +8,7 @@
 			<el-form :model="siginForm" class="login-form">
 				<select v-model="siginForm.areacode" class="form-input">
 					<option value="+86">中国大陆(+86)</option>
+					<option value="+0855">中国香港(+0855)</option>
 				</select>
 				<div class="form-items">
 					<input type="text" v-model="siginForm.mobileno" class="form-input form-icon login-tele" placeholder="手机号" />
@@ -28,10 +29,7 @@
 				</div>
 				<div class="form-code">
 					<input type="text" v-model="siginForm.verificationCode" class="form-input form-icon login-code" placeholder="验证码" />
-					<div class="form-code-btn" :class="codeImgStatus || sendStatus ? 'disable' : ''" @click="sendMsg">{{sendBtnText}}</div>
-				</div>
-				<div style="height: 64px;">
-					<router-link to="../forget" style="color:#555">忘记登录密码</router-link>
+					<div class="form-code-btn" :class="codeImgStatus || sendStatus || phoneValid ? 'disable' : ''" @click="sendMsg">{{sendBtnText}}</div>
 				</div>
 				<el-button class="btn" @click="submit" :class="submitBtn ? 'btn-disable' : ''" :disabled="submitBtn">注册账号</el-button>
 				<div class="login-type">
@@ -70,21 +68,33 @@
 			}
 		},
 		watch: {
-			"siginForm.mobileno" (val, old) {
-				let reg = /^1[3|4|5|8][0-9]\d{4,8}$/.test(val)
+			"siginForm.areacode"(val, old) {
+				let type = this.siginForm.areacode
+				let reg = ""
+				if(type == "+86"){
+					reg = /^1[3|4|5|6|7|8][0-9]\d{4,8}$/.test(val)
+				} else {
+					reg = /^([6|9])\d{7}$/.test(val) 
+				}
 				if(!reg) {
 					this.phoneValid = "手机号不正确!"
 				} else {
 					this.phoneValid = ""
 				}
 			},
-			"siginForm.password" (val, old) {
-				let reg = val.length >= 6;
-				if(!reg) {
-					this.pwdValid = "密码长度至少6位!"
+			"siginForm.mobileno" (val, old) {
+				let type = this.siginForm.areacode
+				let reg = ""
+				if(type == "+86"){
+					reg = /^1[3|4|5|6|7|8][0-9]\d{4,8}$/.test(val)
 				} else {
-					this.pwdValid = ""
+					reg = /^([6|9])\d{7}$/.test(val) 
 				}
+				this.phoneValid = reg ? "" : "手机号不正确!"
+			},
+			"siginForm.password" (val, old) {
+				let reg = (val.length >= 6) && (val.length <= 24);
+				this.pwdValid = reg ? "" : "密码长度6~24位!"
 			},
 			"imgCode" (val, old) {
 				if(val.length > 4) {
@@ -121,7 +131,11 @@
 		methods: {
 			getUUID,
 			init() {
+				let self = this;
 				this.uuid = this.getUUID()
+				let timer = setTimeout(function(){
+					self.init();
+				},120000)
 			},
 			timer() {
 				let self = this;
@@ -147,34 +161,34 @@
 				let params = this.siginForm
 				let res = await register(params)
 				if(res.code == 0){
-					this.$message.success('注册成功');
-					localStorage.setItem("userinfo",JSON.stringify({ token: res.data }))
-					localStorage.setItem("token",res.data)
-					if (!window.sessionStorage.getItem('backto')) {
-						var redirect = window.sessionStorage.getItem('backto')
-						return this.$router.replace(redirect);
-					}
-					this.$router.replace('/userCenter');
+					localStorage.setItem("userinfo",JSON.stringify(res.data))
+					localStorage.setItem("token",res.data.token)
+					this.$store.commit("setLogin", true);
+					this.$router.push("/centerPage")
 				} else {
+					this.init()
 					this.$message.error(res.msg)
 				}
 			},
 			async sendMsg() {
 				//发送验证码
 				let status = !this.codeImgStatus && !this.sendStatus && !this.phoneValid;
+				console.log(status)
 				if(status) {
 					this.sendStatus = true;
 					let params = {
 						mobileno: this.siginForm.mobileno,
 						kaptchaImage: this.imgCode,
-						uuid: this.uuid
+						uuid: this.uuid,
+						areacode:this.siginForm.areacode
 					}
 					let res = await getVerificationCode(params)
-					if(res.data) {
+					if(res.data.status) {
 						this.timer();
 						this.$message.success("验证码发送成功")
 					} else {
-
+						this.init();
+						this.$message.error("验证码发送失败")
 					}
 				}
 			},

@@ -1,6 +1,6 @@
 <template>
     <!-- <Detail :id="id" :info="info" v-loading.fullscreen="loading"> -->
-    <Detail :id="''" :info="info" v-loading.fullscreen="loading">
+    <Detail :id="id" :info="info" v-loading.fullscreen="loading" no-comment :hasNothing="hasNothing">
         <section class="report-main-wrap">
             <div class="report-main-head">
                 <div class="section-title">目录</div>
@@ -16,15 +16,6 @@
                         <div class="report-main-item-body" v-loading="item.loading">
                             <div class="report-main-item-section">
                                 <RepeatItem :data="item.children"></RepeatItem>
-                                <!-- <h2>1-1 阿达 阿达三大</h2>
-                                <h3>1-1-1 阿达 阿达三大</h3>
-                                <p>在从前的纸媒时代，话语权是高度集中的，报纸杂志写什么，读者看什么；几乎全中国的意见领袖都集中在了各大杂志报刊里面，并且通过杂志的审美取向对读者进行筛选。比如追求生活品质的读者大部分选择《三联生活周刊》，数码爱好者不少也会订阅《大众软件》，这种内容输出几乎是单向的，一本杂志里面大部分的内容对于读者来说可能都是没有阅读价值的。</p>
-                                <p>今天的中国，正在向着历史的山巅行进。中国共产党人的奋勇开拓与中华民族的伟大复兴，形成穿越时空的激昂合奏。“红色理论家”郑德荣，毕生追求马克思主义真理之光；植物学家钟扬，以颗颗种子造福万千苍生；“当代愚公”黄大发，修完“生命渠”又带领村民走上致富路；诺贝尔奖获得者屠呦呦，年近九旬还在为中医药创新继续探索……在改革创新最前沿奋力争先，在脱贫攻坚战场上闯关夺隘，在基层治理第一线躬身实践，神州大地上，千千万万共产党员正以永不懈怠的精神状态，干在实处、走在前列。</p>
-                                <figure>
-                                    <img src="../assets/timg7.png" alt="">
-                                    <span>图 1-1</span>
-                                </figure>
-                                <p>在从前的纸媒时代，话语权是高度集中的，报纸杂志写什么，读者看什么；几乎全中国的意见领袖都集中在了各大杂志报刊里面，并且通过杂志的审美取向对读者进行筛选。比如追求生活品质的读者大部分选择《三联生活周刊》，数码爱好者不少也会订阅《大众软件》，这种内容输出几乎是单向的，一本杂志里面大部分的内容对于读者来说可能都是没有阅读价值的。</p> -->
                             </div>
                         </div>
                     </div>
@@ -36,6 +27,13 @@
         <div class="aside-wrap" slot="aside">
             <NewNewsList v-if="newnews" title="热门文章" v-bind:newnews='newnews'></NewNewsList>
         </div>
+
+        <FooView>
+            <div class="more-fixed-btns" slot="before">
+                <li class="btn-expand open" @click="openAll">全部展开</li>
+                <li class="btn-expand close" @click="closeAll">全部关闭</li>
+            </div>
+        </FooView>
     </Detail>
 </template>
 
@@ -43,16 +41,20 @@
 import Detail from '../components/Detail.vue';
 import RepeatItem from '../components/RepeatItem.vue';
 import NewNewsList from "../components/NewNewsList.vue";
+import FooView from "../components/FooView.vue";
 
-import utils from '../plugins/utils.js';
-import { getReportDetail, getReportInfo, findUser } from "../plugins/ajax_zyh.js";
+import { scrollPercent, replaceImageInHtml } from "../plugins/utils.js";
+import { getReportDetail, getReportInfo, findUser, addReadLog } from "../plugins/ajax_zyh.js";
 import $axios from "../plugins/axios.js";
+
+var nothingTimer;
 
 export default {
     components: {
         Detail,
         RepeatItem,
         NewNewsList,
+        FooView,
     },
     data() {
         return {
@@ -66,30 +68,53 @@ export default {
             },
             data: [],
             newnews: [],
+            hasNothing: false,
         }
     },
     head() {
         return { title: this.info.title }
     },
-    created() {
+    mounted() {
         if (!this.id) {
             this.loading = false;
+            this.hasNothing = true;
+            nothingTimer = setTimeout(() => this.$router.replace({ name: 'index' }), 5000);
             return this.$message.error('未获得报告 ID');
         }
 
-        // this.id = '5b3b6a42cac9f6367dc81e4e'
         getReportDetail(this.id).then(data => {
             this.loading = false;
             this.convertData(data);
         }).catch(err => {
             this.loading = false;
+            this.hasNothing = true;
+            nothingTimer = setTimeout(() => this.$router.replace({ name: 'index' }), 5000);
             this.$message.error('报告数据请求失败');
         });
 
         this.gethotArticles();
+
+        window.sessionStorage.removeItem('backto');
+        this.scroller = new scrollPercent();
+    },
+    beforeDestroy() {
+        nothingTimer && clearTimeout(nothingTimer);
+        this.scroller && this.scroller.destroy(res => {
+            this.logId && addReadLog({
+                id: this.logId,
+                ...res,
+            });
+        });
+        
+        this.gallery && this.gallery.destroy();
     },
     methods: {
         convertData (data) {
+            if (data.logId) {
+                this.logId = data.logId;
+                data = data.object;
+            }
+
             var main = data[0];
             this.info.title = main.name;
             this.info.author = '沙利文' || '';
@@ -101,7 +126,7 @@ export default {
                 return now.subjects.reduce((re, x) => {
                     return re.concat(rest.filter((y, i) => {
                         if (x == y.id) {
-                            y.content = '';
+                            y.content = y.content ? y.content : '';
                             y.loading = true;
                             y.level = level;
                             y.mark = (now.mark || []).concat([re.length+1]);
@@ -113,6 +138,13 @@ export default {
                 }, []);
             })(main, data.slice(1), 1);
             this.data = mainData;
+            // 绑定滚动事件
+            this.scroller.init();
+
+            setTimeout(() => {
+                var $body = document.querySelector('.el-main')
+                this.gallery = lightGallery($body, { selector: '.gallery' });
+            }, 50);
         },
         clickToggle (index) {
             this.verification.call(this).then(() => {
@@ -124,41 +156,19 @@ export default {
             var item = this.data[index];
             item.showBody = !item.showBody;
             this.$set(this.data, index, item);
-
-            console.log(item);
-            // getReportDetail(item.id).then(res => {
-            //     console.log(res);
-            // })
-            // item.reply 
-            // console.log(this.data[index]);
-
-        },
-        // 请求获取内容
-        getContent (item) {
-            return new Promise((resolve, reject) => {
-                // (function _load(now, children){
-                //     if (!children || children.length < 1) return null;
-                //     children.map((section, i) => {
-                //         if (x.children) {
-                //             _load(x, x.children);
-                //         }
-                //         if (!x.sections) return null;
-                //         getReportInfo(x.id).then(res => {
-                //             x.content = res;
-                //         }).catch(reject);
-                //     })
-                // })(item, item.children)
-            })
         },
         verification () {
             return new Promise((resolve, reject) => {
                 if (!window.localStorage.getItem('userinfo')) {
                     reject({code:'40001',data:null,msg:'请先登录'});
                     this.$message.warning('请先登录');
+                    var href = window.location.href;
+                    href = href.replace(window.location.origin, '');
+                    window.sessionStorage.setItem('backto', href);
                     return this.$router.push('/login');
                 }
 
-                if (!window.localStorage.getItem('telphone')) {
+                if (window.localStorage.getItem('telphone')) {
                     var tel = window.localStorage.getItem('telphone')
                     return resolve({ mobileno: tel });
                 }
@@ -182,6 +192,34 @@ export default {
                 console.log(err);
             });
         },
+        jumpToComment () {
+            window.location.hash = 'comment';
+            setTimeout(() => {
+                var href = window.location.href;
+                href = href.replace('#comment', '');
+                window.history.replaceState({}, '', href);
+            }, 0);
+        },
+        openAll() {
+            if (!window.localStorage.getItem('userinfo')) {
+                this.$message.warning('请先登录');
+                var href = window.location.href;
+                href = href.replace(window.location.origin, '');
+                window.sessionStorage.setItem('backto', href);
+                return this.$router.push('/login');
+            }
+            
+            this.data = this.data.map(item => {
+                item.showBody = true;
+                return item;
+            });
+        },
+        closeAll() {
+            this.data = this.data.map(item => {
+                item.showBody = false;
+                return item;
+            });
+        }
     }
 }
 </script>
@@ -294,5 +332,19 @@ export default {
     & > :last-child {
         margin-bottom: 0;
     }
+}
+.btn-expand {
+    text-indent: -999em;
+    background-position: 0 0;
+    background-size: 200% 200%;
+    background-image: url(/assets/images/expand.jpg);
+    cursor: pointer;
+}
+.btn-expand.open { background-position: 0 0; }
+.btn-expand.close { background-position: 100% 0; }
+.btn-expand:hover.open { background-position: 0 100%; }
+.btn-expand:hover.close { background-position: 100% 100%; }
+.btn-expand:last-child {
+    margin-bottom: 10px;
 }
 </style>

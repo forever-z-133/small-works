@@ -4,7 +4,7 @@
            {{title}}
         </div>
         <div class="new_news">
-          <NewNews v-for="(item,index) in newnews" v-bind:newnews='item' v-bind:id='index' v-bind:key='index'></NewNews>
+          <NewNews v-for="(item,index) in newnews" v-bind:newnews='item' v-if="item" v-bind:id='index' v-bind:key='index'></NewNews>
         </div>
         </div>
 </template>
@@ -24,8 +24,10 @@
   }
   .newnews:nth-child(1),
   .newnews:nth-child(2) {
+    cursor: pointer;
     img {
       width: 100%;
+      height: auto;
     }
     .newsmessage {
       font-size: 16px;
@@ -40,16 +42,24 @@
       display: -webkit-box;
       min-height: 44px;
       -webkit-line-clamp: 2;
+      vertical-align: middle;
       text-overflow: ellipsis;
       padding: 14px 0px;
       width: 100%;
       overflow: hidden;
       -webkit-box-orient: vertical;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tip {
+      position: absolute;
+      margin: -45% 0 0 0;
     }
     span {
-      position: absolute;
+      // position: absolute;
       background: #e83929;
-      margin: -50% 0 0 0;
+      // margin: -60% 0 0 0;
       color: white;
       border-right-style: 10px;
       border-top-right-radius: 13px;
@@ -61,8 +71,9 @@
     }
   }
   .newnews:nth-child(n + 3) {
-    .newlink{
+    .newlink {
       display: flex;
+      cursor: pointer;
     }
 
     img {
@@ -107,7 +118,7 @@ export default {
   data() {
     return {};
   },
-   components: {
+  components: {
     NewNews
   },
   props: {
@@ -115,9 +126,9 @@ export default {
       type: Array,
       required: true
     },
-    title:{
-      type:String,
-      required:true
+    title: {
+      type: String,
+      required: true
     }
   },
   methods: {},

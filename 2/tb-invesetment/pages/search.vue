@@ -1,8 +1,8 @@
 <template>
   <div class="fillcontain">
     <el-row type="flex" class="row-bg" justify="center">
-      <el-col :xs="0" :sm="0" :md="3" :lg="3" :xl="3"></el-col>
-      <el-col :xs="15" :sm="15" :md="12" :lg="12" :xl="12" id="newslist">
+      <el-col :xs="0" :sm="0" :md="2" :lg="3" :xl="3"></el-col>
+      <el-col :xs="15" :sm="15" :md="12" :lg="12" :xl="12" id="newslist" style="min-width: 680px;">
 
         <div v-if="type==2" class="gallery">
           <div class="item" v-for="(item,index) in imgs" :key="index" @click="reportdetail(item.id)">
@@ -11,23 +11,35 @@
         </div>
         <div v-else class="newslist ">
           <div v-for="(item,index) in newsitem" :key="index">
-            <Newsitem source="search" v-bind:newsitem='item.object' :userLogBrowse='userLogBrowse' :type='newstype'></Newsitem>
+            <Newsitem :keyword="key"  source="search" v-bind:newsitem='item.object' :userLogBrowse='userLogBrowse' :type='newstype'></Newsitem>
           </div>
 
         </div>
-        <div class="nomore">
-          <span v-if="nomore">没有更多了</span>
+        <div v-if="nomore" class="nomore">
+           <img src="../assets/images/nomore.png">
+        </div>
+        <div v-if="listloading" class="listloading" >
+           <img src="../assets/images/loading.gif">
+        </div>
+         <div  v-if="noresult" class="noresult">
+          <img src="../assets/images/noresult.png">
         </div>
       </el-col>
-      <el-col :span="1"></el-col>
-      <el-col :xs="8" :sm="8" :md="5" :lg="5" :xl="5"></el-col>
-      <el-col :xs="0" :sm="0" :md="3" :lg="3" :xl="3"></el-col>
+      <el-col :span="1" style="min-width:30px;"></el-col>
+      <el-col :xs="8" :sm="8" :md="5" :lg="5" :xl="5" style="min-width: 280px;">
+        <NewNewsList v-if="newnews&&type!=='2'" title="热门文章" v-bind:newnews='newnews'></NewNewsList>
+
+      </el-col>
+      <el-col :xs="0" :sm="0" :md="1" :lg="3" :xl="3"></el-col>
     </el-row>
+    <FooView></FooView>
   </div>
 </template>
 
 <script>
 import Newsitem from "../components/Newsitem.vue";
+import NewNewsList from "../components/NewNewsList.vue";
+import FooView from "../components/FooView.vue";
 import $axios from "../plugins/axios.js";
 export default {
   data() {
@@ -46,7 +58,10 @@ export default {
         turn: 0,
         completeness: 0
       },
-      pause: true
+      pause: true,
+      noresult: false,
+      listloading: true,
+      newnews: []
     };
   },
   mounted() {
@@ -56,13 +71,17 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   components: {
-    Newsitem
+    Newsitem,
+    NewNewsList,
+    FooView
   },
   created() {
     // console.log(this.type);
+    this.gethotArticles();
     if (this.type == 0) {
       //搜文章
       this.searcharticle();
+      this.newstype=1;
     } else if (this.type == 1) {
       this.searchrepote();
       this.newstype = 6;
@@ -79,9 +98,13 @@ export default {
       this.pageNum = 1;
       this.busy = true;
       this.newsitem = [];
+      this.noresult = false;
+      this.nomore = false;
+      this.gethotArticles();
       if (this.type == 0) {
         //搜文章
         this.searcharticle();
+        this.newstype=1;
       } else if (this.type == 1) {
         this.searchrepote();
         this.newstype = 6;
@@ -93,26 +116,47 @@ export default {
     }
   },
   methods: {
+    // 获取热门文章
+    gethotArticles() {
+      $axios({
+        method: "get",
+        url: "/cmsArticle/hotArticles"
+      })
+        .then(res => {
+          if (res.data.code == "0") {
+            console.log(res);
+            if (res.data.data) {
+              this.newnews = res.data.data;
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     searcharticle() {
       $axios({
         method: "get",
         url: "/cmsArticle/search/" + this.pageNum + "/" + this.key
       })
         .then(res => {
-          console.log(res);
           if (res.data.code == "0") {
             this.userLogBrowse.id = res.data.data.logId;
             this.userLogBrowse.turn++;
-            console.log(
-              res.data.data.pageInfo.resultList.length,
-              res.data.data.pageInfo.pageSize
-            );
             if (
               res.data.data.pageInfo.resultList.length <
-              res.data.data.pageInfo.pageSize
+                res.data.data.pageInfo.pageSize &&
+              res.data.data.pageInfo.resultList.length > 0
             ) {
               this.nomore = true;
               this.busy = false;
+              this.listloading = false;
+            } else if (
+              res.data.data.pageInfo.resultList.length == 0 &&
+              res.data.data.pageInfo.total == 0
+            ) {
+              this.noresult = true;
+              this.listloading = false;
             }
             this.newsitem = this.newsitem.concat(
               res.data.data.pageInfo.resultList
@@ -135,11 +179,19 @@ export default {
             this.userLogBrowse.turn++;
             if (
               res.data.data.pageInfo.resultList.length <
-              res.data.data.pageInfo.pageSize
+                res.data.data.pageInfo.pageSize &&
+              res.data.data.pageInfo.resultList.length > 0
             ) {
               this.nomore = true;
               this.busy = false;
+              this.listloading = false;
               console.log("不要");
+            } else if (
+              res.data.data.pageInfo.resultList.length == 0 &&
+              res.data.data.pageInfo.total == 0
+            ) {
+              this.noresult = true;
+              this.listloading = false;
             }
             this.newsitem = this.newsitem.concat(
               res.data.data.pageInfo.resultList
@@ -162,10 +214,18 @@ export default {
             this.userLogBrowse.turn++;
             if (
               res.data.data.pageInfo.resultList.length <
-              res.data.data.pageInfo.pageSize
+                res.data.data.pageInfo.pageSize &&
+              res.data.data.pageInfo.resultList.length > 0
             ) {
               this.nomore = true;
               this.busy = false;
+              this.listloading = false;
+            } else if (
+              res.data.data.pageInfo.resultList.length == 0 &&
+              res.data.data.pageInfo.total == 0
+            ) {
+              this.noresult = true;
+              this.listloading = false;
             }
             this.imgs = this.imgs.concat(res.data.data.pageInfo.resultList);
           }
@@ -232,6 +292,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.fillcontain {
+  padding: 45px 0;
+}
 .gallery {
   display: flex;
   flex-wrap: wrap;
@@ -251,12 +314,32 @@ export default {
 .nomore {
   display: flex;
   justify-content: center;
+  padding: 60px 0 100px 0;
 }
 .nomore span {
-  border: 1px solid #e83929;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #e83929;
-  padding: 10px 24px;
+  // border: 1px solid #e83929;
+  // border-radius: 4px;
+  // font-size: 16px;
+  // color: #e83929;
+  // padding: 10px 24px;
+}
+.noresult {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.noresult img {
+  padding: 140px 0;
+}
+.listloading {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0 0 0;
+  img {
+    width: 130px;
+    height: 100px;
+  }
 }
 </style>

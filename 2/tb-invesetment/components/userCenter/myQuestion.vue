@@ -2,13 +2,16 @@
 	<div class="question">
 		<div class="question-box" v-for="(item,index) in dataList" :key="index" :index="index">
 			<div class="question-header">
-				<div class="question-title">{{JSON.parse(item.question).question}}</div>
-				<div class="question-time">{{item.modifiedat | formatDate}}</div>
+				<div class="question-title">{{ item.question | showQuestion}}</div>
+				<div class="question-time" v-if="item.status != 0">{{item.modifiedat | formatDate}}</div>
 			</div>
-			<div class="question-content">
+			<div v-if="item.status == 0" class="question-wait question-content">
+				头豹的专家正在积极为您解答中
+			</div>
+			<div class="question-content" v-else>
 				<div class="question-date">{{item.createdat | formatDate}}</div>
 				<div class="question-left">
-					<img src="../../assets/timg1.png" />
+					<img src="../../assets/userCenter/head-default.png" />
 				</div>
 				<div class="question-right">
 					<div class="question-name">{{item.answerauthorname}}</div>
@@ -16,14 +19,14 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="dataList.length == 0">暂无数据...</div>
-		<page @current-page="handlePage" :page-size="page.pageSize" :page-total="page.pageTotal"></page>
+		<div v-if="dataList.length == 0" style="text-align: center;">暂无数据...</div>
+		<page @page="handlePage" :page-size="page.pageSize" :page-total="page.pageTotal"></page>
 	</div>
 </template>
 
 <script>
 	import { findUserQuestionList } from "../../plugins/userApi";
-	import utils from "../../plugins/utils"
+	import { publishTime } from "../../plugins/utils"
 	import page from "./page"
 	export default {
 		data() {
@@ -32,21 +35,25 @@
 				page: {
 					pageIndex: 1,
 					pageSize: 15,
-					pageTotal: 100
+					pageTotal: 0
 				}
 			}
 		},
 		components: {
 			page
 		},
-		filters:{
-			formatDate(val){
-				let str = utils.publishTime(val)
+		filters: {
+			formatDate(val) {
+				let str = publishTime(val)
 				return str
+			},
+			showQuestion(val) {
+				let data = JSON.parse(val)
+				return data.question
 			}
 		},
 		created() {
-			console.log("我的提问")
+			//			console.log("我的提问")
 			this.init()
 		},
 		methods: {
@@ -112,11 +119,11 @@
 	.question-content:after {
 		content: "";
 		position: absolute;
-		background-color: #F5F5F5;
-		width: 7px;
-		height: 7px;
 		left: 20px;
 		top: -7px;
+		border-bottom: 7px solid #F5F5F5;
+		border-left: 3.5px solid transparent;
+		border-right: 3.5px solid transparent;
 	}
 	
 	.question-date {
@@ -159,5 +166,8 @@
 		line-height: 22px;
 		height: 47px;
 		overflow: hidden;
+	}
+	.question-wait{
+		
 	}
 </style>

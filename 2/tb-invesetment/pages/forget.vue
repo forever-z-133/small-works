@@ -5,10 +5,14 @@
 				<div class="border-title">找回密码</div>
 			</div>
 			<el-form :model="forgetform" class="login-form" v-if="step">
-				<select name="" id="" class="form-input">
-					<option value="1">中国大陆(+86)</option>
+				<select v-model="areacode" class="form-input">
+					<option value="+86">中国大陆(+86)</option>
+					<option value="+0855">中国香港(+0855)</option>
 				</select>
-				<input type="text" v-model="forgetform.mobileno" class="form-input form-icon login-tele" placeholder="手机号" />
+				<div class="form-code">
+					<input type="text" v-model="forgetform.mobileno" class="form-input form-icon login-tele" placeholder="手机号" />
+					<div class="tips tips-error" style="right: -110px; top: 22px;">{{phoneValid}}</div>
+				</div>
 				<div class="form-code">
 					<input type="text" v-model="imgCode" class="form-input form-icon login-img" placeholder="图形码" />
 					<div class="form-code-img" @click="init">
@@ -45,11 +49,12 @@
 </template>
 
 <script>
-	import { baseUrl, getUUID, updatePassword, updatePasswordValidate, imgvrifyControllerDefaultKaptchas, getVerificationCode, checkCode } from "../plugins/userApi"
+	import { baseUrl, getUUID, login, updatePassword, updatePasswordValidate, imgvrifyControllerDefaultKaptchas, getVerificationCode, checkCode } from "../plugins/userApi"
 	import axios from "../plugins/axios"
 	export default {
 		data() {
 			return {
+				areacode:"+86",
 				baseUrl: baseUrl,
 				forgetform: {
 					mobileno: "",
@@ -67,7 +72,8 @@
 				sendBtnText: "发送验证码",
 				codeValid: false,
 				pwdValid: "",
-				repwdValid: ""
+				repwdValid: "",
+				phoneValid:""
 
 			}
 		},
@@ -82,6 +88,16 @@
 			this.init()
 		},
 		watch: {
+			"areacode"(val, old) {
+				let type = this.siginForm.areacode
+				let reg = ""
+				if(type == "+86"){
+					reg = /^1[3|4|5|6|7|8][0-9]\d{4,8}$/.test(val)
+				} else {
+					reg = /^([6|9])\d{7}$/.test(val) 
+				}
+				this.phoneValid = reg ? "" : "手机号不正确!"
+			},
 			"imgCode" (val, old) {
 				if(val.length > 4) {
 					this.imgCode = val.slice(0, 4);
@@ -95,21 +111,23 @@
 					this.code = val.slice(0, 4);
 				}
 			},
-			"forgetform.password" (val, old) {
-				let reg = val.length >= 6;
-				if(!reg) {
-					this.pwdValid = "密码长度至少6位!"
+			"forgetform.mobileno"(val, old){
+				let type = this.areacode
+				let reg = ""
+				if(type == "+86"){
+					reg = /^1[3|4|5|6|7|8][0-9]\d{4,8}$/.test(val)
 				} else {
-					this.pwdValid = ""
+					reg = /^([6|9])\d{7}$/.test(val) 
 				}
+				this.phoneValid = reg ? "" : "手机号不正确!"
+			},
+			"forgetform.password" (val, old) {
+				let reg = (val.length >= 6) && (val.length <= 24);
+				this.pwdValid = reg ? "" : "密码长度6~24位!";
 			},
 			"forgetform.repassword" (val, old) {
-				let pwd = this.forgetform.password
-				if(val === pwd) {
-					this.repwdValid = "";
-				} else {
-					this.repwdValid = "两次密码输入不一致";
-				}
+				let pwd = this.forgetform.password;
+				this.repwdValid = val === pwd ? "" : "两次密码输入不一致";
 			}
 
 		},
@@ -139,16 +157,18 @@
 				if(status) {
 					this.sendStatus = true;
 					let params = {
+						areacode:this.areacode,
 						mobileno: this.forgetform.mobileno,
 						kaptchaImage: this.imgCode,
 						uuid: this.uuid
 					}
 					let res = await getVerificationCode(params)
-					if(res.data) {
+					if(res.data.status) {
 						this.timer();
 						this.$message.success("验证码发送成功")
 					} else {
-
+						this.init();
+						this.$message.error("验证码发送失败")
 					}
 				}
 			},
@@ -177,9 +197,13 @@
 				let res = await updatePasswordValidate(params)
 				if(res.code == 0) {
 					this.step = false;
-					localStorage.setItem("token", res.data)
+					//localStorage.setItem("token", res.data)
+					localStorage.setItem("userinfo",JSON.stringify(res.data))
+					localStorage.setItem("token",res.data.token)
+					this.$store.commit("setLogin", true);
 					this.codeErrorMsg = ""
 				} else {
+					this.init()
 					this.step = true;
 					this.codeErrorMsg = res.msg
 					this.$message.error(res.msg)
@@ -193,9 +217,22 @@
 				let res = await updatePassword(params);
 				if(res.code == 0) {
 					this.$message.success("密码修改成功")
-					this.$router.push("/")
+					this.login()
 				} else {
 					this.$message.error(res.msg)
+				}
+			},
+			async login(){
+				let params = {
+					mobileNo: this.forgetform.mobileno,
+					password: this.forgetform.password
+				}
+				params.uuid = this.uuid;
+				let res = await login(params)
+				if(res.code == 0){
+					localStorage.setItem("userinfo",JSON.stringify(res.data))
+					localStorage.setItem("token",res.data.token)
+					this.$router.push("/")
 				}
 			}
 		}

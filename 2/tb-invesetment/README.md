@@ -1,7 +1,22 @@
-# 投融资服务商：头豹
+# nuxt
 
-Nuxt.js 需要根目录，无法预览
+> Nuxt.js project
 
-又是一个外包，基于 nuxt.js 来做，vue 开发起来还是比 react 舒服。
+## Build Setup
 
-但前端三人水平都不高，比如全局数据，asyncData 能都处理得不好。
+``` bash
+# install dependencies
+$ npm install # Or yarn install
+
+# serve with hot reload at localhost:3000
+$ npm run dev
+
+# build for production and launch server
+$ npm run build
+$ npm start
+
+# generate static project
+$ npm run generate
+```
+
+For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).

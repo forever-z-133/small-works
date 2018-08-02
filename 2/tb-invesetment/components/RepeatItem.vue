@@ -9,10 +9,12 @@
             </div>
             <div class="section-body" v-if="subject.sections && subject.sections.length>0">
                 <div class="section-item" v-for="(section, i) in subject.sections" :key="i">
-                    <p v-if="section">{{section.text || ''}}</p>
+                    <p v-if="section">{{section.text | imgCanClick(imgbaseurl)}}</p>
                     <template v-if="section && section.illustrations && section.illustrations.length>0">
                         <figure v-for="(img, j) in section.illustrations" :key="j">
-                            <img v-if="img && img.imageUrl" :src="img.imageUrl | addSrcPrefix(imgbaseurl)">
+                            <a :href="img.imageUrl | addSrcPrefix(imgbaseurl)" class="gallery">
+                                <img v-if="img && img.imageUrl" :src="img.imageUrl | addSrcPrefix(imgbaseurl)" @click="clickImg">
+                            </a>
                             <span v-if="img && img.title">{{img.title}}</span>
                         </figure>
                     </template>
@@ -24,15 +26,27 @@
 </template>
 
 <script>
-import utils from '../plugins/utils.js'
+import { addSrcPrefix, replaceImageInHtml } from '../plugins/utils.js'
 
 export default {
     name: 'RepeatItem',
     props: ['data'],
+    methods: {
+        clickImg (e) {
+            var src = e.target.src;
+            console.log(src);
+        },
+    },
     filters: {
         addSrcPrefix (url, prefix) {
-            return utils.addSrcPrefix(url || '', prefix)
-        }
+            return addSrcPrefix(url || '', prefix)
+        },
+        imgCanClick (html, imgbaseurl) {
+            if (!html) return '';
+            return replaceImageInHtml(html, imgbaseurl, (img, src) => {
+                return `<a href="${src}" target="_blank">${img}</a>`;
+            });
+        },
     }
 }
 </script>

@@ -2,9 +2,7 @@ import axios from "axios";
 import Qs from "qs";
 let config = {
 	baseURL: 'http://test.vestleader.com:2222/vestLeader/',
-	headers: {
-		"Content-Type": "application/json"
-	},
+	headers: {},
 	paramsSerializer: function(params) {
 		return Qs.stringify(params, {
 			arrayFormat: 'brackets'
@@ -13,25 +11,34 @@ let config = {
 	timeout: 10000,
 }
 
-const $http = (url, method, data, token) => {
+const $http = (url, method, data, sigin) => {
 	config.url = url;
 	config.method = method;
 	let params = data || {}
 	if(method == "get") {
 		config.params = params
 	} else {
+		config.headers["Content-Type"] = "application/json"
 		config.data = JSON.stringify(params)
 	}
-	if(token){
-		let userinfo = JSON.parse(localStorage.getItem("userinfo"))
-		//config.headers.Authorization = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODI0OTc1NTU0MyIsImF1ZCI6IjEwMS45My4xOTguMTI4IiwiaXNzIjoiYjJlMDAyZjQwNzJjNGQ1ZmIwZTNiMTkyMjgxYzhiMTciLCJjcmVhdGVkX2RhdGUiOjE1MzE1NDkxOTg3NTQsImV4cCI6MTc5MDc0OTE5OCwianRpIjoiYjg2NzRmODcwZjM1NDFmOGIwMTRhYjljYzZjZjEzNmMifQ.AehHoWmovHoP_DTxtLqnHvDjvH3avQA12dv1MKYFzonZWMIP6rci35GLXvAimXAZaKvclTTzRu4PZ9ZrgPH_Ng"
+	if(sigin) {
+		var token, userinfo = localStorage.getItem("userinfo");
+
+		try { // 刷新后 getTokenId 取得还是登录前的旧 token，所以从登录后的 userinfo.token 中取
+			userinfo = JSON.parse(userinfo);
+			token = userinfo.token
+		} catch(err) {
+			token = localStorage.getItem("token");
+		}
+		//		console.log(token)
+		config.headers.Authorization = token
 	}
 	return new Promise((resolve, reject) => {
 		axios(config).then(res => {
 			if(res.status == 200) {
 				resolve(res.data)
 			}
-			if(res.status == 500){
+			if(res.status == 500) {
 				alert(res.message)
 			}
 		})
@@ -66,7 +73,7 @@ export const login = data => $http("user/login", "get", data)
 export const register = data => $http("user/register", "post", data)
 
 //获取验证码
-export const getVerificationCode =data => $http("user/getVerificationCode", "get", data)
+export const getVerificationCode = data => $http("user/getVerificationCode", "get", data)
 
 //验证码验证
 export const updatePasswordValidate = data => $http("user/updatePasswordValidate", "get", data)
@@ -92,3 +99,7 @@ export const findUserQuestionList = page => $http("userQuestion/findUserQuestion
 //发布
 export const findUserAdList = page => $http("userAd/findUserAdList", "post", page, true)
 
+//查找找融资、找标的对象
+export const applyClose = data => $http("/userAd/applyClose", "post", data, true)
+
+export const parentlist = () => $http("/sysIndusty/query/parentlist", "get", {}, true)

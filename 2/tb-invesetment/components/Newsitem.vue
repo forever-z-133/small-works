@@ -1,24 +1,29 @@
 <template>
   <div class="newsitem">
-    <div class="newsitemlink"  @click="linkto(newsitem.articletype,newsitem.id)">
+    <div class="newsitemlink" @click="linkto(newsitem.articletype,newsitem.id)">
       <div class="newsimg">
-        <img :src="imgbaseurl+newsitem.images">
+        <img :src="url">
         <span v-if="type==6">{{newsitem.industry|industry}}</span>
         <span v-else-if="newsitem.industries&&newsitem.industries.length>0">{{newsitem.industries[0].name}}</span>
       </div>
       <div class="newsmessage">
-        <div class="title">
-          <p >{{newsitem.title}}</p>
-          <p v-if="type==6">{{newsitem.newsitem}}</p>
-          <p v-else>{{newsitem.contentExcludeHtml}}</p>
+        <div v-if="keyword" class="title">
+          <p v-html="newsitem.title.replace(keyword,`<span style='color:#e83929;font-weight:600'>${keyword}</span>`)">{{newsitem.title}}</p>
+          <!-- <p v-if="type==6" v-html="newsitem.newsitem.replace(keyword,`<span style='color:#e83929;font-weight:600'>${keyword}</span>`)">{{newsitem.newsitem}}</p> -->
+          <p v-if="type!==6" v-html="newsitem.contentExcludeHtml.replace(keyword,`<span style='color:#e83929;font-weight:600'>${keyword}</span>`)">{{newsitem.contentExcludeHtml}}</p>
+        </div>
+        <div v-else class="title">
+          <p>{{newsitem.title}}</p>
+          <!-- <p>{{newsitem.newsitem}}</p> -->
+          <p v-if="type!==6">{{newsitem.contentExcludeHtml}}</p>
         </div>
 
         <div class="specific">
-          
+
           <span class="recommend">{{ newsitem.articletype | capitalize }}</span>
           <span class="author" v-if="type!==6">沙利文 · &nbsp;</span>
           <span class="author" v-if="type==6">沙利文 · &nbsp;</span>
-          <span class="time"  v-if="type==6">{{newsitem.createdAt|time}}</span>
+          <span class="time" v-if="type==6">{{newsitem.createdAt|time}}</span>
           <span class="time" v-else>{{newsitem.createdat|time}}</span>
           <!-- <span class="comment"><img src="../assets/comment.png">999 + 评论</span> -->
         </div>
@@ -33,6 +38,7 @@
 .newsitem {
   border-top: 1px solid #e7e8eb;
   padding: 20px 0;
+  cursor: pointer;
 }
 .newsitem .newsitemlink {
   display: flex;
@@ -104,11 +110,15 @@
 }
 </style>
 <script>
-import utils from "../plugins/utils.js";
+import { publishTime } from "../plugins/utils.js";
 import $axios from "../plugins/axios.js";
+
 export default {
   data() {
-    return {};
+    return {
+      url: require("../assets/images/loading_image.gif"),
+      errorurl: require("../assets/images/default_image.png")
+    };
   },
   props: {
     newsitem: {
@@ -126,6 +136,20 @@ export default {
     userLogBrowse: {
       type: Object,
       required: false
+    },
+    keyword: {
+      type: String,
+      required: false
+    }
+  },
+  watch: {
+    newsitem(curVal, oldVal) {
+      this.newsitem = curVal;
+      if (!curVal.images) {
+        this.url = this.errorurl;
+      }else{
+        this.url= this.imgbaseurl + curVal.images
+      }
     }
   },
   methods: {
@@ -234,7 +258,7 @@ export default {
       return type;
     },
     time: function(value) {
-      var time = utils.publishTime(value);
+      var time = publishTime(value);
       return time;
     },
     industry: function(value) {
@@ -246,6 +270,17 @@ export default {
       }
     }
   },
-  mounted() {}
+  mounted() {
+    var newImg = new Image();
+    newImg.src = this.imgbaseurl + this.newsitem.images;
+    newImg.onload = () => {
+      // 图片加载成功后把地址给原来的img
+      this.url = newImg.src;
+    };
+    newImg.onerror = () => {
+      // 图片加载错误时的替换图片
+      this.url = this.errorurl;
+    };
+  }
 };
 </script>

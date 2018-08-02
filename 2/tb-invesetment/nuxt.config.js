@@ -22,6 +22,7 @@ module.exports = {
  
   css: [
     'element-ui/lib/theme-chalk/index.css',
+    'lightgallery.js/dist/css/lightgallery.min.css',
     ],
   /*
   ** Build configuration
@@ -32,7 +33,8 @@ module.exports = {
     */
    vendor: [
     'axios',
-    'element-ui',
+    'lightgallery.js',
+    // 'element-ui',
   ],
   babel: {
     plugins: [['component', [{
