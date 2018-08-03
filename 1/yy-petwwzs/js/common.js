@@ -105,3 +105,11 @@ if (window.innerWidth < 768) {
     $qrcode.attr('src', qrcode[i]);
   });
 }
+
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?07655d5d4d4142c4d2b768fb14647089";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
