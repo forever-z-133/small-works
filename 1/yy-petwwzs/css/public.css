@@ -102,7 +102,7 @@
     position: fixed;
     z-index: 10;
     bottom: 4%;
-    right: 25px;
+    right: 1%;
     display: -webkit-box;
     display: flex;
     flex-wrap: wrap;
@@ -249,6 +249,9 @@
 .tel-box {
     position: absolute;
     top: 0; right: 20px;
+}
+.tel-box .telephone:not(:last-child) {
+    margin-right: 10px;
 }
 .btn-menu {
     width: 50px;
