@@ -23,17 +23,18 @@ urlsWithoutToken.push("/userLogToken/getTokenId")
 // axios拦截器  token过期之后的处理
 axios.interceptors.request.use(
   config => { // 这里的config包含每次请求的内容
-    if (window.localStorage.getItem("baseurl")) {
-      config.baseURL = window.localStorage.getItem("baseurl"); //测试用
-    }
+    // if (localStorage.getItem("baseurl")) {
+    //   config.baseURL = localStorage.getItem("baseurl"); //测试用
+    // }
     let url;
-    if (config.url.indexOf("?") < 0) {
-      url = config.url.substring(axios.defaults.baseURL.length);
-    } else {
-      url = config.url.substring(axios.defaults.baseURL.length, config.url.indexOf("?"));
-    }
+    // if (config.url.indexOf("?") < 0) {
+    //   url = config.url.substring(axios.defaults.baseURL.length);
+    //   console.log(url)
+    // } else {
+    //   url = config.url.substring(axios.defaults.baseURL.length, config.url.indexOf("?"));
+    // }
     // 需要带上token
-    if (urlsWithoutToken.indexOf(url) < 0 && localStorage.getItem("token")) {
+    if (urlsWithoutToken.indexOf(config.url) < 0 && localStorage.getItem("token")) {
       var token, userinfo = localStorage.getItem("userinfo");
       try {  // 刷新后 getTokenId 取得还是登录前的旧 token，所以从登录后的 userinfo.token 中取
         userinfo = JSON.parse(userinfo);

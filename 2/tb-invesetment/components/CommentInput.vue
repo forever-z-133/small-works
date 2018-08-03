@@ -17,8 +17,9 @@
 </template>
 
 <script>
-import defaultImage from '~/assets/register.png';
-import utils from '../plugins/utils.js';
+import defaultImage from '~/assets/userCenter/head-default.png';
+import { decodeForXSS } from '../plugins/utils.js';
+import { findUserInfoAndUserCompanyByUserId } from '../plugins/userApi.js';
 
 export default {
   data() {
@@ -27,6 +28,17 @@ export default {
       userImage: defaultImage,
       userName: '匿名用户',
     }
+  },
+  mounted() {
+    var userinfo = window.localStorage.getItem('userinfo');
+    userinfo = JSON.parse(userinfo) || {};
+    var tel = window.localStorage.getItem('telphone') || userinfo.mobileno;
+    // 比如 15972921527 转为 15*****1527
+    tel = tel ? tel.split('').map((x, i) => i > 1 && i < tel.length - 4 ? '*' : x).join('') : '';
+    if (tel) this.userName = tel;
+    // this.getUserName().then(name => {
+    //   this.userName = name || tel;
+    // }).catch(err => {});
   },
   methods: {
     input: function(e) {
@@ -44,8 +56,30 @@ export default {
     },
     submit: function(e) {
       var msg = this.msg;
-      msg = utils.decodeForXSS(msg);
+      msg = decodeForXSS(msg);
       this.$emit('submit', msg);
+    },
+    getUserName: function(callback) {
+      return new Promise((resolve, reject) => {
+        var userinfo = window.localStorage.getItem('userinfo');
+        userinfo = userinfo ? JSON.parse(userinfo) : '';
+        var name = window.localStorage.getItem('username');
+        if (name) {
+          callback && callback(name);
+          resolve(name);
+        } else if (userinfo && userinfo.name) {
+          name = userinfo.name;
+          callback && callback(name);
+          resolve(name);
+        } else {
+          findUserInfoAndUserCompanyByUserId().then(res => {
+            name = res.data ? res.data.name : '';
+            if (!name) return reject('');
+            callback && callback(name);
+            resolve(name);
+          }).catch(reject);
+        }
+      });
     }
   }
 };

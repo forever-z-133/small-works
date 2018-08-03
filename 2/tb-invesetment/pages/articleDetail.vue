@@ -1,26 +1,38 @@
 <template>
-    <Detail :id="id" :info="info">
+    <Detail :id="id" :info="info" :hasNothing="hasNothing">
         <article v-html="article" class="article-wrap" v-loading="loading"></article>
         <nuxt-link :to="'/reportDetail/?id='+sourceId" v-if="sourceId" class="btn btn-more-report">阅读相关报告</nuxt-link>
 
+
+        <div slot="action">
+            <div class="item" @click="jumpToComment">
+                <i class="icon icon-comment"></i>
+                <span>0</span>
+            </div>
+        </div>
         <div class="aside-wrap" slot="aside">
             <NewNewsList v-if="newnews" title="热门文章" v-bind:newnews='newnews'></NewNewsList>
         </div>
+        <FooView></FooView>
     </Detail>
 </template>
 
 <script>
 import Detail from '../components/Detail.vue';
 import NewNewsList from "../components/NewNewsList.vue";
+import FooView from "../components/FooView.vue";
 
-import utils from "../plugins/utils.js";
-import { getArticleDetail } from "../plugins/ajax_zyh.js";
+import { replaceImageInHtml, scrollPercent } from "../plugins/utils.js";
+import { getArticleDetail, addReadLog } from "../plugins/ajax_zyh.js";
 import $axios from "../plugins/axios.js";
+
+var nothingTimer;
 
 export default {
     components: {
         Detail,
         NewNewsList,
+        FooView,
     },
     data() {
         return {
@@ -31,50 +43,74 @@ export default {
                 author: '作者',
                 type: '类型',
                 time: '0000-00-00',
+                favorite: '0',
             },
             sourceId: '',
             article: '',
             newnews: [],
+            hasNothing: false,
         }
     },
     head() {
         return { title: this.info.title }
     },
-    created() {
-        if (!this.id) {
+    mounted () {
+         if (!this.id) {
             this.loading = false;
+            this.hasNothing = true;
+            nothingTimer = setTimeout(() => this.$router.replace({ name: 'index' }), 5000);
             return this.$message.error('缺少关键ID，无法获取文章');
         }
 
-        getArticleDetail(this.id).then(this.render_article).catch(err => {
+        getArticleDetail(this.id).then(res => {
+            this.render_article(res);
+        }).catch(err => {
+            console.log(err);
             this.loading = false;
+            this.hasNothing = true;
+            nothingTimer = setTimeout(() => this.$router.replace({ name: 'index' }), 5000);
             this.$message.error('数据获取失败');
         });
 
         this.gethotArticles();
-    },
-    mounted () {
-        var min = document.querySelector('.detail-contianer')
-        this.scroller = new utils.scrollPercent(window, 0, 100);
+        this.scroller = new scrollPercent();
     },
     beforeDestroy() {
-        this.scroller.destroy();
+        nothingTimer && clearTimeout(nothingTimer);
+        this.scroller && this.scroller.destroy(res => {
+            this.logId && addReadLog({
+                id: this.logId,
+                ...res,
+            });
+        });
+
+        this.gallery && this.gallery.destroy();
     },
     methods: {
         render_article(data) {
+            if (data.logId) {
+                this.logId = data.logId;
+                data = data.object;
+            }
+
             this.info.title = data.title;
             this.info.author = '沙利文' || data.auditby;
             this.info.type = data.articletype;
             this.info.time = data.createdat;
+            this.info.favorite = data.valid;
             // 文章内容
             var html = data.content;
-            // html = utils.replaceImageInHtml(html, this.imgbaseurl);
+            html = this.imgCanClick(html);
             this.article = html;
             // 相关文献
             this.sourceId = data.reportid;
-            // this.sourceId = data.industriesid ? data.industriesid[0] : '';
             // 绑定滚动事件
             this.scroller.init();
+
+            setTimeout(() => {
+                var $body = document.querySelector('.el-main')
+                this.gallery = lightGallery($body, { selector: '.gallery' });
+            }, 50);
         },
         // 获取热门文章
         gethotArticles() {
@@ -86,6 +122,20 @@ export default {
                 this.newnews = res.data.data;
             }).catch(err => {
                 console.log(err);
+            });
+        },
+        jumpToComment () {
+            window.location.hash = 'comment';
+            setTimeout(() => {
+                var href = window.location.href;
+                href = href.replace('#comment', '');
+                window.history.replaceState({}, '', href);
+            }, 0);
+        },
+        imgCanClick (html) {
+            if (!html) return '';
+            return replaceImageInHtml(html, this.imgbaseurl, (img, src) => {
+                return `<a href="${src}" class="gallery">${img}</a>`;
             });
         },
     }

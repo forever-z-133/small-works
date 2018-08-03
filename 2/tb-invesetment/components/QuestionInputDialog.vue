@@ -54,8 +54,8 @@ export default {
     methods: {
         submit (data) {
 
-            if (!data.title) return this.$message('请输入标题', { type: 'warning' });
-            if (!data.question) return this.$message('多写点问题的描述吧', { type: 'warning' });
+            // if (!data.title) return this.$message.warning('请输入标题');
+            if (!data.question) return this.$message.warning('多写点问题的描述吧');
 
             if (!window.localStorage.getItem('userinfo')) {
                 window.sessionStorage.setItem('temp_question', JSON.stringify(data));
@@ -72,12 +72,12 @@ export default {
                 this.successVisible = true;
                 this.Timer = setTimeout(this.reload, 3000);
             }).catch(err => {
-                this.$message(err.message || err.msg, { type: 'error' })
+                this.$message.error(err.message || err.msg)
             });
         },
         reload: function() {
             var href = window.location.href;
-            href = href.replace(/[\?#].*/, '');
+            href = href.replace('question=true', '');
             window.location.href = href;
         }
     }

@@ -1,7 +1,8 @@
 <template>
   <div class="header">
+    <el-row type="flex" class="row-bg" justify="center">
     <el-col :span="3"></el-col>
-    <el-col :span="12" style="display:flex;align-items:center;">
+    <el-col :span="12" style="display:flex;align-items:center;min-width: 680px;">
       <el-col :span="4">
         <div class="companyicon"><img src="../assets/logo.png"></div>
       </el-col>
@@ -26,7 +27,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6" style="position:relative;display:flex;justify-content:flex-end">
+      <el-col :span="6" style="position:relative;display:flex;justify-content:flex-end;padding:0 20px">
         <div class="screen" @click="isChoose">
           <span class="screen_word">{{activescreen}}</span>
           <span :class="IschooseScreen?'top':'bottom'"></span>
@@ -41,7 +42,7 @@
 
     </el-col>
 
-    <el-col :span="6">
+    <el-col :span="6" style="min-width: 280px;display:flex;align-items: center;justify-content: flex-end;">
       <div class="iconlist">
         <div class="iconitem" @click="activeid=1" :class="activeid==1?'iconitem_active':''">
           <nuxt-link :to="{name:'index'}">
@@ -65,39 +66,45 @@
           </nuxt-link>
         </div>
         <div class="userinfo" v-if="$store.state.islogin" @click="showUser">
-          <img src="../assets/images/userlogo.png">
+          <img class="userinfoimg" src="../assets/userCenter/head-default.png">
         </div>
-        <div v-if="Isshowuser&&userinfo" class="screen_list user_message">
+        <div v-if="Isshowuser" class="screen_list user_message">
           <div class="screen_item">
-            <img src="../assets/images/userlogo.png">
-            <span>{{userinfo.name}}</span>
+            <img src="../assets/userCenter/head-default.png">
+            <span v-if="userinfo.name">{{userinfo.name}}</span>
+             <span v-else>{{userinfo.mobileno}}</span>
           </div>
           <div class="screen_item">
             <nuxt-link :to="{name:'userCenter'}">
               <span>个人中心</span>
             </nuxt-link>
           </div>
-          <div class="screen_item">
-            <span @click="signout">退出</span>
+          <div class="screen_item" @click="signout">
+            <span >退出</span>
           </div>
         </div>
       </div>
     </el-col>
     <el-col :span="3"></el-col>
+    </el-row>
   </div>
 </template>
+<style>
+.el-header {
+  padding: 0 !important;
+    box-shadow: 0 4px 8px 0 rgba(51, 51, 51, 0.12);
+}
+</style>
 
 <style  lang="less" scoped>
-.el-header {
-  padding: 0;
-}
 .header {
   width: 100%;
-  height: 100%;
-  background: #ffffff;
-  box-shadow: 0 4px 8px 0 rgba(51, 51, 51, 0.12);
-  display: flex;
-  align-items: center;
+  // height: 100%;
+  // background: #ffffff;
+  // box-shadow: 0 4px 8px 0 rgba(51, 51, 51, 0.12);
+  // padding: 13px 0 0 0;
+  // display: flex;
+  // align-items: center;
 }
 .iconlist {
   display: flex;
@@ -110,7 +117,12 @@
     flex-direction: column;
     align-items: center;
     margin: 0 0 0 60px;
-
+    a {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
     p {
       padding: 0;
       margin: 0;
@@ -127,6 +139,7 @@
     margin: 0 0 0 60px;
     width: 42px;
     height: 42px;
+    cursor: pointer;
     img {
       width: 100%;
       height: 100%;
@@ -138,9 +151,10 @@
   background: #ffffff;
   box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3);
   border-radius: 2px;
-  z-index: 4;
+  z-index: 400;
   position: absolute;
   width: 100%;
+  top: 55px;
   .search_history {
     padding: 16px 16px 0 16px;
     .history_ul {
@@ -156,6 +170,7 @@
       border: 1px solid #ebebeb;
       border-radius: 100px;
       margin: 0 12px 6px 0;
+      cursor: pointer;
     }
     .history_li:active,
     .history_li:hover {
@@ -168,6 +183,10 @@
     color: #211e1e;
     .hot_li {
       padding: 6px 16px;
+      cursor: pointer;
+      img{
+        margin: 0 0 0 10px;
+      }
     }
     .hot_li:active,
     .hot_li:hover {
@@ -178,13 +197,14 @@
 .screen {
   border: 1px solid #dc2525;
   border-radius: 100px;
-  padding: 11px 0px;
+  padding: 11px 20px;
   display: flex;
   justify-content: center;
   color: #dc2525;
-  max-width: 142px;
+  // max-width: 142px;
   width: 100%;
   align-items: center;
+  cursor: pointer;
   .screen_word {
     margin: 0 5px 0 0;
   }
@@ -208,11 +228,11 @@
   box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3);
   border-radius: 2px;
   position: absolute;
-  max-width: 90px;
-  width: 100%;
+    max-width: 130px;
+    width: 50%;
   padding: 0 26px;
   z-index: 100;
-  top: 50px;
+  top: 60px;
   .screen_item {
     font-size: 14px;
     color: #211e1e;
@@ -221,12 +241,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     a {
       color: #211e1e;
     }
   }
 }
 .user_message {
+  top: 62px;
   .screen_item {
     justify-content: flex-start;
     img {
@@ -251,16 +273,30 @@ export default {
       screenList: ["文章", "报告", "图表"],
       activescreen: "文章",
       Isshowuser: false,
-      activeid: 1,
+     
       type: 0,
       userinfo: {}
     };
+  },
+  computed:{
+  	 activeid(){
+  	 	let path = this.$route.path
+  	 	if(path == "/"){
+  	 		return 1
+  	 	}else if(path == "/login"){
+  	 		return 2
+  	 	}else if(path == "/signin"){
+  	 		return 3
+  	 	} else {
+  	 		return 1
+  	 	}
+  	 },
   },
   created() {
     this.getUserHotwordsystem(); //获取热词
     this.getUserHotworduser(); //获取历史搜索记录
   },
-
+	
   methods: {
     //获取热词
     getUserHotwordsystem() {
@@ -337,6 +373,10 @@ export default {
     //点击头像
     showUser() {
       this.Isshowuser = true;
+      var i = window.localStorage.getItem("userinfo");
+      this.userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
+      var myphone = this.userinfo.mobileno.substr(3, 4);
+      this.userinfo.mobileno= this.userinfo.mobileno.replace(myphone, "****");
       setTimeout(() => {
         this.Isshowuser = false;
       }, 3000);
@@ -352,20 +392,53 @@ export default {
     },
     //登出
     signout() {
+    	let path = this.$route.path
       this.Isshowuser = false;
       window.localStorage.removeItem("userinfo");
+      window.localStorage.removeItem("telphone");
+      window.localStorage.removeItem("username");
       this.$store.commit("setLogin", false);
+       $axios({
+        method: "post",
+        url: "/userLogToken/getTokenId"
+      })
+        .then(res => {
+          console.log(res);
+          if (res.data.code == "0") {
+            window.localStorage.setItem("token", res.data.data);
+            if(path == "/"){
+            	 window.location.reload();
+            } else {
+            	this.$router.replace("/")
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   mounted() {
     var i = window.localStorage.getItem("userinfo");
-    this.userinfo =  JSON.parse(window.localStorage.getItem("userinfo"));
+    this.userinfo = JSON.parse(window.localStorage.getItem("userinfo"));
     // console.log(i)
     if (this.userinfo) {
       this.$store.commit("setLogin", true);
     } else {
       this.$store.commit("setLogin", false);
     }
+    document.addEventListener("click", e => {
+      if (
+        e.target._prevClass !== "screen" &&
+        e.target._prevClass !== "screen_word"
+      ) {
+        this.IschooseScreen = false;
+      }
+      // console.log(e.target._prevClass)
+      if(e.target._prevClass!=='userinfoimg'){
+         this.Isshowuser = false;
+      }
+    });
   }
 };
 </script>

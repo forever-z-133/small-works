@@ -1,11 +1,11 @@
 <template>
-    <div class="newnews">
+    <div class="newnews" v-if="!!newnews">
         <div class="newlink"  @click="linkto(newnews.articletype,newnews.id)">
             <div>
-                <img :src="imgbaseurl+newnews.images">
+                <img :src="url">
                 
             </div>
-            <div><span>No.{{id+1}}</span></div>
+            <div class="tip"><span>No.{{id+1}}</span></div>
             <div class="newsmessage">
             <p class="title">{{newnews.title}}</p>
             <p class="time">{{newnews.createdat|time}}</p>
@@ -23,10 +23,13 @@
 }
 </style>
 <script>
-import utils from "../plugins/utils.js";
+import { publishTime } from "../plugins/utils.js";
 export default {
   data() {
-    return {};
+    return {
+       url: require("../assets/images/loading_image.gif"),
+      errorurl:require("../assets/images/default_image.png")
+    };
   },
   props: {
     newnews: {
@@ -90,10 +93,20 @@ export default {
   },
    filters: {
     time:function(value){
-      var time=utils.publishTime(value)
+      var time = publishTime(value)
      return time
     }
   },
-  mounted() {}
+  mounted() {
+     var newImg = new Image();
+    newImg.src = this.imgbaseurl + this.newnews.images;
+    newImg.onload = () => {
+      // 图片加载成功后把地址给原来的img
+      this.url = newImg.src;
+    };
+     newImg.onerror = () => { // 图片加载错误时的替换图片
+    this.url = this.errorurl;
+   }
+  }
 };
 </script>

@@ -8,7 +8,7 @@
                 </div>
                 <div class="list-content">
                     <h5 class="list-name">
-                        <span class="notOnBoard" v-if="!item.onboard">审核中</span>
+                        <!-- <span class="notOnBoard" v-if="!item.reply">审核中</span> -->
                         <span>{{item.title}}</span>
                     </h5>
                     <div class="list-desc">
@@ -17,11 +17,11 @@
                     <div class="comment-reply-list-wrap" v-if="item.reply">
                         <div class="list-item image-left" v-for="(reply, index) in item.reply" :key="index">
                             <div class="list-image ratio round">
-                                <img src="../assets/logo.png" alt="头豹管理员">
+                                <img :src="reply.image" alt="头豹管理员">
                             </div>
                             <div class="list-content">
                                 <h5 class="list-name">
-                                    <span>管理员：{{reply.title}}</span>
+                                    <span>管理员</span>
                                 </h5>
                                 <div class="list-desc">
                                     <p>{{reply.desc}}</p>
@@ -32,14 +32,15 @@
                 </div>
             </div>
             <div class="list-foot" v-if="state!=='none'">
-                <div class="list-empty" v-if="state==='empty'">没有更多了</div>
-                <!-- <button class="btn btn-more" @click="load_list" v-else>查看更多</button> -->
+                <div class="list-empty" v-if="state==='empty'||(data&&data.length<1)">没有更多了</div>
+                <button class="btn btn-more" @click="load_list" v-if="showMore">查看更多</button>
             </div>
         </div>
     </section>
 </template>
 
 <script>
+import defaultImage from '~/assets/userCenter/head-default.png';
 import { getCommentList } from "../plugins/ajax_zyh.js";
 
 export default {
@@ -49,6 +50,7 @@ export default {
             page: 0,
             loading: true,
             state: 'load',
+            showMore: false,
         }
     },
     props: {
@@ -71,9 +73,10 @@ export default {
         },
         load_list() {
             this.loading = true;
-            getCommentList(this.id).then(data => {
+            getCommentList(this.id, this.page).then(data => {
                 this.page++;
-                this.update_list(data || []);
+                this.update_list(data.resultList || []);
+                this.$emit('commentNumber', data.total);
                 this.loading = false;
             }).catch(err => {
                 this.loading = false;
@@ -81,16 +84,21 @@ export default {
             });
         },
         update_list(data) {
+            if (data.total > this.data.length) {
+                this.showMore = true;
+            } else { this.showMore = false; }
             data = data.map(this.covert_list);
             if (data.length < 1) this.state = 'empty';
             this.data = this.data.concat(data);
         },
         covert_list(item, index) {
-            item.title = '匿名用户' || item.userId;
+            let tel = item.mobileNo;
+            tel = tel ? tel.split('').map((x, i) => i > 1 && i < tel.length - 4 ? '*' : x).join('') : '';
+            item.title = tel || '匿名用户';
             item.desc = item.content;
-            item.image = '';
+            item.image = defaultImage;
             if (item.reply) {
-                item.reply = [{ title: item.auditedBy, desc: item.reply }];
+                item.reply = [{ title: item.auditedBy, desc: item.reply, image: defaultImage }];
             }
             return item;
         },
@@ -120,7 +128,7 @@ export default {
     align-items: flex-start;
 }
 .list-image {
-    width: 75px;
+    width: 65px;
 }
 .list-name {
     font-size: 18px;
@@ -141,6 +149,7 @@ export default {
 }
 .list-empty {
     line-height: 30px;
+    margin-top: 20px;
 }
 .notOnBoard {
     font-size: 12px;
@@ -170,6 +179,9 @@ export default {
     }
     .list-image {
         width: 50px;
+    }
+    .list-content {
+        margin-top: 5px;
     }
     .list-name {
         margin-top: 0;

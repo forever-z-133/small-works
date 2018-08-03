@@ -204,6 +204,7 @@ html,body{
 .form-input {
     position: relative;
     overflow: hidden;
+    cursor: pointer;
     
     :hover {
         opacity: 0.8;
@@ -225,6 +226,9 @@ html,body{
     flex-shrink: 0;
     display: inline-block;
     vertical-align: middle;
+    background-size: 100% auto;
+    background-attachment: center;
+    background-repeat: no-repeat;
 
     &-company, &-user, &-tel, &-msg, &-safe, &-upload {
         background-size: 600% 100%;
@@ -236,9 +240,33 @@ html,body{
     &-msg { background-position: 60% 0; }
     &-safe { background-position: 80% 0; }
     &-upload { background-position: 100% 0; }
+    &-favorite { background-image: url(/assets/like_fill.png); }
+    .on &-favorite { background-image: url(/assets/like_fill_on.png); }
+    &-comment { background-image: url(/assets/message_fill.png); }
+    .on &-comment { background-image: url(/assets/message_fill_on.png); }
 }
 
 /********************** 业务相关公共代码 *************************/
+
+.aside-action-wrap {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #c7c7c7;
+    padding: 0 0 40px;
+
+    .item {
+        margin-right: 40px;
+    }
+    span {
+        display: block;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    &.on {
+        color: @color;
+    }
+}
 
 .input-wrap-head {
     padding: 20px 20px 0;
@@ -282,6 +310,7 @@ html,body{
     align-items: center;
     line-height: 1em;
     color: @color;
+    cursor: pointer;
 
     input[type="checkbox"] {
         position: absolute;

@@ -4,13 +4,13 @@
             <div class="section-title">问答</div>
         </div>
         <form @submit.prevent="submit" class="zyh-input-wrap-body">
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="label">写下问答的标题</label>
                 <div class="input-box min-height">
                     <textarea name="title" v-model="input.title" placeholder="例如：为什么马云能赚那么多钱，而你是个穷鬼？" @input="justifyLength('title', 500, $event)"></textarea>
                     <span class="input-length">0/500</span>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label class="label">简单描述你的问题</label>
                 <div class="input-box min-height">
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import utils from '../plugins/utils.js';
+import { decodeForXSS } from '../plugins/utils.js';
 import { findUser } from "../plugins/ajax_zyh.js";
 
 export default {
@@ -38,7 +38,7 @@ export default {
     data() {
         return {
             input: this.data || {
-                title: '',
+                // title: '',
                 question: '',
                 moblie: '',
             }
@@ -68,7 +68,7 @@ export default {
         },
         submit(e) {
             var data = {...this.input};
-            data = utils.decodeForXSS(data);
+            data = decodeForXSS(data);
             this.$emit('submit', data);
         }
     }

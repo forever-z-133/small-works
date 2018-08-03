@@ -1,34 +1,46 @@
 <template>
-    <Detail :id="id" :info="info">
+    <Detail :id="id" :info="info" :hasNothing="hasNothing">
         <section class="picture-wrap" v-if="slides && slides.length>0" ref="wrap">
             <el-carousel arrow="never" :autoplay="false" indicator-position="none" ref="swiper" @change="swiperChange">
                 <el-carousel-item v-for="item in slides" :key="item">
-                    <div v-html="item"></div>
+                    <img :src="item">
+                    <!-- <div v-html="item"></div> -->
                 </el-carousel-item>
-                <div class="arrow arrow-left" @click="prev" v-if="showArrow"><i class="el-icon-arrow-left"></i></div>
-                <div class="arrow arrow-right" @click="next" v-if="showArrow"><i class="el-icon-arrow-right"></i></div>
+                <div class="bg" v-loading="loading">
+                    <div class="arrow arrow-left" @click="prev" :class="{'hide':!showArrowLeft}"><i class="el-icon-arrow-left"></i></div>
+                    <div class="arrow arrow-right" @click="next" :class="{'hide':!showArrowRight}"><i class="el-icon-arrow-right"></i></div>
+                </div>
             </el-carousel>
             <nuxt-link :to="'/reportDetail/?id='+sourceId" v-if="sourceId" class="btn btn-more-report">阅读相关报告</nuxt-link>
         </section>
 
-        <div class="aside-wrap" slot="aside">
-            <NewNewsList v-if="newnews" title="热门文章" v-bind:newnews='newnews'></NewNewsList>
+        <div slot="action">
+            <div class="item" @click="jumpToComment">
+                <i class="icon icon-comment"></i>
+                <span>0</span>
+            </div>
         </div>
+
+        <FooView></FooView>
     </Detail>
 </template>
 
 <script>
 import Detail from '../components/Detail.vue';
 import NewNewsList from "../components/NewNewsList.vue";
+import FooView from "../components/FooView.vue";
 
-import utils from "../plugins/utils.js";
-import { getArticleDetail } from "../plugins/ajax_zyh.js";
+import { replaceImageInHtml, scrollPercent } from "../plugins/utils.js";
+import { addReadLog, getReportImageList } from "../plugins/ajax_zyh.js";
 import $axios from "../plugins/axios.js";
+
+var nothingTimer;
 
 export default {
     components: {
         Detail,
         NewNewsList,
+        FooView,
     },
     data() {
         return {
@@ -40,89 +52,125 @@ export default {
                 time: '0000-00-00',
             },
             slides: [],
-            showArrow: true,  // 是否显示轮播箭头
-            newnews: [],
-            lastIndex: 0,
-            tempData: {},
+            showArrowLeft: true,  // 是否显示轮播箭头
+            showArrowRight: true,
+            loading: true,
+            hasNothing: false,
+            prevId: '',
+            nextId: '',
         }
     },
     head() {
         return { title: this.info.title }
     },
-    created() {
+    mounted () {
         // 如果从搜索结果而来，不可左右切换
         if (this.from === 'search') {
-            this.showArrow = false;
+            this.showArrowLeft = false;
+            this.showArrowRight = false;
+        }
+
+        if (!this.id) {
+            this.hasNothing = true;
+            nothingTimer = setTimeout(() => this.$router.replace({ name: 'index' }), 5000);
+            return;
         }
         
         // 获取首页图表
         this.getOneImage(this.id);
-        // 获取右侧文章列表
-        this.gethotArticles();
+
+        this.scroller = new scrollPercent();
+    },
+    beforeDestroy() {
+        nothingTimer && clearTimeout(nothingTimer);
+        this.scroller && this.scroller.destroy(res => {
+            this.logId && addReadLog({
+                id: this.logId,
+                ...res,
+            });
+        });
     },
     methods: {
         getOneImage (id) {
-            var $loading = this.$loading({ fullscreen: true })
-            getArticleDetail(this.id).then(data => {
-                $loading.close();
-                this.render_swiper(data);
+            this.loading = true;
+            getReportImageList(id).then(data => {
+                this.loading = false;
+                if (data.logId) {
+                    this.logId = data.logId;
+                    data = data.object;
+                }
+                if (data.prev) {
+                    this.prevId = data.prev.id;
+                    this.showArrowLeft = true;
+                } else {
+                    this.showArrowLeft = false;
+                }
+                if (data.next) {
+                    this.nextId = data.next.id;
+                    this.showArrowRight = true;
+                } else {
+                    this.showArrowRight = false;
+                }
+                if (data.me) {
+                    data = data.me;
+                } else {
+                    this.hasNothing = true;
+                    nothingTimer = setTimeout(() => this.$router.replace({ name: 'index' }), 5000);
+                }
+                
+                this.id = data.id;
+                var img = this.render_swiper(data);
+                this.slides.length = 0;
+                this.slides.push(img);
+
+                this.initImageHeight();
+
+                // 绑定滚动事件
+                this.scroller.init();
             }).catch(err => {
-                $loading.close();
+                this.loading = false;
+                this.hasNothing = true;
+                nothingTimer = setTimeout(() => this.$router.replace({ name: 'index' }), 5000);
                 console.log(err);
                 this.$message.error('获取图表接口请求失败');
             });
         },
         prev () {
-            this.getNextImage(this.id, -1).then(data => {
-                if (!data) this.message.warning('这是第一个了');
-                this.$refs.swiper.prev();
-            });
+            if (!this.prevId) {
+                this.$message.warning('这是第一个哟');
+                this.showArrowLeft = false;
+                return;
+            }
+            this.getOneImage(this.prevId);
+            this.$router.replace('/pictureDetail?id=' + this.prevId);
         },
         next () {
-            this.getNextImage(this.id, 1).then(data => {
-                if (!data) this.message.warning('没有下一个了');
-                this.$refs.swiper.next();
-            });
+            if (!this.nextId) {
+                this.$message.warning('没有下一个咯');
+                this.showArrowRight = false;
+                return;
+            }
+            this.getOneImage(this.nextId);
+            this.$router.replace('/pictureDetail?id=' + this.nextId);
         },
-        getNextImage (id, direction) {
-            var $loading = this.$loading({ fullscreen: true });
-            return new Promise((resolve, reject) => {
-                if (id in this.tempData) {
-                    $loading.close();
-                    var data = this.tempData[id];
-                    this.render_swiper(data);
-                    return resolve(data);
-                }
-
-                // resolve()
-                // getArticleDetail(this.id).then(data => {
-                //     this.render_swiper(data);
-                //     this.initImageHeight();
-                //     this.id = data.id;
-                //     $loading.close();
-                // }).catch(err => {
-                //     $loading.close();
-                //     console.log(err);
-                //     this.$message.error('获取图表接口请求失败');
-                // });
-            });
-        },
-        render_swiper (data) {
-            this.id = data.id;
-            this.tempData[this.id] = data;
-
-            this.info.title = data.title;
+        render_swiper (data, push = true) {
+            this.info.title = data.tinametle || data.name;
             this.info.author = '沙利文' || data.auditby;
-            this.info.type = data.articletype;
+            this.info.type = '5' || data.articletype;
             this.info.time = data.createdat;
 
-            var html = data.content;
-            html = utils.replaceImageInHtml(html, this.imgbaseurl);
-            this.slides = [html];
-
             this.sourceId = data.reportid;
+
+            var img = this.imgbaseurl + data.imageUrl;
+            return img;
         },
-        swiperChange () {
+        swiperChange (index) {
+            this.initImageHeight();
+            setTimeout(() => {
+                this.initImageHeight();
+            }, 500);
+        },
+        initImageHeight () {
             this.$swiper = this.$swiper || this.$refs.wrap;
             this.$box = this.$swiper && this.$swiper.querySelector('.el-carousel__container');
             setTimeout(() => {
@@ -133,17 +181,13 @@ export default {
                 $box.style.height = $img.offsetHeight + 'px';
             }, 300);
         },
-        // 获取热门文章
-        gethotArticles() {
-            $axios({
-                method: "get",
-                url: "/cmsArticle/hotArticles"
-            }).then(res => {
-                if (res.data.code != 0) return;
-                this.newnews = res.data.data;
-            }).catch(err => {
-                console.log(err);
-            });
+        jumpToComment () {
+            window.location.hash = 'comment';
+            setTimeout(() => {
+                var href = window.location.href;
+                href = href.replace('#comment', '');
+                window.history.replaceState({}, '', href);
+            }, 0);
         },
     }
 }
@@ -152,6 +196,7 @@ export default {
 <style lang="less" scoped>
 @import "../assets/css/var";
 
+.hide { opacity: 0 !important; pointer-events: none; }
 .btn-more-report {
     max-width: 140px;
     font-size: 16px;
@@ -162,6 +207,8 @@ export default {
     background: none;
 }
 .picture-wrap {
+    position: relative;
+    z-index: 1;
     margin-bottom: 30px;
 
     .arrow {
@@ -191,6 +238,9 @@ export default {
 .picture-wrap {
     .el-carousel {
         margin-bottom: 30px;
+    }
+    .el-carousel__container {
+        transition: height .2s;
     }
     img {
         width: 100%;

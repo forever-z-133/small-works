@@ -1,7 +1,7 @@
 <template>
-    <el-row>
+    <el-row id="comment">
         <CommentInput @submit="submit" ref="comment"></CommentInput>
-        <CommentList :id="id" ref="list"></CommentList>
+        <CommentList :id="id" ref="list" @commentNumber="sendNumber" ></CommentList>
     </el-row>
 </template>
 
@@ -48,8 +48,20 @@ export default {
                 this.$refs.list.reload_list(); 
                 window.sessionStorage.removeItem('temp_comment');
             }).catch(err => {
-                this.$message('留言列表数据：' + (err.message || err.msg), { type: 'error' });
+                this.$message.error('留言列表数据：' + (err.message || err.msg));
             });
+        },
+        sendNumber(total) {
+            this.$emit('commentNumber', total);
+            var $icon = document.querySelector('.icon-comment');
+            if ($icon) {
+                var $num = $icon.parentNode.querySelector('span')
+                if ($num) $num.innerHTML = total;
+            } else {
+                setTimeout(() => {
+                    this.sendNumber(total);
+                }, 2000);
+            }
         }
     }
 }

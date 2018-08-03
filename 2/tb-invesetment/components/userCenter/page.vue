@@ -32,7 +32,7 @@
 		methods: {
 			clickPage(index) {
 				this.pageIndex = index;
-				this.$emit("currentPage", index)
+				this.$emit("page", index)
 			}
 		}
 	}

@@ -5,14 +5,14 @@
     </div>
     <div class="today_question">
       <div class="question">
-        <div @click="golink(todayQa.id)" >
+        <div @click="golink(todayQa.id)" v-if="todayQa">
           <div class="question_title">
             <div class="triangle_border_right">
               <span></span>
             </div>
             <p>{{todayQa.title}}</p>
           </div>
-          <img :src="imgbaseurl+todayQa.images">
+          <img :src="url">
         </div>
 
       </div>
@@ -32,6 +32,7 @@
 }
 .question {
   padding: 0 0 30px 0;
+  cursor:pointer;
   img {
     width: 100%;
   }
@@ -60,7 +61,10 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+       url: require("../assets/images/loading_image.gif"),
+      errorurl:require("../assets/images/default_image.png")
+    };
   },
   props: {
     todayQa: {
@@ -81,6 +85,16 @@ export default {
           window.open(href, "_blank");
     }
   },
-  mounted() {}
+  mounted() {
+     var newImg = new Image();
+    newImg.src = this.imgbaseurl + this.todayQa.images;
+    newImg.onload = () => {
+      // 图片加载成功后把地址给原来的img
+      this.url = newImg.src;
+    };
+     newImg.onerror = () => { // 图片加载错误时的替换图片
+    this.url = this.errorurl;
+   }
+  }
 };
 </script>

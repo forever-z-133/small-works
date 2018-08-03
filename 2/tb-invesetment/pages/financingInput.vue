@@ -30,6 +30,8 @@ export default {
 
             if (!data.companyName) return this.$message.warning('请填写公司名称');
             if (!data.purpose) return this.$message.warning('请填写融资用途');
+            if (!data.contacts) return this.$message.warning('请填写联系人');
+            if (!data.mobile) return this.$message.warning('请填联系电话');
             
             if (!window.localStorage.getItem('userinfo')) {
                 window.sessionStorage.setItem('temp_financing', JSON.stringify(data));

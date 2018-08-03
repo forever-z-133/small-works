@@ -28,8 +28,10 @@
 						<option value="0,2">2亿以上</option>
 					</select>
 					<div class="form-input form-icon icon-add">
-						<!--<input type="file" @change="uploadFile"/>-->
-						{{ user.namecard }}
+						<div class="name-card">
+							<img :src="imgbaseurl + user.namecard" v-if="user.namecard" width="50" height="50">
+                        	<span>{{ user.namecard || "上传名片" }}</span>
+						</div>
 						<el-upload :on-success="uploadFile" :show-file-list="false" class="file-upload" action="http://test.vestleader.com:2222/vestLeader/file/uploadFile">
 							<el-button class="file-upload-btn" size="small" type="primary">点击上传</el-button>
 						</el-upload>
@@ -51,7 +53,7 @@
 					<div>关注领域:</div>
 					<ul class="radio-list">
 						<template v-for="(item,index) in arealist">
-							<li :class="addareas.indexOf(item) > -1 ? 'active' : (addareas.length == 3 ? 'disable' : '')" @click="add(item)" :key="index" :value="index" class="select-radio">{{item}}</li>
+							<li :class="addareas.indexOf(item.name) > -1 ? 'active' : (addareas.length == 3 ? 'disable' : '')" @click="add(item.name)" :key="index" :value="index" class="select-radio">{{item.name}}</li>
 						</template>
 					</ul>
 				</div>
@@ -65,11 +67,11 @@
 </template>
 
 <script>
-	import { fillInUserInfo, findUserByMobileno, findUserInfoAndUserCompanyByUserId } from "../plugins/userApi"
+	import { fillInUserInfo, findUserByMobileno, findUserInfoAndUserCompanyByUserId, parentlist } from "../plugins/userApi"
 	export default {
 		data() {
 			return {
-				arealist: ["金融", "医疗", "教育", "服务", "个体户", "运输", "设计", "建筑", "互联网", "AR", "游戏", "旅游", "运动"],
+				arealist: [],
 				user: {
 					name: "",
 					address: "",
@@ -105,13 +107,14 @@
 
 			},
 			async getUserData() {
+				let areas = await parentlist();
+				this.arealist = areas.data
 				let data = this.user;
 				let res = await findUserInfoAndUserCompanyByUserId();
 				if(res.code == 0) {
-					let focus = res.focuson ? res.focuson.split(",") : [];
-					let max = res.maxinumscale || 0;
-					let min = res.mininumscale || 0;
-
+					let focus = res.data.focuson ? res.data.focuson.split(",") : [];
+					let max = res.data.maxinumscale || 0;
+					let min = res.data.mininumscale || 0;
 					this.addareas = focus;
 					this.scale = [min, max].join(",");
 

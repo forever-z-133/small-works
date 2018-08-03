@@ -16,14 +16,14 @@
 				{{item.releaseDate | formatDate}}
 			</div>
 		</div>
-		<div v-if="pagelist.length == 0">暂无数据...</div>
-		<page @current-page="handlePage" :page-size="page.pageSize" :page-total="page.pageTotal"></page>
+		<div v-if="pagelist.length == 0" style="text-align: center;">暂无数据...</div>
+		<page @page="handlePage" :page-size="page.pageSize" :page-total="page.pageTotal"></page>
 	</div>
 </template>
 
 <script>
 	import { findUserLeavewords } from "../../plugins/userApi"
-	import utils from "../../plugins/utils"
+	import { publishTime } from "../../plugins/utils"
 	import page from "./page"
 	export default {
 		data() {
@@ -32,17 +32,17 @@
 				page: {
 					pageIndex: 1,
 					pageSize: 15,
-					pageTotal: 100
+					pageTotal: 0
 				}
 			}
 		},
 		created() {
-			console.log("阅读历史")
+//			console.log("阅读历史")
 			this.init()
 		},
 		filters:{
 			formatDate(val){
-				let str = utils.publishTime(val)
+				let str = publishTime(val)
 				return str
 			}
 		},

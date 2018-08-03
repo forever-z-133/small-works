@@ -1,12 +1,13 @@
 <template>
-	<div class="content-box">
+	<div class="content-box" style="min-width: 960px;width: 75%;">
 		<div class="login-title">
 			<div class="border-title">账号密码登录</div>
 			<router-link class="new-link" to="../signin">注册新用户</router-link>
 		</div>
-		<el-form :model="loginForm" class="login-form">
+		<div class="login-form">
 			<select name="" id="" class="form-input">
-				<option value="1">中国大陆(+86)</option>
+				<option value="+86">中国大陆(+86)</option>
+				<option value="+0855">中国香港(+0855)</option>
 			</select>
 			<input type="text" v-model="loginForm.mobileNo" class="form-input form-icon login-tele" placeholder="手机号" />
 			<input type="password" v-model="loginForm.password" class="form-input form-icon login-pwd" placeholder="密码" />
@@ -16,17 +17,17 @@
 					<img :src="codeSrc+uuid" />
 				</div>
 				<div class="code-reload" @click="init"></div>
-				<div class="tips tips-error" v-if="errorMsg">{{errorMsg}}</div>
 			</div>
-			<div style="height: 64px;">
+			<div class="login-link-tips">
 				<router-link to="../forget" style="color:#555">忘记登录密码</router-link>
+				<div class="tips tips-error" v-if="errorMsg">{{errorMsg}}</div>
 			</div>
 			<el-button class="btn" @click="submit">立即登录</el-button>
 			<div class="login-type">
 				<div class="login-wx">微信登录</div>
 				<div class="login-tb">头豹APP登录</div>
 			</div>
-		</el-form>
+		</div>
 
 	</div>
 </template>
@@ -52,6 +53,20 @@
 			this.init()
 		},
 		watch:{
+			"loginForm.mobileNo" (val, old) {
+				let type = this.areacode
+				let reg = ""
+				if(type == "+86"){
+					reg = /^1[3|4|5|6|7|8][0-9]\d{4,8}$/.test(val)
+				} else {
+					reg = /^([6|9])\d{7}$/.test(val) 
+				}
+				this.errorMsg = reg ? '' : "手机号不正确!";
+			},
+			"loginForm.password" (val, old) {
+				let reg = val.length >= 6;
+				this.errorMsg = reg ? '' : "密码长度至少6位!";
+			},
 			"imgCode"(val,old){
 				if(val.length > 4){
 					this.imgCode = val.slice(0, 4);
@@ -83,10 +98,11 @@
 						var redirect = window.sessionStorage.getItem('backto')
 						return this.$router.replace(redirect);
 					}
-					this.$router.push("/userCenter")
+					this.$router.push("/")
 				} else {
-					this.chance--
-					this.$message.error(res.msg)
+					this.chance--;
+					this.init()
+					this.errorMsg = res.msg;
 				}
 			},
 			async checkImg(){

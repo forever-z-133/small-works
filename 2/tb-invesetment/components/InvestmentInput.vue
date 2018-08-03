@@ -51,8 +51,9 @@
             <div class="rowline">
                 <div class="form-group">
                     <div class="input-box">
-                        <input name="contact" v-model="input.license" placeholder="上传执照" readonly>
-                        <button class="form-input"><i class="icon icon-upload"></i><input type="file" @input="upload($event, 'license')"></button>
+                        <img :src="input.license" v-if="input.license" width="75" height="45">
+                        <input name="contact" v-model="input.license" placeholder="上传营业执照" readonly>
+                        <button class="form-input"><i class="icon icon-upload"></i><input type="file" @change="upload($event, 'license')"></button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -91,7 +92,7 @@
 <script>
 import AgreementDialog from "../components/AgreementDialog.vue";
 
-import utils from '../plugins/utils.js';
+import { decodeForXSS, uploadImage, addSrcPrefix } from '../plugins/utils.js';
 import { ajaxUpload } from '../plugins/ajax_zyh.js';
 
 export default {
@@ -102,7 +103,7 @@ export default {
     data() {
         return {
             input: this.data || {
-                adType: 1,
+                adType: '1',
                 companyName: '',
                 companyStatus: false,
                 acquisitionType: '',  // 收购类型
@@ -131,25 +132,33 @@ export default {
                 this.input[key] = value.slice(0, max);
                 length = max;
             }
-            e.target.nextSibling.innerText = length + '/' + max;
+            var $text = e.target.parentNode.querySelector('span')
+            if($text) $text.innerText = length + '/' + max;
         },
         submit (e) {
             var data = {...this.input};
-            data = utils.decodeForXSS(data);
+            data = decodeForXSS(data);
             this.$emit('submit', data);
         },
         upload: function(e, key) {
             var files = e.target.files;
+            for (var i in files) {
+                if (files[i].size > 1 * 1024 * 1024) {
+                    return this.$message.warning('上传文件大小请小于 1M。');
+                }
+            }
             var loading = this.$loading({ fullscreen: true });
-            utils.uploadImage.call(this, files).then(url => {
-                url = utils.addSrcPrefix(url, this.imgbaseurl);
+            uploadImage.call(this, files).then(url => {
+                url = addSrcPrefix(url, this.imgbaseurl);
                 this.input[key] = url;
                 e.target.value = '';
+                this.$message.success('上传成功');
                 loading.close();
             }).catch(err => {
                 e.target.value = '';
+                console.log(err);
                 loading.close();
-                this.$message.error(err.message || err.msg);
+                this.$message.warning(err);
             });
         },
     }
