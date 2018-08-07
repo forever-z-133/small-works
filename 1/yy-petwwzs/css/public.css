@@ -1800,11 +1800,16 @@
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .detail-header {
     padding-bottom: 1em;
     margin-bottom: 1em;
     border-bottom: 2px solid;
+}
+.detail-from {
+    font-size: .5em;
+    color: #aaa;
 }
 .detail-article-header {
     margin-bottom: 2em;
