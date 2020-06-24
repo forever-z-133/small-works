@@ -1,6 +1,6 @@
 # 青浦智造
 
-预览：[青浦智造](https://foreverz133.github.io/small-works/1/qp-factory-map/)
+预览：[青浦智造](https://forever-z-133.github.io/small-works/1/qp-factory-map/)
 
 是2015年上海青浦购物节的签到活动。青浦区制造业比较发达，偏B2B，有点像1688和淘宝的关系一样，所以上海购物节之后便是青浦购物节，都是省级的大活动，真佩服老板能接到政府的单。
 

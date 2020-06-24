@@ -1,6 +1,6 @@
 # 青浦品牌之旅
 
-预览：[青浦品牌之旅](https://foreverz133.github.io/small-works/1/qp-brands-travel/)
+预览：[青浦品牌之旅](https://forever-z-133.github.io/small-works/1/qp-brands-travel/)
 
 上海青浦购物节是以制造业为主的大型展销会，品牌之旅为三大活动之首，以扫码签到的形式让更多客户了解制造业品牌。
 

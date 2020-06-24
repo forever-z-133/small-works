@@ -1,6 +1,6 @@
 # 上海优秀商业景观推选
 
-预览：[上海优秀商业景观推选](https://foreverz133.github.io/small-works/1/sw-building-0118/)
+预览：[上海优秀商业景观推选](https://forever-z-133.github.io/small-works/1/sw-building-0118/)
 
 上海购物节最后阶段的作品，14家最美商城评选完毕，但希望能保留和回顾其宣传视频，因此有了此网站。
 

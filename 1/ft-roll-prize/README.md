@@ -1,6 +1,6 @@
 # 旋转吧我的盘
 
-预览：[旋转吧我的盘](https://foreverz133.github.io/small-works/1/ft-roll-prize/)
+预览：[旋转吧我的盘](https://forever-z-133.github.io/small-works/1/ft-roll-prize/)
 
 方太厨卫的线上活动，包含多个活动。本项目为简单的转盘抽奖。
 

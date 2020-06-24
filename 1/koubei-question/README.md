@@ -1,6 +1,6 @@
 # 口碑吃货节商户问卷
 
-预览：[口碑吃货节商户问卷](https://foreverz133.github.io/small-works/1/koubei-question/)
+预览：[口碑吃货节商户问卷](https://forever-z-133.github.io/small-works/1/koubei-question/)
 
 2017上海美食节，也叫口碑吃货节、网红吃货节。联合全市八十多家饮食相关门店，进行大面积的优惠促销活动，并举办大型展会进一步推广各家品牌。
 

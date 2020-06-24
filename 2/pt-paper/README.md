@@ -1,6 +1,6 @@
 # 上海购物节普陀 Style
 
-预览：[上海购物节普陀 Style](https://foreverz133.github.io/small-works/2/pt-paper/)
+预览：[上海购物节普陀 Style](https://forever-z-133.github.io/small-works/2/pt-paper/)
 
 纯展示类H5其实有非常丰富的形式，轮播呀，一镜到底呀，全景呀等等。网易就非常擅长情怀类营销。
 

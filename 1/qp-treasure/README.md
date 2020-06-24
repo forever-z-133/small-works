@@ -1,6 +1,6 @@
 # 青浦环球港大寻宝
 
-预览：[青浦环球港大寻宝](https://foreverz133.github.io/small-works/1/qp-treasure/)
+预览：[青浦环球港大寻宝](https://forever-z-133.github.io/small-works/1/qp-treasure/)
 
 上海购物节在环球港进行开幕仪式，为夜晚的活动提供白天的引流和宣传，因此进行了定点寻宝签到的小游戏互动。
 

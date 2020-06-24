@@ -1,6 +1,6 @@
 # 上海圣诞景观投票
 
-预览：[上海圣诞景观投票](https://foreverz133.github.io/small-works/1/ssw-vote-1224/)
+预览：[上海圣诞景观投票](https://forever-z-133.github.io/small-works/1/ssw-vote-1224/)
 
 这是相对不成熟的一次案例，，也是初次在项目中使用自写的前端路由，出现了相当多的问题。
 

@@ -1,6 +1,6 @@
 # 万物至上宠物纪念馆
 
-预览：[万物至上宠物纪念馆](https://foreverz133.github.io/small-works/1/yy-petwwzs/)
+预览：[万物至上宠物纪念馆](https://forever-z-133.github.io/small-works/1/yy-petwwzs/)
 
 帮杨杨做的官网，主要对万物至上宠物纪念馆进行较详细介绍，包括宠物善后殡葬与骨灰晶体产品等业务。
 

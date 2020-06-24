@@ -1,6 +1,6 @@
 # 最武汉 2.0 （重构未完成）
 
-预览：[最武汉 2.0](https://foreverz133.github.io/small-works/1/wtu-wuhan-2/)
+预览：[最武汉 2.0](https://forever-z-133.github.io/small-works/1/wtu-wuhan-2/)
 
 介绍武汉吃喝玩够的个性网址，囊括美食、景点、大学等方方面面。
 

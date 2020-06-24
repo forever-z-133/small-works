@@ -312,7 +312,7 @@
 
     var isReady = false;
     // 非公司域名则直接回调，如 file，localhost, github 或等情况
-    if (/localhost|(192\.168)|foreverZ133/i.test(location.hostname) || !/^http/.test(location.href)) {
+    if (/localhost|(192\.168)|forever-z-133/i.test(location.hostname) || !/^http/.test(location.href)) {
       return callback && callback();
     } else {
       var timer = setTimeout(function(){

@@ -1,6 +1,6 @@
 # 中秋国庆与你同行
 
-预览：[中秋国庆与你同行](https://foreverz133.github.io/small-works/2/kdc-10-1/)
+预览：[中秋国庆与你同行](https://forever-z-133.github.io/small-works/2/kdc-10-1/)
 
 由于同事都在说没沟通没操演不利于团队发展，因此就进行一次每周自主立项的小实验，拉拢策划设计部门一起研究可能会成为爆款的H5并进行制作。
 

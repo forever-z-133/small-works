@@ -1,6 +1,6 @@
 # ChinaJoy 死神激斗
 
-预览：[ChinaJoy 死神激斗](https://foreverz133.github.io/small-works/2/ll-china-joy/)
+预览：[ChinaJoy 死神激斗](https://forever-z-133.github.io/small-works/2/ll-china-joy/)
 
 真是闲的时候超闲，忙的时候超忙。感谢娜娜给我推荐的外包，为 china joy 做东西好方啊，说不定会有上千的访问量呢。
 

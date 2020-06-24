@@ -1,6 +1,6 @@
 # “伊”声母亲的祝福
 
-预览：[“伊”声母亲的祝福](https://foreverz133.github.io/small-works/2/bbb-mother-day/)
+预览：[“伊”声母亲的祝福](https://forever-z-133.github.io/small-works/2/bbb-mother-day/)
 
 为母亲节准备的活动，个人认为送情怀送贺卡是比较好的方案。
 

@@ -1,6 +1,6 @@
 # 金鸡来签到，福袋抽回家
 
-预览：[金鸡来签到，福袋抽回家](https://foreverz133.github.io/small-works/1/bb-lucky-bag/)
+预览：[金鸡来签到，福袋抽回家](https://forever-z-133.github.io/small-works/1/bb-lucky-bag/)
 
 上海百联奥特莱斯广场的活动，回馈活跃的公众号粉丝。
 

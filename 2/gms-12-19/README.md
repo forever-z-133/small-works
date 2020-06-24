@@ -1,6 +1,6 @@
 # 岁末华泾重装新开业
 
-预览：[岁末华泾重装新开业](https://foreverz133.github.io/small-works/2/gms-12-19/)
+预览：[岁末华泾重装新开业](https://forever-z-133.github.io/small-works/2/gms-12-19/)
 
 这就是那个最初流行的轮播式H5，从H5在营销领域爆发三四年过去了，现在的营销渐渐开始与更多的线下活动绑定。
 

@@ -1,6 +1,6 @@
 # 中经基金有限公司
 
-预览：[中经基金有限公司](https://foreverz133.github.io/small-works/2/zj-office-web/)
+预览：[中经基金有限公司](https://forever-z-133.github.io/small-works/2/zj-office-web/)
 
 帮耗子老哥应急做的，30 块钱的外包，4 张静态页面，我其实觉得这价格都喊高了。
 

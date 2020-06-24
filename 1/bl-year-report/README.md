@@ -1,6 +1,6 @@
 # 鸡年送福，一起莱年报
 
-预览：[鸡年送福，一起莱年报](https://foreverz133.github.io/small-works/1/bl-year-report/)
+预览：[鸡年送福，一起莱年报](https://forever-z-133.github.io/small-works/1/bl-year-report/)
 
 鸡年伊始百联集团做的品牌推广，让每人给过去一年的自己打个标签，比如忙、懵、富等。
 

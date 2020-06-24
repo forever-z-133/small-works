@@ -1,6 +1,6 @@
 # 坤鼎创意部官网
 
-预览：[坤鼎创意部官网](https://foreverz133.github.io/small-works/1/kdc-creative/)
+预览：[坤鼎创意部官网](https://forever-z-133.github.io/small-works/1/kdc-creative/)
 
 其实公司进行过多次组织调整，而创意+技术的结构是我最喜欢的。
 

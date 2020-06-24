@@ -1,6 +1,6 @@
 # 口碑上海美食节官网
 
-预览：[口碑上海美食节官网](https://foreverz133.github.io/small-works/1/koubei-foodie/)
+预览：[口碑上海美食节官网](https://forever-z-133.github.io/small-works/1/koubei-foodie/)
 
 17年5月时的上海美食节，也叫口碑吃货节，由我司(坤鼎KDC)主责线上推广和供应商招标，所以就活动内容、加盟方式和购票途径进行了官网宣传。更多的还是线下引流和双微推广。
 

@@ -1,5 +1,5 @@
 # 有缘千里来对诗
-预览：[有缘千里来对诗](https://foreverz133.github.io/small-works/2/bbb-love-poems/)
+预览：[有缘千里来对诗](https://forever-z-133.github.io/small-works/2/bbb-love-poems/)
 
 为八佰伴提供的情人节线上活动，一方面有对诗的趣味性，一方面有抽奖的利益性。且有一定的社交互动性，发起者提供上句，访问者答出下句，则访问者可进行抽奖。
 
